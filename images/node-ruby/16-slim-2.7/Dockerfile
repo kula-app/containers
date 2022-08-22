@@ -1,0 +1,50 @@
+FROM node:16.16.0-slim
+
+# Change user to root for full control
+USER root
+
+# Update dependencies
+RUN apt-get update -qq > /dev/null && apt-get upgrade -y --no-install-recommends
+RUN apt-get install -y \
+    autoconf \
+    bison \
+    build-essential \
+    curl \
+    git \
+    libdb-dev \
+    libffi-dev \
+    libgdbm-dev \
+    libgdbm6 \
+    libncurses5-dev \
+    libreadline6-dev \
+    libssl-dev \
+    libyaml-dev \
+    uuid-dev \
+    zlib1g-dev \
+  && rm -rf /var/lib/apt/lists/*;
+
+# Install rbenv
+RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
+RUN echo '# rbenv setup' > /etc/profile.d/rbenv.sh
+RUN echo 'export RBENV_ROOT=/usr/local/rbenv' >> /etc/profile.d/rbenv.sh
+RUN echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> /etc/profile.d/rbenv.sh
+RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+RUN chmod +x /etc/profile.d/rbenv.sh
+
+# Install ruby-build
+RUN mkdir /usr/local/rbenv/plugins
+RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plugins/ruby-build
+
+# Setup rbenv shimming
+ENV RBENV_ROOT /usr/local/rbenv
+ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Install Ruby versions
+RUN rbenv install 2.7.6
+RUN rbenv global 2.7.6
+
+# Install common Ruby gems
+RUN gem install bundler
+
+# Switch back to original user
+USER node
