@@ -1,8 +1,5 @@
 FROM node:16.16.0
 
-# Change user to root for full control
-USER root
-
 # Update dependencies
 RUN apt-get update -qq > /dev/null && apt-get upgrade -y --no-install-recommends
 RUN apt-get install -y \
@@ -45,6 +42,3 @@ RUN rbenv global 2.7.6
 
 # Install common Ruby gems
 RUN gem install bundler
-
-# Switch back to original user
-USER node
