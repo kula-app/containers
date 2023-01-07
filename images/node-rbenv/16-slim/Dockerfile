@@ -1,23 +1,23 @@
-FROM node:16.16.0
+FROM node:16.16.0-slim
 
 # Update dependencies
 RUN apt-get update -qq > /dev/null && apt-get upgrade -y --no-install-recommends
 RUN apt-get install -y \
-    autoconf \
-    bison \
-    build-essential \
-    curl \
-    git \
-    libdb-dev \
-    libffi-dev \
-    libgdbm-dev \
-    libgdbm6 \
-    libncurses5-dev \
-    libreadline6-dev \
-    libssl-dev \
-    libyaml-dev \
-    uuid-dev \
-    zlib1g-dev \
+  autoconf \
+  bison \
+  build-essential \
+  curl \
+  git \
+  libdb-dev \
+  libffi-dev \
+  libgdbm-dev \
+  libgdbm6 \
+  libncurses5-dev \
+  libreadline6-dev \
+  libssl-dev \
+  libyaml-dev \
+  uuid-dev \
+  zlib1g-dev \
   && rm -rf /var/lib/apt/lists/*;
 
 # Install rbenv
@@ -36,9 +36,8 @@ RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plu
 ENV RBENV_ROOT /usr/local/rbenv
 ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-# Install Ruby versions
-RUN rbenv install 2.7.6
-RUN rbenv global 2.7.6
+# Smoke test
+RUN rbenv --version
 
 # Install common Ruby gems
 RUN gem install bundler

@@ -1,6 +1,6 @@
 # Sources:
-# - https://github.com/docker-library/ruby/blob/8ea8c4000c5005771efc9ce34931763d191462cb/3.2/alpine3.16/Dockerfile
-# - https://github.com/nodejs/docker-node/blob/86d8b5dbad62b7c58d2146dafaa7b35086ae2eb8/18/alpine3.16/Dockerfile
+# - https://github.com/docker-library/ruby/blob/main/3.2/alpine3.16/Dockerfile
+# - https://github.com/nodejs/docker-node/blob/main/18/alpine3.16/Dockerfile
 
 # ---- Base ----
 FROM alpine:3.16
