@@ -34,35 +34,38 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build node-rbenv 16
-        uses: docker/build-push-action@v3
-        with:
-          cache-from: type=registry,ref=ghcr.io/kula-app/containers/node-rbenv:buildcache
-          cache-to: type=registry,ref=ghcr.io/kula-app/containers/node-rbenv:buildcache,mode=max
-          context: images/node-rbenv/16
-          labels: kula/node-rbenv
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            latest
-            16
-            16.16
+      # - name: Build node-rbenv 16
+      #   uses: docker/build-push-action@v3
+      #   if: always()
+      #   with:
+      #     cache-from: type=registry,ref=ghcr.io/kula-app/containers/node-rbenv:buildcache
+      #     cache-to: type=registry,ref=ghcr.io/kula-app/containers/node-rbenv:buildcache,mode=max
+      #     context: images/node-rbenv/16
+      #     labels: kula/node-rbenv
+      #     platforms: linux/amd64,linux/arm64
+      #     push: ${{ github.event_name != 'pull_request' }}
+      #     tags: |
+      #       latest
+      #       16
+      #       16.16
 
-      - name: Build node-rbenv 16-slim
-        uses: docker/build-push-action@v3
-        with:
-          cache-from: type=registry,ref=ghcr.io/kula-app/containers/node-rbenv:buildcache
-          cache-to: type=registry,ref=ghcr.io/kula-app/containers/node-rbenv:buildcache,mode=max
-          context: images/node-rbenv/16
-          labels: kula/node-rbenv
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            16-slim
-            16.16-slim
+      # - name: Build node-rbenv 16-slim
+      #   uses: docker/build-push-action@v3
+      #   if: always()
+      #   with:
+      #     cache-from: type=registry,ref=ghcr.io/kula-app/containers/node-rbenv:buildcache
+      #     cache-to: type=registry,ref=ghcr.io/kula-app/containers/node-rbenv:buildcache,mode=max
+      #     context: images/node-rbenv/16
+      #     labels: kula/node-rbenv
+      #     platforms: linux/amd64,linux/arm64
+      #     push: ${{ github.event_name != 'pull_request' }}
+      #     tags: |
+      #       16-slim
+      #       16.16-slim
 
       - name: Build node-ruby 18-3.2-alpine3.16
         uses: docker/build-push-action@v3
+        if: always()
         with:
           cache-from: type=registry,ref=ghcr.io/kula-app/containers/node-ruby:buildcache
           cache-to: type=registry,ref=ghcr.io/kula-app/containers/node-ruby:buildcache,mode=max
