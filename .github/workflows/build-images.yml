@@ -24,7 +24,7 @@ jobs:
               16
               16.16
           - image: node-rbenv
-            context: "16"
+            context: "16-slim"
             tags: |
               16-slim
               16.16-slim
