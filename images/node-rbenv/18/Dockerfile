@@ -1,4 +1,4 @@
-FROM node:16.16.0-slim
+FROM node:18.13
 
 # Update dependencies
 RUN apt-get update -qq > /dev/null && apt-get upgrade -y --no-install-recommends
@@ -38,6 +38,3 @@ ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/sbin:/usr/local/bin:/usr/s
 
 # Smoke test
 RUN rbenv --version
-
-# Install common Ruby gems
-RUN gem install bundler
