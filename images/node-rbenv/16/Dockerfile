@@ -38,6 +38,3 @@ ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/sbin:/usr/local/bin:/usr/s
 
 # Smoke test
 RUN rbenv --version
-
-# Install common Ruby gems
-RUN gem install bundler
