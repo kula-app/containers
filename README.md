@@ -1,5 +1,7 @@
 # The kula.app containers library
 
+[![Build Images](https://github.com/kula-app/containers/actions/workflows/build-images.yml/badge.svg)](https://github.com/kula-app/containers/actions/workflows/build-images.yml)
+
 Various container image combinations used in projects of [kula](https://kula.app).
 
 ## Get an image
@@ -25,14 +27,3 @@ $ docker build -t kula/APP .
 ```
 
 > Remember to replace the `APP`, `VERSION` and `OPERATING-SYSTEM` placeholders in the example command above with the correct values.
-
-## Run the application using Docker Compose
-
-The main folder of each application contains a functional `docker-compose.yml` file. Run the application using it as shown below:
-
-```console
-$ curl -sSL https://raw.githubusercontent.com/kula-app/containers/main/containers/APP/docker-compose.yml > docker-compose.yml
-$ docker-compose up -d
-```
-
-> Remember to replace the `APP` placeholder in the example command above with the correct value.
