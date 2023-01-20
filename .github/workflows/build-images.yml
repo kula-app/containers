@@ -20,52 +20,40 @@ jobs:
           # node-rbenv
           - image: node-rbenv
             context: "16"
-            labels: |
-              kula/node-rbenv
             tags: |
-              16
-              16.16
+              kula/node-rbenv:16
+              kula/node-rbenv:16.16
           - image: node-rbenv
             context: 16-slim
-            labels: |
-              kula/node-rbenv
             tags: |
-              16-slim
-              16.16-slim
+              kula/node-rbenv:16-slim
+              kula/node-rbenv:16.16-slim
           - image: node-rbenv
             context: "18"
-            labels: |
-              kula/node-rbenv
             tags: |
-              18
-              18.13
+              kula/node-rbenv:18
+              kula/node-rbenv:18.13
           - image: node-rbenv
             context: 18/ruby2.7.6
-            labels: |
-              kula/node-rbenv
             tags: |
-              18-ruby2.7.6
-              18.13-ruby2.7.6
+              kula/node-rbenv:18-ruby2.7.6
+              kula/node-rbenv:18.13-ruby2.7.6
           - image: node-rbenv
             context: 18/ruby3.2.0
-            labels: |
-              kula/node-rbenv
             tags: |
-              18-ruby3.2.0
-              18.13-ruby3.2.0
+              kula/node-rbenv:18-ruby3.2.0
+              kula/node-rbenv:18.13-ruby3.2.0
           - image: node-rbenv
             context: latest
-            labels: kula/node-rbenv
-            tags: latest
+            tags: |
+              kula/node-rbenv:latest
 
           # node-ruby
           - image: node-ruby
             context: 18-3.2/alpine3.16
-            labels: |
-              kula/node-ruby
             tags: |
-              18-3.2-alpine3.16
-              18.13-3.2-alpine3.16
+              kula/node-ruby:18-3.2-alpine3.16
+              kula/node-ruby:18.13-3.2-alpine3.16
 
     steps:
       - name: Checkout Repository
@@ -90,7 +78,6 @@ jobs:
           # cache-from: type=registry,ref=kula/${{ matrix.image }}:buildcache
           # cache-to: type=registry,ref=kula/${{ matrix.image }}:buildcache,mode=max
           context: images/${{ matrix.image }}/${{ matrix.context }}
-          labels: ${{ matrix.labels }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ matrix.tags }}
