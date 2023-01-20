@@ -68,19 +68,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build Image
         uses: docker/build-push-action@v3
         if: always()
         with:
-          cache-from: type=registry,ref=ghcr.io/kula-app/containers/${{ matrix.image }}:buildcache
-          cache-to: type=registry,ref=ghcr.io/kula-app/containers/${{ matrix.image }}:buildcache,mode=max
+          cache-from: type=registry,ref=kula/${{ matrix.image }}:buildcache
+          cache-to: type=registry,ref=kula/${{ matrix.image }}:buildcache,mode=max
           context: images/${{ matrix.image }}/${{ matrix.context }}
           labels: kula/${{ matrix.image }}
           platforms: linux/amd64,linux/arm64
