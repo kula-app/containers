@@ -34,7 +34,7 @@ RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plu
 
 # Setup rbenv shimming
 ENV RBENV_ROOT /usr/local/rbenv
-ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
 
 # Smoke test
 RUN rbenv --version
