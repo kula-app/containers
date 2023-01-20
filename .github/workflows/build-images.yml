@@ -73,8 +73,8 @@ jobs:
         uses: docker/build-push-action@v3
         if: always()
         with:
-          cache-from: type=registry,ref=kula/${{ matrix.image }}:buildcache
-          cache-to: type=registry,ref=kula/${{ matrix.image }}:buildcache,mode=max
+          # cache-from: type=registry,ref=kula/${{ matrix.image }}:buildcache
+          # cache-to: type=registry,ref=kula/${{ matrix.image }}:buildcache,mode=max
           context: images/${{ matrix.image }}/${{ matrix.context }}
           labels: kula/${{ matrix.image }}
           platforms: linux/amd64,linux/arm64
