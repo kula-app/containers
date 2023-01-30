@@ -159,7 +159,7 @@ jobs:
         with:
           cache-from: type=registry,ref=ghcr.io/kula-app/containers/${{ matrix.image }}:buildcache
           cache-to: type=registry,ref=ghcr.io/kula-app/containers/${{ matrix.image }}:buildcache,mode=max
-          context: images/${{ matrix.image }}/${{ matrix.context }}
+          context: images/${{ matrix.context }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ matrix.tags }}
