@@ -4,7 +4,7 @@
   "regexManagers": [
     {
       "fileMatch": [".github/workflows/build-images.yml"],
-      "matchStrings": ["(?<depName>.*)-rbenv:(?<currentValue>[\\d\\.]*)"],
+      "matchStrings": ["kula/(?<depName>.*)-rbenv:(?<currentValue>[\\d\\.]*)"],
       "datasourceTemplate": "docker"
     }
   ]
