@@ -17,7 +17,7 @@ RUN apt-get install -y \
   libssl-dev \
   libyaml-dev \
   uuid-dev \
-  zlib1g-dev &&
+  zlib1g-dev && \
   rm -rf /var/lib/apt/lists/*
 
 # Install rbenv
