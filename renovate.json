@@ -5,18 +5,18 @@
     {
       "fileMatch": [".github/workflows/build-images.yml"],
       "matchStrings": [
-        "kula/node-rbenv:(?<currentValue>[\\d\\.]*)",
-        "kula/node-rbenv:(?<currentValue>[\\d\\.]*-slim)",
-        "kula/node-ruby:(?<currentValue>[\\d\\.]*)"
+        "kula/node-rbenv:(?<currentValue>[\\d\\.]*)$",
+        "kula/node-rbenv:(?<currentValue>[\\d\\.]*-slim)$",
+        "kula/node-ruby:(?<currentValue>[\\d\\.]*)$"
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "node"
     },
     {
-      "fileMatch": [".github/workflows/build-images.yml"],
+      "fileMatch": [".github/workflows/build-images.yml", "Dockerfile"],
       "matchStrings": [
         "kula/node-rbenv:[\\d\\.]*-ruby(?<currentValue>[\\d\\.]*)$",
-        "ENV RUBY_VERSION (?<currentValue>[\\d\\.]*)"
+        "ENV RUBY_VERSION (?<currentValue>.*)$"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "ruby/ruby"
