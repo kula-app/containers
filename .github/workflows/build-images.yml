@@ -74,21 +74,21 @@ jobs:
             context: node-rbenv/18
             tags: |
               kula/node-rbenv:18
-              kula/node-rbenv:18.13
+              kula/node-rbenv:18.16
 
           # -- Ruby 2.7 --
           - image: node-rbenv
             context: node-rbenv/18/ruby2.7.6
             tags: |
               kula/node-rbenv:18-ruby2.7.6
-              kula/node-rbenv:18.13-ruby2.7.6
+              kula/node-rbenv:18.16-ruby2.7.6
 
           # -- Ruby 3.2 --
           - image: node-rbenv
             context: node-rbenv/18/ruby3.2.0
             tags: |
               kula/node-rbenv:18-ruby3.2.0
-              kula/node-rbenv:18.13-ruby3.2.0
+              kula/node-rbenv:18.16-ruby3.2.0
 
           # +------------+
           # | Node.JS 18 |
@@ -97,21 +97,21 @@ jobs:
             context: node-rbenv/18-slim
             tags: |
               kula/node-rbenv:18-slim
-              kula/node-rbenv:18.13-slim
+              kula/node-rbenv:18.16-slim
 
           # -- Ruby 2.7 --
           - image: node-rbenv
             context: node-rbenv/18-slim/ruby2.7.6
             tags: |
               kula/node-rbenv:18-slim-ruby2.7.6
-              kula/node-rbenv:18.13-slim-ruby2.7.6
+              kula/node-rbenv:18.16-slim-ruby2.7.6
 
           # -- Ruby 3.2 --
           - image: node-rbenv
             context: node-rbenv/18-slim/ruby3.2.0
             tags: |
               kula/node-rbenv:18-slim-ruby3.2.0
-              kula/node-rbenv:18.13-slim-ruby3.2.0
+              kula/node-rbenv:18.16-slim-ruby3.2.0
 
           # +------------------+
           # | Node.JS - Latest |
