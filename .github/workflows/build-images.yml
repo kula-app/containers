@@ -275,7 +275,7 @@ jobs:
           # | Node.JS - Latest |
           # +------------------+
           - image: node-rbenv
-            context: node-rbenv/latest
+            context: node-rbenv/node-latest
             tags: |
               kula/node-rbenv:latest
 
