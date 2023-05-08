@@ -177,7 +177,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         if: always()
         with:
           cache-from: type=registry,ref=ghcr.io/kula-app/containers/${{ matrix.image }}:buildcache
