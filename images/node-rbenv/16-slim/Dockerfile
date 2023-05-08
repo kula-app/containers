@@ -1,4 +1,4 @@
-FROM node:16.16.0-slim
+FROM node:16.20.0-slim
 
 # Update dependencies
 RUN apt-get update -qq > /dev/null && apt-get upgrade -y --no-install-recommends
