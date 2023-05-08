@@ -323,7 +323,7 @@ jobs:
 
           # -- Ruby 3 --
           - image: node-ruby
-            context: node-ruby/18-3.2/alpine3.16
+            context: node-ruby/node-18/ruby-3/alpine3.16
             tags: |
               kula/node-ruby:18-ruby3-alpine3.16
               kula/node-ruby:18.20-ruby3-alpine3.16
