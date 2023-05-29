@@ -3,7 +3,7 @@
 # - https://github.com/docker-library/ruby/blob/master/2.7/buster/Dockerfile
 
 # ---- Base ----
-FROM node:18.20-buster
+FROM node:18.16-buster
 
 # -- Install Ruby --
 # skip installing gem documentation
