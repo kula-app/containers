@@ -45,13 +45,13 @@ jobs:
             tags: |
               kula/node-rbenv:16-ruby2
               kula/node-rbenv:16-ruby2.7
-              kula/node-rbenv:16-ruby2.7.6
+              kula/node-rbenv:16-ruby2.7.8
               kula/node-rbenv:16.20-ruby2
               kula/node-rbenv:16.20-ruby2.7
-              kula/node-rbenv:16.20-ruby2.7.6
+              kula/node-rbenv:16.20-ruby2.7.8
               kula/node-rbenv:16.20.0-ruby2
               kula/node-rbenv:16.20.0-ruby2.7
-              kula/node-rbenv:16.20.0-ruby2.7.6
+              kula/node-rbenv:16.20.0-ruby2.7.8
 
           # -- Ruby 3 --
           - image: node-rbenv
@@ -86,13 +86,13 @@ jobs:
             tags: |
               kula/node-rbenv:16-slim-ruby2
               kula/node-rbenv:16-slim-ruby2.7
-              kula/node-rbenv:16-slim-ruby2.7.6
+              kula/node-rbenv:16-slim-ruby2.7.8
               kula/node-rbenv:16.20-slim-ruby2
               kula/node-rbenv:16.20-slim-ruby2.7
-              kula/node-rbenv:16.20-slim-ruby2.7.6
+              kula/node-rbenv:16.20-slim-ruby2.7.8
               kula/node-rbenv:16.20.0-slim-ruby2
               kula/node-rbenv:16.20.0-slim-ruby2.7
-              kula/node-rbenv:16.20.0-slim-ruby2.7.6
+              kula/node-rbenv:16.20.0-slim-ruby2.7.8
 
           # -- Ruby 3 --
           - image: node-rbenv
@@ -131,9 +131,9 @@ jobs:
               kula/node-rbenv:18-ruby2.7
               kula/node-rbenv:18.16-ruby2.7
               kula/node-rbenv:18.16.0-ruby2.7
-              kula/node-rbenv:18-ruby2.7.6
-              kula/node-rbenv:18.16-ruby2.7.6
-              kula/node-rbenv:18.16.0-ruby2.7.6
+              kula/node-rbenv:18-ruby2.7.8
+              kula/node-rbenv:18.16-ruby2.7.8
+              kula/node-rbenv:18.16.0-ruby2.7.8
 
           # -- Ruby 3 --
           - image: node-rbenv
@@ -172,9 +172,9 @@ jobs:
               kula/node-rbenv:18-slim-ruby2.7
               kula/node-rbenv:18.16-slim-ruby2.7
               kula/node-rbenv:18.16.0-slim-ruby2.7
-              kula/node-rbenv:18-slim-ruby2.7.6
-              kula/node-rbenv:18.16-slim-ruby2.7.6
-              kula/node-rbenv:18.16.0-slim-ruby2.7.6
+              kula/node-rbenv:18-slim-ruby2.7.8
+              kula/node-rbenv:18.16-slim-ruby2.7.8
+              kula/node-rbenv:18.16.0-slim-ruby2.7.8
 
           # -- Ruby 3 --
           - image: node-rbenv
@@ -213,9 +213,9 @@ jobs:
               kula/node-rbenv:20-ruby2.7
               kula/node-rbenv:20.2-ruby2.7
               kula/node-rbenv:20.2.0-ruby2.7
-              kula/node-rbenv:20-ruby2.7.6
-              kula/node-rbenv:20.2-ruby2.7.6
-              kula/node-rbenv:20.2.0-ruby2.7.6
+              kula/node-rbenv:20-ruby2.7.8
+              kula/node-rbenv:20.2-ruby2.7.8
+              kula/node-rbenv:20.2.0-ruby2.7.8
 
           # -- Ruby 3 --
           - image: node-rbenv
@@ -254,9 +254,9 @@ jobs:
               kula/node-rbenv:20-slim-ruby2.7
               kula/node-rbenv:20.2-slim-ruby2.7
               kula/node-rbenv:20.2.0-slim-ruby2.7
-              kula/node-rbenv:20-slim-ruby2.7.6
-              kula/node-rbenv:20.2-slim-ruby2.7.6
-              kula/node-rbenv:20.2.0-slim-ruby2.7.6
+              kula/node-rbenv:20-slim-ruby2.7.8
+              kula/node-rbenv:20.2-slim-ruby2.7.8
+              kula/node-rbenv:20.2.0-slim-ruby2.7.8
 
           # -- Ruby 3 --
           - image: node-rbenv
@@ -305,9 +305,9 @@ jobs:
               kula/node-ruby:18-ruby2.7-alpine3.16
               kula/node-ruby:18.16-ruby2.7-alpine3.16
               kula/node-ruby:18.16.0-ruby2.7-alpine3.16
-              kula/node-ruby:18-ruby2.7.6-alpine3.16
-              kula/node-ruby:18.16-ruby2.7.6-alpine3.16
-              kula/node-ruby:18.16.0-ruby2.7.6-alpine3.16
+              kula/node-ruby:18-ruby2.7.8-alpine3.16
+              kula/node-ruby:18.16-ruby2.7.8-alpine3.16
+              kula/node-ruby:18.16.0-ruby2.7.8-alpine3.16
           - image: node-ruby
             context: node-ruby/node-18/ruby-2/buster
             tags: |
@@ -317,9 +317,9 @@ jobs:
               kula/node-ruby:18-ruby2.7-buster
               kula/node-ruby:18.16-ruby2.7-buster
               kula/node-ruby:18.16.0-ruby2.7-buster
-              kula/node-ruby:18-ruby2.7.6-buster
-              kula/node-ruby:18.16-ruby2.7.6-buster
-              kula/node-ruby:18.16.0-ruby2.7.6-buster
+              kula/node-ruby:18-ruby2.7.8-buster
+              kula/node-ruby:18.16-ruby2.7.8-buster
+              kula/node-ruby:18.16.0-ruby2.7.8-buster
 
           # -- Ruby 3 --
           - image: node-ruby
