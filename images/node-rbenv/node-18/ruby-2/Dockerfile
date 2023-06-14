@@ -1,4 +1,4 @@
-FROM kula/node-rbenv:18.16.0
+FROM kula/node-rbenv:18.20.0
 
 ENV RUBY_VERSION 2.7.8
 
