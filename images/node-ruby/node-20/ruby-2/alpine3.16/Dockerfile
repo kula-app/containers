@@ -3,7 +3,7 @@
 # - https://github.com/nodejs/docker-node/blob/main/20/alpine3.16/Dockerfile
 
 # ---- Base ----
-FROM node:20.3.0-alpine3.16
+FROM node:20.4.0-alpine3.16
 
 # -- Install Ruby --
 RUN set -eux
@@ -21,8 +21,8 @@ apk add --no-cache \
 RUN set -eux
 mkdir -p /usr/local/etc
 {
-    echo 'install: --no-document'
-    echo 'update: --no-document'
+echo 'install: --no-document'
+echo 'update: --no-document'
 } >>/usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
@@ -89,9 +89,9 @@ export ac_cv_func_isnan=yes ac_cv_func_isinf=yes
 # hack in "ENABLE_PATH_CHECK" disabling to suppress:
 #   warning: Insecure world writable dir
 {
-    echo '#define ENABLE_PATH_CHECK 0'
-    echo
-    cat file.c
+echo '#define ENABLE_PATH_CHECK 0'
+echo
+cat file.c
 } >file.c.new
 mv file.c.new file.c
 
@@ -101,9 +101,9 @@ autoconf
 apkArch="$(apk --print-arch)"
 case "$apkArch" in
 s390x | armhf | armv7)
-    apk add --no-cache libucontext-dev
-    export LIBS='-lucontext'
-    ;;
+apk add --no-cache libucontext-dev
+export LIBS='-lucontext'
+;;
 esac
 gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"
 ./configure \
@@ -115,10 +115,10 @@ make -j "$(nproc)"
 make install
 
 runDeps="$(
-    scanelf --needed --nobanner --format '%n#p' --recursive /usr/local |
-        tr ',' '\n' |
-        sort -u |
-        awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }'
+scanelf --needed --nobanner --format '%n#p' --recursive /usr/local |
+tr ',' '\n' |
+sort -u |
+awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }'
 )"
 apk add --no-network --virtual .ruby-rundeps $runDeps
 apk del --no-network .ruby-builddeps
@@ -127,12 +127,12 @@ cd /
 rm -r /usr/src/ruby
 # verify we have no "ruby" packages installed
 if
-    apk --no-network list --installed |
-        grep -v '^[.]ruby-rundeps' |
-        grep -i ruby \
-        ;
+apk --no-network list --installed |
+grep -v '^[.]ruby-rundeps' |
+grep -i ruby \
+    ;
 then
-    exit 1
+exit 1
 fi
 [ "$(command -v ruby)" = '/usr/local/bin/ruby' ]
 # rough smoke test

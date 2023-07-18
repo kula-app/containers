@@ -3,15 +3,15 @@
 # - https://github.com/docker-library/ruby/blob/master/2.7/buster/Dockerfile
 
 # ---- Base ----
-FROM node:20.3.0-buster
+FROM node:20.4.0-buster
 
 # -- Install Ruby --
 # skip installing gem documentation
 RUN set -eux
 mkdir -p /usr/local/etc
 {
-    echo 'install: --no-document'
-    echo 'update: --no-document'
+echo 'install: --no-document'
+echo 'update: --no-document'
 } >>/usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
@@ -45,9 +45,9 @@ cd /usr/src/ruby
 # hack in "ENABLE_PATH_CHECK" disabling to suppress:
 #   warning: Insecure world writable dir
 {
-    echo '#define ENABLE_PATH_CHECK 0'
-    echo
-    cat file.c
+echo '#define ENABLE_PATH_CHECK 0'
+echo
+cat file.c
 } >file.c.new
 mv file.c.new file.c
 
@@ -64,13 +64,13 @@ make install
 apt-mark auto '.*' >/dev/null
 apt-mark manual $savedAptMark >/dev/null
 find /usr/local -type f -executable -not \( -name '*tkinter*' \) -exec ldd '{}' ';' |
-    awk '/=>/ { print $(NF-1) }' |
-    sort -u |
-    grep -vE '^/usr/local/lib/' |
-    xargs -r dpkg-query --search |
-    cut -d: -f1 |
-    sort -u |
-    xargs -r apt-mark manual \
+awk '/=>/ { print $(NF-1) }' |
+sort -u |
+grep -vE '^/usr/local/lib/' |
+xargs -r dpkg-query --search |
+cut -d: -f1 |
+sort -u |
+xargs -r apt-mark manual \
     ;
 apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
