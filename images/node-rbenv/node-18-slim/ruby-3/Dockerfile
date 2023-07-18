@@ -1,6 +1,6 @@
 FROM kula/node-rbenv:18.20.0-slim
 
-ENV RUBY_VERSION 3.2.0
+ENV RUBY_VERSION 3.2.2
 
 # Install ruby versions
 RUN rbenv install $RUBY_VERSION

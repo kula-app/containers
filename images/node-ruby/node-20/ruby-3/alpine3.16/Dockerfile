@@ -21,13 +21,13 @@ apk add --no-cache \
 RUN set -eux
 mkdir -p /usr/local/etc
 {
-    echo 'install: --no-document'
-    echo 'update: --no-document'
+echo 'install: --no-document'
+echo 'update: --no-document'
 } >>/usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
 ENV RUBY_MAJOR 3.2
-ENV RUBY_VERSION 3.2.0
+ENV RUBY_VERSION 3.2.2
 ENV RUBY_DOWNLOAD_SHA256 d2f4577306e6dd932259693233141e5c3ec13622c95b75996541b8d5b68b28b4
 
 # some of ruby's build scripts are written in ruby
@@ -95,9 +95,9 @@ export ac_cv_func_isnan=yes ac_cv_func_isinf=yes
 # hack in "ENABLE_PATH_CHECK" disabling to suppress:
 #   warning: Insecure world writable dir
 {
-    echo '#define ENABLE_PATH_CHECK 0'
-    echo
-    cat file.c
+echo '#define ENABLE_PATH_CHECK 0'
+echo
+cat file.c
 } >file.c.new
 mv file.c.new file.c
 
@@ -113,10 +113,10 @@ make -j "$(nproc)"
 make install
 
 runDeps="$(
-    scanelf --needed --nobanner --format '%n#p' --recursive /usr/local |
-        tr ',' '\n' |
-        sort -u |
-        awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }'
+scanelf --needed --nobanner --format '%n#p' --recursive /usr/local |
+tr ',' '\n' |
+sort -u |
+awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }'
 )"
 apk add --no-network --virtual .ruby-rundeps $runDeps
 apk del --no-network .ruby-builddeps
@@ -125,12 +125,12 @@ cd /
 rm -r /usr/src/ruby
 # verify we have no "ruby" packages installed
 if
-    apk --no-network list --installed |
-        grep -v '^[.]ruby-rundeps' |
-        grep -i ruby \
-        ;
+apk --no-network list --installed |
+grep -v '^[.]ruby-rundeps' |
+grep -i ruby \
+    ;
 then
-    exit 1
+exit 1
 fi
 [ "$(command -v ruby)" = '/usr/local/bin/ruby' ]
 # rough smoke test

@@ -10,13 +10,13 @@ FROM node:20.3.0-buster
 RUN set -eux
 mkdir -p /usr/local/etc
 {
-    echo 'install: --no-document'
-    echo 'update: --no-document'
+echo 'install: --no-document'
+echo 'update: --no-document'
 } >>/usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
 ENV RUBY_MAJOR 3.2
-ENV RUBY_VERSION 3.2.0
+ENV RUBY_VERSION 3.2.2
 ENV RUBY_DOWNLOAD_SHA256 d2f4577306e6dd932259693233141e5c3ec13622c95b75996541b8d5b68b28b4
 
 # some of ruby's build scripts are written in ruby
@@ -37,30 +37,30 @@ rustArch=
 dpkgArch="$(dpkg --print-architecture)"
 case "$dpkgArch" in
 'amd64')
-    rustArch='x86_64-unknown-linux-gnu'
-    rustupUrl='https://static.rust-lang.org/rustup/archive/1.25.1/x86_64-unknown-linux-gnu/rustup-init'
-    rustupSha256='5cc9ffd1026e82e7fb2eec2121ad71f4b0f044e88bca39207b3f6b769aaa799c'
-    ;;
+rustArch='x86_64-unknown-linux-gnu'
+rustupUrl='https://static.rust-lang.org/rustup/archive/1.25.1/x86_64-unknown-linux-gnu/rustup-init'
+rustupSha256='5cc9ffd1026e82e7fb2eec2121ad71f4b0f044e88bca39207b3f6b769aaa799c'
+;;
 'arm64')
-    rustArch='aarch64-unknown-linux-gnu'
-    rustupUrl='https://static.rust-lang.org/rustup/archive/1.25.1/aarch64-unknown-linux-gnu/rustup-init'
-    rustupSha256='e189948e396d47254103a49c987e7fb0e5dd8e34b200aa4481ecc4b8e41fb929'
-    ;;
+rustArch='aarch64-unknown-linux-gnu'
+rustupUrl='https://static.rust-lang.org/rustup/archive/1.25.1/aarch64-unknown-linux-gnu/rustup-init'
+rustupSha256='e189948e396d47254103a49c987e7fb0e5dd8e34b200aa4481ecc4b8e41fb929'
+;;
 esac
 
 if [ -n "$rustArch" ]; then
-    mkdir -p /tmp/rust
+mkdir -p /tmp/rust
 
-    wget -O /tmp/rust/rustup-init "$rustupUrl"
-    echo "$rustupSha256 */tmp/rust/rustup-init" | sha256sum --check --strict
-    chmod +x /tmp/rust/rustup-init
+wget -O /tmp/rust/rustup-init "$rustupUrl"
+echo "$rustupSha256 */tmp/rust/rustup-init" | sha256sum --check --strict
+chmod +x /tmp/rust/rustup-init
 
-    export RUSTUP_HOME='/tmp/rust/rustup' CARGO_HOME='/tmp/rust/cargo'
-    export PATH="$CARGO_HOME/bin:$PATH"
-    /tmp/rust/rustup-init -y --no-modify-path --profile minimal --default-toolchain '1.66.0' --default-host "$rustArch"
+export RUSTUP_HOME='/tmp/rust/rustup' CARGO_HOME='/tmp/rust/cargo'
+export PATH="$CARGO_HOME/bin:$PATH"
+/tmp/rust/rustup-init -y --no-modify-path --profile minimal --default-toolchain '1.66.0' --default-host "$rustArch"
 
-    rustc --version
-    cargo --version
+rustc --version
+cargo --version
 fi
 
 wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz"
@@ -75,9 +75,9 @@ cd /usr/src/ruby
 # hack in "ENABLE_PATH_CHECK" disabling to suppress:
 #   warning: Insecure world writable dir
 {
-    echo '#define ENABLE_PATH_CHECK 0'
-    echo
-    cat file.c
+echo '#define ENABLE_PATH_CHECK 0'
+echo
+cat file.c
 } >file.c.new
 mv file.c.new file.c
 
@@ -96,13 +96,13 @@ rm -rf /tmp/rust
 apt-mark auto '.*' >/dev/null
 apt-mark manual $savedAptMark >/dev/null
 find /usr/local -type f -executable -not \( -name '*tkinter*' \) -exec ldd '{}' ';' |
-    awk '/=>/ { print $(NF-1) }' |
-    sort -u |
-    grep -vE '^/usr/local/lib/' |
-    xargs -r dpkg-query --search |
-    cut -d: -f1 |
-    sort -u |
-    xargs -r apt-mark manual \
+awk '/=>/ { print $(NF-1) }' |
+sort -u |
+grep -vE '^/usr/local/lib/' |
+xargs -r dpkg-query --search |
+cut -d: -f1 |
+sort -u |
+xargs -r apt-mark manual \
     ;
 apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
