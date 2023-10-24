@@ -1,4 +1,4 @@
-FROM node:20.4.0
+FROM node:20.8.1
 
 # Update dependencies
 RUN apt-get update -qq >/dev/null && apt-get upgrade -y --no-install-recommends
