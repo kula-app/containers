@@ -3,8 +3,7 @@ FROM kula/node-rbenv:18.18.2
 ENV RUBY_VERSION 2.7.8
 
 # Install ruby versions
-RUN rbenv install $RUBY_VERSION
-RUN rbenv global $RUBY_VERSION
+RUN rbenv install $RUBY_VERSION && rbenv global $RUBY_VERSION
 
 # smoke test
 RUN ruby --version
