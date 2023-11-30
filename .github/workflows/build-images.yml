@@ -297,17 +297,17 @@ jobs:
 
           # -- Ruby 2 --
           - image: node-ruby
-            context: node-ruby/node-18/ruby-2/alpine3.16
+            context: node-ruby/node-18/ruby-2/alpine
             tags: |
-              kula/node-ruby:18-ruby2-alpine3.16
-              kula/node-ruby:18.18-ruby2-alpine3.16
-              kula/node-ruby:18.18.2-ruby2-alpine3.16
-              kula/node-ruby:18-ruby2.7-alpine3.16
-              kula/node-ruby:18.18-ruby2.7-alpine3.16
-              kula/node-ruby:18.18.2-ruby2.7-alpine3.16
-              kula/node-ruby:18-ruby2.7.8-alpine3.16
-              kula/node-ruby:18.18-ruby2.7.8-alpine3.16
-              kula/node-ruby:18.18.2-ruby2.7.8-alpine3.16
+              kula/node-ruby:18-ruby2-alpine
+              kula/node-ruby:18.18-ruby2-alpine
+              kula/node-ruby:18.18.2-ruby2-alpine
+              kula/node-ruby:18-ruby2.7-alpine
+              kula/node-ruby:18.18-ruby2.7-alpine
+              kula/node-ruby:18.18.2-ruby2.7-alpine
+              kula/node-ruby:18-ruby2.7.8-alpine
+              kula/node-ruby:18.18-ruby2.7.8-alpine
+              kula/node-ruby:18.18.2-ruby2.7.8-alpine
           - image: node-ruby
             context: node-ruby/node-18/ruby-2/buster
             tags: |
@@ -323,17 +323,17 @@ jobs:
 
           # -- Ruby 3 --
           - image: node-ruby
-            context: node-ruby/node-18/ruby-3/alpine3.16
+            context: node-ruby/node-18/ruby-3/alpine
             tags: |
-              kula/node-ruby:18-ruby3-alpine3.16
-              kula/node-ruby:18.18-ruby3-alpine3.16
-              kula/node-ruby:18.18.2-ruby3-alpine3.16
-              kula/node-ruby:18-ruby3.2-alpine3.16
-              kula/node-ruby:18.18-ruby3.2-alpine3.16
-              kula/node-ruby:18.18.2-ruby3.2-alpine3.16
-              kula/node-ruby:18-ruby3.2.2-alpine3.16
-              kula/node-ruby:18.18-ruby3.2.2-alpine3.16
-              kula/node-ruby:18.18.2-ruby3.2.2-alpine3.16
+              kula/node-ruby:18-ruby3-alpine
+              kula/node-ruby:18.18-ruby3-alpine
+              kula/node-ruby:18.18.2-ruby3-alpine
+              kula/node-ruby:18-ruby3.2-alpine
+              kula/node-ruby:18.18-ruby3.2-alpine
+              kula/node-ruby:18.18.2-ruby3.2-alpine
+              kula/node-ruby:18-ruby3.2.2-alpine
+              kula/node-ruby:18.18-ruby3.2.2-alpine
+              kula/node-ruby:18.18.2-ruby3.2.2-alpine
           - image: node-ruby
             context: node-ruby/node-18/ruby-3/buster
             tags: |

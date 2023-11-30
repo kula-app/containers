@@ -1,9 +1,9 @@
 # Sources:
-# - https://github.com/docker-library/ruby/blob/master/3.2/alpine3.16/Dockerfile
-# - https://github.com/nodejs/docker-node/blob/main/18/alpine3.16/Dockerfile
+# - https://github.com/docker-library/ruby/blob/master/3.2/alpine/Dockerfile
+# - https://github.com/nodejs/docker-node/blob/main/20/alpine/Dockerfile
 
 # ---- Base ----
-FROM node:20.8.1-alpine3.16
+FROM node:20.8.1-alpine
 
 # -- Install Ruby --
 RUN set -eux
@@ -26,19 +26,14 @@ echo 'update: --no-document'
 } >>/usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
-ENV RUBY_MAJOR 3.2
-ENV RUBY_VERSION 3.2.2
-ENV RUBY_DOWNLOAD_SHA256 d2f4577306e6dd932259693233141e5c3ec13622c95b75996541b8d5b68b28b4
+ENV RUBY_MAJOR 2.7
+ENV RUBY_VERSION 2.7.7
+ENV RUBY_DOWNLOAD_SHA256 b38dff2e1f8ce6e5b7d433f8758752987a6b2adfd9bc7571dbc42ea5d04e3e4c
 
 # some of ruby's build scripts are written in ruby
 #   we purge system ruby later to make sure our final image uses what we just built
 RUN set -eux
 
-yjit=
-apkArch="$(apk --print-arch)"
-case "$apkArch" in
-x86_64 | aarch64) yjit=1 ;;
-esac
 # readline-dev vs libedit-dev: https://bugs.ruby-lang.org/issues/11869 and https://github.com/docker-library/ruby/issues/75
 apk add --no-cache --virtual .ruby-builddeps \
     autoconf \
@@ -69,7 +64,6 @@ apk add --no-cache --virtual .ruby-builddeps \
     xz \
     yaml-dev \
     zlib-dev \
-    ${yjit:+rust} \
     ;
 
 wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz"
@@ -102,12 +96,20 @@ cat file.c
 mv file.c.new file.c
 
 autoconf
+# fix builds on arm32v6/7 and s390x: https://github.com/docker-library/ruby/issues/308
+# and don't break the other arches: https://github.com/docker-library/ruby/issues/365
+apkArch="$(apk --print-arch)"
+case "$apkArch" in
+s390x | armhf | armv7)
+apk add --no-cache libucontext-dev
+export LIBS='-lucontext'
+;;
+esac
 gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"
 ./configure \
     --build="$gnuArch" \
     --disable-install-doc \
     --enable-shared \
-    ${yjit:+--enable-yjit} \
     ;
 make -j "$(nproc)"
 make install
