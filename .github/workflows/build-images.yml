@@ -200,36 +200,36 @@ jobs:
             context: node-rbenv/node-20
             tags: |
               kula/node-rbenv:20
-              kula/node-rbenv:20.8
-              kula/node-rbenv:20.8.1
+              kula/node-rbenv:20.10
+              kula/node-rbenv:20.10.0
 
           # -- Ruby 2 --
           - image: node-rbenv
             context: node-rbenv/node-20/ruby-2
             tags: |
               kula/node-rbenv:20-ruby2
-              kula/node-rbenv:20.8-ruby2
-              kula/node-rbenv:20.8.1-ruby2
+              kula/node-rbenv:20.10-ruby2
+              kula/node-rbenv:20.10.0-ruby2
               kula/node-rbenv:20-ruby2.7
-              kula/node-rbenv:20.8-ruby2.7
-              kula/node-rbenv:20.8.1-ruby2.7
+              kula/node-rbenv:20.10-ruby2.7
+              kula/node-rbenv:20.10.0-ruby2.7
               kula/node-rbenv:20-ruby2.7.8
-              kula/node-rbenv:20.8-ruby2.7.8
-              kula/node-rbenv:20.8.1-ruby2.7.8
+              kula/node-rbenv:20.10-ruby2.7.8
+              kula/node-rbenv:20.10.0-ruby2.7.8
 
           # -- Ruby 3 --
           - image: node-rbenv
             context: node-rbenv/node-20/ruby-3
             tags: |
               kula/node-rbenv:20-ruby3
-              kula/node-rbenv:20.8-ruby3
-              kula/node-rbenv:20.8.1-ruby3
+              kula/node-rbenv:20.10-ruby3
+              kula/node-rbenv:20.10.0-ruby3
               kula/node-rbenv:20-ruby3.2
-              kula/node-rbenv:20.8-ruby3.2
-              kula/node-rbenv:20.8.1-ruby3.2
+              kula/node-rbenv:20.10-ruby3.2
+              kula/node-rbenv:20.10.0-ruby3.2
               kula/node-rbenv:20-ruby3.2.2
-              kula/node-rbenv:20.8-ruby3.2.2
-              kula/node-rbenv:20.8.1-ruby3.2.2
+              kula/node-rbenv:20.10-ruby3.2.2
+              kula/node-rbenv:20.10.0-ruby3.2.2
 
           # endregion
           # region Node.JS 20-slim
@@ -241,36 +241,36 @@ jobs:
             context: node-rbenv/node-20-slim
             tags: |
               kula/node-rbenv:20-slim
-              kula/node-rbenv:20.8-slim
-              kula/node-rbenv:20.8.1-slim
+              kula/node-rbenv:20.10-slim
+              kula/node-rbenv:20.10.0-slim
 
           # -- Ruby 2 --
           - image: node-rbenv
             context: node-rbenv/node-20-slim/ruby-2
             tags: |
               kula/node-rbenv:20-slim-ruby2
-              kula/node-rbenv:20.8-slim-ruby2
-              kula/node-rbenv:20.8.1-slim-ruby2
+              kula/node-rbenv:20.10-slim-ruby2
+              kula/node-rbenv:20.10.0-slim-ruby2
               kula/node-rbenv:20-slim-ruby2.7
-              kula/node-rbenv:20.8-slim-ruby2.7
-              kula/node-rbenv:20.8.1-slim-ruby2.7
+              kula/node-rbenv:20.10-slim-ruby2.7
+              kula/node-rbenv:20.10.0-slim-ruby2.7
               kula/node-rbenv:20-slim-ruby2.7.8
-              kula/node-rbenv:20.8-slim-ruby2.7.8
-              kula/node-rbenv:20.8.1-slim-ruby2.7.8
+              kula/node-rbenv:20.10-slim-ruby2.7.8
+              kula/node-rbenv:20.10.0-slim-ruby2.7.8
 
           # -- Ruby 3 --
           - image: node-rbenv
             context: node-rbenv/node-20-slim/ruby-3
             tags: |
               kula/node-rbenv:20-slim-ruby3
-              kula/node-rbenv:20.8-slim-ruby3
-              kula/node-rbenv:20.8.1-slim-ruby3
+              kula/node-rbenv:20.10-slim-ruby3
+              kula/node-rbenv:20.10.0-slim-ruby3
               kula/node-rbenv:20-slim-ruby3.2
-              kula/node-rbenv:20.8-slim-ruby3.2
-              kula/node-rbenv:20.8.1-slim-ruby3.2
+              kula/node-rbenv:20.10-slim-ruby3.2
+              kula/node-rbenv:20.10.0-slim-ruby3.2
               kula/node-rbenv:20-slim-ruby3.2.2
-              kula/node-rbenv:20.8-slim-ruby3.2.2
-              kula/node-rbenv:20.8.1-slim-ruby3.2.2
+              kula/node-rbenv:20.10-slim-ruby3.2.2
+              kula/node-rbenv:20.10.0-slim-ruby3.2.2
 
           # endregion
           # region Node.JS Latest
