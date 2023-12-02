@@ -3,7 +3,7 @@
 # - https://github.com/nodejs/docker-node/blob/main/18/alpine/Dockerfile
 
 # ---- Base ----
-FROM node:18.18.2-alpine
+FROM node:18.19.0-alpine
 
 # -- Install Ruby --
 RUN set -eux; \
