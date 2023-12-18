@@ -90,22 +90,22 @@ jobs:
             context: node-rbenv/node-18
             tags: |
               kula/node-rbenv:18
-              kula/node-rbenv:18.18
-              kula/node-rbenv:18.18.2
+              kula/node-rbenv:18.19
+              kula/node-rbenv:18.19.0
 
           # -- Ruby 3 --
           - image: node-rbenv
             context: node-rbenv/node-18/ruby-3
             tags: |
               kula/node-rbenv:18-ruby3
-              kula/node-rbenv:18.18-ruby3
-              kula/node-rbenv:18.18.2-ruby3
+              kula/node-rbenv:18.19-ruby3
+              kula/node-rbenv:18.19.0-ruby3
               kula/node-rbenv:18-ruby3.2
-              kula/node-rbenv:18.18-ruby3.2
-              kula/node-rbenv:18.18.2-ruby3.2
+              kula/node-rbenv:18.19-ruby3.2
+              kula/node-rbenv:18.19.0-ruby3.2
               kula/node-rbenv:18-ruby3.2.2
-              kula/node-rbenv:18.18-ruby3.2.2
-              kula/node-rbenv:18.18.2-ruby3.2.2
+              kula/node-rbenv:18.19-ruby3.2.2
+              kula/node-rbenv:18.19.0-ruby3.2.2
 
           # endregion
           # region Node.JS 18-slim
@@ -117,22 +117,22 @@ jobs:
             context: node-rbenv/node-18-slim
             tags: |
               kula/node-rbenv:18-slim
-              kula/node-rbenv:18.18-slim
-              kula/node-rbenv:18.18.2-slim
+              kula/node-rbenv:18.19-slim
+              kula/node-rbenv:18.19.0-slim
 
           # -- Ruby 3 --
           - image: node-rbenv
             context: node-rbenv/node-18-slim/ruby-3
             tags: |
               kula/node-rbenv:18-slim-ruby3
-              kula/node-rbenv:18.18-slim-ruby3
-              kula/node-rbenv:18.18.2-slim-ruby3
+              kula/node-rbenv:18.19-slim-ruby3
+              kula/node-rbenv:18.19.0-slim-ruby3
               kula/node-rbenv:18-slim-ruby3.2
-              kula/node-rbenv:18.18-slim-ruby3.2
-              kula/node-rbenv:18.18.2-slim-ruby3.2
+              kula/node-rbenv:18.19-slim-ruby3.2
+              kula/node-rbenv:18.19.0-slim-ruby3.2
               kula/node-rbenv:18-slim-ruby3.2.2
-              kula/node-rbenv:18.18-slim-ruby3.2.2
-              kula/node-rbenv:18.18.2-slim-ruby3.2.2
+              kula/node-rbenv:18.19-slim-ruby3.2.2
+              kula/node-rbenv:18.19.0-slim-ruby3.2.2
 
           # endregion
           # region Node.JS 20
@@ -216,26 +216,26 @@ jobs:
             context: node-ruby/node-18/ruby-3/alpine
             tags: |
               kula/node-ruby:18-ruby3-alpine
-              kula/node-ruby:18.18-ruby3-alpine
-              kula/node-ruby:18.18.2-ruby3-alpine
+              kula/node-ruby:18.19-ruby3-alpine
+              kula/node-ruby:18.19.0-ruby3-alpine
               kula/node-ruby:18-ruby3.2-alpine
-              kula/node-ruby:18.18-ruby3.2-alpine
-              kula/node-ruby:18.18.2-ruby3.2-alpine
+              kula/node-ruby:18.19-ruby3.2-alpine
+              kula/node-ruby:18.19.0-ruby3.2-alpine
               kula/node-ruby:18-ruby3.2.2-alpine
-              kula/node-ruby:18.18-ruby3.2.2-alpine
-              kula/node-ruby:18.18.2-ruby3.2.2-alpine
+              kula/node-ruby:18.19-ruby3.2.2-alpine
+              kula/node-ruby:18.19.0-ruby3.2.2-alpine
           - image: node-ruby
             context: node-ruby/node-18/ruby-3/buster
             tags: |
               kula/node-ruby:18-ruby3-buster
-              kula/node-ruby:18.18-ruby3-buster
-              kula/node-ruby:18.18.2-ruby3-buster
+              kula/node-ruby:18.19-ruby3-buster
+              kula/node-ruby:18.19.0-ruby3-buster
               kula/node-ruby:18-ruby3.2-buster
-              kula/node-ruby:18.18-ruby3.2-buster
-              kula/node-ruby:18.18.2-ruby3.2-buster
+              kula/node-ruby:18.19-ruby3.2-buster
+              kula/node-ruby:18.19.0-ruby3.2-buster
               kula/node-ruby:18-ruby3.2.2-buster
-              kula/node-ruby:18.18-ruby3.2.2-buster
-              kula/node-ruby:18.18.2-ruby3.2.2-buster
+              kula/node-ruby:18.19-ruby3.2.2-buster
+              kula/node-ruby:18.19.0-ruby3.2.2-buster
 
             # endregion
 
