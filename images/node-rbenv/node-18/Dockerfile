@@ -1,4 +1,4 @@
-FROM node:18.18.2
+FROM node:18.19.0
 
 # Update dependencies
 RUN apt-get update -qq >/dev/null && apt-get upgrade -y --no-install-recommends
