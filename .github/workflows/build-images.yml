@@ -225,17 +225,17 @@ jobs:
               kula/node-ruby:18.19-ruby3.2.2-alpine
               kula/node-ruby:18.19.0-ruby3.2.2-alpine
           - image: node-ruby
-            context: node-ruby/node-18/ruby-3/buster
+            context: node-ruby/node-18/ruby-3/bullseye
             tags: |
-              kula/node-ruby:18-ruby3-buster
-              kula/node-ruby:18.19-ruby3-buster
-              kula/node-ruby:18.19.0-ruby3-buster
-              kula/node-ruby:18-ruby3.2-buster
-              kula/node-ruby:18.19-ruby3.2-buster
-              kula/node-ruby:18.19.0-ruby3.2-buster
-              kula/node-ruby:18-ruby3.2.2-buster
-              kula/node-ruby:18.19-ruby3.2.2-buster
-              kula/node-ruby:18.19.0-ruby3.2.2-buster
+              kula/node-ruby:18-ruby3-bullseye
+              kula/node-ruby:18.19-ruby3-bullseye
+              kula/node-ruby:18.19.0-ruby3-bullseye
+              kula/node-ruby:18-ruby3.2-bullseye
+              kula/node-ruby:18.19-ruby3.2-bullseye
+              kula/node-ruby:18.19.0-ruby3.2-bullseye
+              kula/node-ruby:18-ruby3.2.2-bullseye
+              kula/node-ruby:18.19-ruby3.2.2-bullseye
+              kula/node-ruby:18.19.0-ruby3.2.2-bullseye
 
             # endregion
 
