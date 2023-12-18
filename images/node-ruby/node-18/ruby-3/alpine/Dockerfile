@@ -28,18 +28,12 @@ RUN set -eux; \
 ENV LANG C.UTF-8
 ENV RUBY_MAJOR 3.2
 ENV RUBY_VERSION 3.2.2
-ENV RUBY_DOWNLOAD_SHA256 d2f4577306e6dd932259693233141e5c3ec13622c95b75996541b8d5b68b28b4
+ENV RUBY_DOWNLOAD_SHA256 4b352d0f7ec384e332e3e44cdbfdcd5ff2d594af3c8296b5636c710975149e23
 
 # some of ruby's build scripts are written in ruby
 #   we purge system ruby later to make sure our final image uses what we just built
 RUN set -eux; \
     \
-    yjit=; \
-    apkArch="$(apk --print-arch)"; \
-    case "$apkArch" in \
-    x86_64 | aarch64) yjit=1 ;; \
-    esac; \
-    # readline-dev vs libedit-dev: https://bugs.ruby-lang.org/issues/11869 and https://github.com/docker-library/ruby/issues/75
     apk add --no-cache --virtual .ruby-builddeps \
     autoconf \
     bison \
@@ -69,8 +63,29 @@ RUN set -eux; \
     xz \
     yaml-dev \
     zlib-dev \
-    ${yjit:+rust} \
     ; \
+    \
+    rustArch=; \
+    apkArch="$(apk --print-arch)"; \
+    case "$apkArch" in \
+    'x86_64') rustArch='x86_64-unknown-linux-musl'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.26.0/x86_64-unknown-linux-musl/rustup-init'; rustupSha256='7aa9e2a380a9958fc1fc426a3323209b2c86181c6816640979580f62ff7d48d4' ;; \
+    'aarch64') rustArch='aarch64-unknown-linux-musl'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.26.0/aarch64-unknown-linux-musl/rustup-init'; rustupSha256='b1962dfc18e1fd47d01341e6897cace67cddfabf547ef394e8883939bd6e002e' ;; \
+    esac; \
+    \
+    if [ -n "$rustArch" ]; then \
+    mkdir -p /tmp/rust; \
+    \
+    wget -O /tmp/rust/rustup-init "$rustupUrl"; \
+    echo "$rustupSha256 */tmp/rust/rustup-init" | sha256sum --check --strict; \
+    chmod +x /tmp/rust/rustup-init; \
+    \
+    export RUSTUP_HOME='/tmp/rust/rustup' CARGO_HOME='/tmp/rust/cargo'; \
+    export PATH="$CARGO_HOME/bin:$PATH"; \
+    /tmp/rust/rustup-init -y --no-modify-path --profile minimal --default-toolchain '1.74.1' --default-host "$rustArch"; \
+    \
+    rustc --version; \
+    cargo --version; \
+    fi; \
     \
     wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz"; \
     echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.xz" | sha256sum --check --strict; \
@@ -107,11 +122,12 @@ RUN set -eux; \
     --build="$gnuArch" \
     --disable-install-doc \
     --enable-shared \
-    ${yjit:+--enable-yjit} \
+    ${rustArch:+--enable-yjit} \
     ; \
     make -j "$(nproc)"; \
     make install; \
     \
+    rm -rf /tmp/rust; \
     runDeps="$( \
     scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
     | tr ',' '\n' \
@@ -143,4 +159,4 @@ ENV BUNDLE_SILENCE_ROOT_WARNING=1 \
     BUNDLE_APP_CONFIG="$GEM_HOME"
 ENV PATH $GEM_HOME/bin:$PATH
 # adjust permissions of a few directories for running "gem install" as an arbitrary user
-RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
+RUN mkdir -p "$GEM_HOME" && chmod 1777 "$GEM_HOME"
