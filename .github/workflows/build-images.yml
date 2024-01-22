@@ -15,8 +15,8 @@ concurrency:
 
 jobs:
   build-publish-image:
-    name: Build Images
     runs-on: ubuntu-latest
+    name: "Build Images (${{ matrix.context}})"
     strategy:
       fail-fast: false
       matrix:
