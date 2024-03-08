@@ -91,7 +91,7 @@ jobs:
             tags: |
               kula/node-rbenv:18
               kula/node-rbenv:18.19
-              kula/node-rbenv:18.19.0
+              kula/node-rbenv:18.19.1
 
           # -- Ruby 3 --
           - image: node-rbenv
@@ -99,13 +99,13 @@ jobs:
             tags: |
               kula/node-rbenv:18-ruby3
               kula/node-rbenv:18.19-ruby3
-              kula/node-rbenv:18.19.0-ruby3
+              kula/node-rbenv:18.19.1-ruby3
               kula/node-rbenv:18-ruby3.2
               kula/node-rbenv:18.19-ruby3.2
-              kula/node-rbenv:18.19.0-ruby3.2
+              kula/node-rbenv:18.19.1-ruby3.2
               kula/node-rbenv:18-ruby3.2.2
               kula/node-rbenv:18.19-ruby3.2.2
-              kula/node-rbenv:18.19.0-ruby3.2.2
+              kula/node-rbenv:18.19.1-ruby3.2.2
 
           # endregion
           # region Node.JS 18-slim
@@ -118,7 +118,7 @@ jobs:
             tags: |
               kula/node-rbenv:18-slim
               kula/node-rbenv:18.19-slim
-              kula/node-rbenv:18.19.0-slim
+              kula/node-rbenv:18.19.1-slim
 
           # -- Ruby 3 --
           - image: node-rbenv
@@ -126,13 +126,13 @@ jobs:
             tags: |
               kula/node-rbenv:18-slim-ruby3
               kula/node-rbenv:18.19-slim-ruby3
-              kula/node-rbenv:18.19.0-slim-ruby3
+              kula/node-rbenv:18.19.1-slim-ruby3
               kula/node-rbenv:18-slim-ruby3.2
               kula/node-rbenv:18.19-slim-ruby3.2
-              kula/node-rbenv:18.19.0-slim-ruby3.2
+              kula/node-rbenv:18.19.1-slim-ruby3.2
               kula/node-rbenv:18-slim-ruby3.2.2
               kula/node-rbenv:18.19-slim-ruby3.2.2
-              kula/node-rbenv:18.19.0-slim-ruby3.2.2
+              kula/node-rbenv:18.19.1-slim-ruby3.2.2
 
           # endregion
           # region Node.JS 20
@@ -217,25 +217,25 @@ jobs:
             tags: |
               kula/node-ruby:18-ruby3-alpine
               kula/node-ruby:18.19-ruby3-alpine
-              kula/node-ruby:18.19.0-ruby3-alpine
+              kula/node-ruby:18.19.1-ruby3-alpine
               kula/node-ruby:18-ruby3.2-alpine
               kula/node-ruby:18.19-ruby3.2-alpine
-              kula/node-ruby:18.19.0-ruby3.2-alpine
+              kula/node-ruby:18.19.1-ruby3.2-alpine
               kula/node-ruby:18-ruby3.2.2-alpine
               kula/node-ruby:18.19-ruby3.2.2-alpine
-              kula/node-ruby:18.19.0-ruby3.2.2-alpine
+              kula/node-ruby:18.19.1-ruby3.2.2-alpine
           - image: node-ruby
             context: node-ruby/node-18/ruby-3/bullseye
             tags: |
               kula/node-ruby:18-ruby3-bullseye
               kula/node-ruby:18.19-ruby3-bullseye
-              kula/node-ruby:18.19.0-ruby3-bullseye
+              kula/node-ruby:18.19.1-ruby3-bullseye
               kula/node-ruby:18-ruby3.2-bullseye
               kula/node-ruby:18.19-ruby3.2-bullseye
-              kula/node-ruby:18.19.0-ruby3.2-bullseye
+              kula/node-ruby:18.19.1-ruby3.2-bullseye
               kula/node-ruby:18-ruby3.2.2-bullseye
               kula/node-ruby:18.19-ruby3.2.2-bullseye
-              kula/node-ruby:18.19.0-ruby3.2.2-bullseye
+              kula/node-ruby:18.19.1-ruby3.2.2-bullseye
 
             # endregion
 
