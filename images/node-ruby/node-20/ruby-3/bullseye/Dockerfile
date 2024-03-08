@@ -1,6 +1,6 @@
 # Sources:
 # - https://github.com/nodejs/docker-node/blob/main/18/bullseye/Dockerfile
-# - https://github.com/docker-library/ruby/blob/master/3.2/bullseye/Dockerfile
+# - https://github.com/docker-library/ruby/blob/master/3.3/bullseye/Dockerfile
 
 # ---- Base ----
 FROM node:20.11.1-bullseye
@@ -15,8 +15,8 @@ RUN set -eux; \
     } >> /usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
-ENV RUBY_MAJOR 3.2
-ENV RUBY_VERSION 3.2.2
+ENV RUBY_MAJOR 3.3
+ENV RUBY_VERSION 3.3.0
 ENV RUBY_DOWNLOAD_SHA256 4b352d0f7ec384e332e3e44cdbfdcd5ff2d594af3c8296b5636c710975149e23
 
 # some of ruby's build scripts are written in ruby
