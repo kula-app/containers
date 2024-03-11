@@ -15,9 +15,11 @@ RUN set -eux; \
     } >> /usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
-ENV RUBY_MAJOR 3.3
+
+# https://www.ruby-lang.org/en/news/2023/12/25/ruby-3-3-0-released/
 ENV RUBY_VERSION 3.3.0
-ENV RUBY_DOWNLOAD_SHA256 4b352d0f7ec384e332e3e44cdbfdcd5ff2d594af3c8296b5636c710975149e23
+ENV RUBY_DOWNLOAD_URL https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.0.tar.xz
+ENV RUBY_DOWNLOAD_SHA256 676b65a36e637e90f982b57b059189b3276b9045034dcd186a7e9078847b975b
 
 # some of ruby's build scripts are written in ruby
 #   we purge system ruby later to make sure our final image uses what we just built
@@ -26,7 +28,6 @@ RUN set -eux; \
     savedAptMark="$(apt-mark showmanual)"; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
-    bison \
     dpkg-dev \
     libgdbm-dev \
     ruby \
@@ -55,7 +56,7 @@ RUN set -eux; \
     cargo --version; \
     fi; \
     \
-    wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz"; \
+    wget -O ruby.tar.xz "$RUBY_DOWNLOAD_URL"; \
     echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.xz" | sha256sum --check --strict; \
     \
     mkdir -p /usr/src/ruby; \
@@ -72,6 +73,14 @@ RUN set -eux; \
     cat file.c; \
     } > file.c.new; \
     mv file.c.new file.c; \
+    \
+    # workaround crash on arm64
+    # https://bugs.ruby-lang.org/issues/20085
+    # https://github.com/ruby/ruby/pull/9385 <- https://github.com/ruby/ruby/pull/9371
+    wget -O 'arm64-fix.patch' 'https://github.com/ruby/ruby/commit/7f97e3540ce448b501bcbee15afac5f94bb22dd9.patch?full_index=1'; \
+    echo '86bc65415fd62cb2272a4df249f39fb79db15617ad05c540e05a22f02eae73b3 *arm64-fix.patch' | sha256sum --check --strict; \
+    patch -p1 -i arm64-fix.patch; \
+    rm arm64-fix.patch; \
     \
     autoconf; \
     gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
