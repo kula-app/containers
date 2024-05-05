@@ -17,8 +17,10 @@ RUN apt-get install -y \
   libssl-dev \
   libyaml-dev \
   uuid-dev \
-  zlib1g-dev && \
-  rm -rf /var/lib/apt/lists/*
+  zlib1g-dev \
+  \
+  # cleanup
+  && rm -rf /var/lib/apt/lists/* && apt-get clean
 
 # Install rbenv
 RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv

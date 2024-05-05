@@ -18,7 +18,9 @@ RUN apt-get install -y \
   libyaml-dev \
   uuid-dev \
   zlib1g-dev \
-  && rm -rf /var/lib/apt/lists/*;
+  \
+  # cleanup
+  && rm -rf /var/lib/apt/lists/* && apt-get clean
 
 # Install rbenv
 RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
