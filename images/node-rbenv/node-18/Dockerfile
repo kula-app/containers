@@ -44,4 +44,6 @@ ENV RBENV_ROOT /usr/local/rbenv
 ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
 
 # Smoke test
-RUN rbenv --version
+RUN set -x && \
+  rbenv --version && \
+  rbenv install --list-all
