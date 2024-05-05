@@ -32,9 +32,9 @@ RUN set -eux; \
     libgdbm-dev \
     ruby \
     ; \
-    rm -rf /var/lib/apt/lists/*; \
-    \
-    rustArch=; \
+    rm -rf /var/lib/apt/lists/*;
+
+RUN rustArch=; \
     dpkgArch="$(dpkg --print-architecture)"; \
     case "$dpkgArch" in \
     'amd64') rustArch='x86_64-unknown-linux-gnu'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.26.0/x86_64-unknown-linux-gnu/rustup-init'; rustupSha256='0b2f6c8f85a3d02fde2efc0ced4657869d73fccfce59defb4e8d29233116e6db' ;; \
@@ -110,10 +110,12 @@ RUN set -eux; \
     rm -r /usr/src/ruby; \
     # verify we have no "ruby" packages installed
     if dpkg -l | grep -i ruby; then exit 1; fi; \
-    [ "$(command -v ruby)" = '/usr/local/bin/ruby' ]; \
-    # rough smoke test
-    ruby --version; \
-    gem --version; \
+    [ "$(command -v ruby)" = '/usr/local/bin/ruby' ]
+
+# Smoke test
+RUN set -eux && \
+    ruby --version && \
+    gem --version && \
     bundle --version
 
 # don't create ".bundle" in all our apps
