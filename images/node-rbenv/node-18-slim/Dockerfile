@@ -1,8 +1,7 @@
 FROM node:18.20.8-slim
 
 # Update dependencies
-RUN apt-get update -qq >/dev/null && apt-get upgrade -y --no-install-recommends
-RUN apt-get install -y \
+RUN apt-get update -qq -y && apt-get install -qq -y --no-install-recommends \
   autoconf \
   bison \
   build-essential \
