@@ -3,7 +3,7 @@
 # - https://github.com/docker-library/ruby/blob/master/3.3/bullseye/Dockerfile
 
 # ---- Base ----
-FROM node:20.11.1-bullseye
+FROM node:20.15.0-bullseye
 
 # -- Install Ruby --
 # skip installing gem documentation
