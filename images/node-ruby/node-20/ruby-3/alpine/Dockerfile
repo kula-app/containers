@@ -26,9 +26,11 @@ RUN set -eux; \
     } >> /usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
-ENV RUBY_MAJOR 3.3
-ENV RUBY_VERSION 3.3.1
-ENV RUBY_DOWNLOAD_SHA256 4b352d0f7ec384e332e3e44cdbfdcd5ff2d594af3c8296b5636c710975149e23
+
+# https://www.ruby-lang.org/en/news/2024/07/09/ruby-3-3-4-released/
+ENV RUBY_VERSION 3.3.4
+ENV RUBY_DOWNLOAD_URL https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.4.tar.xz
+ENV RUBY_DOWNLOAD_SHA256 1caaee9a5a6befef54bab67da68ace8d985e4fb59cd17ce23c28d9ab04f4ddad
 
 # some of ruby's build scripts are written in ruby
 #   we purge system ruby later to make sure our final image uses what we just built
@@ -36,7 +38,6 @@ RUN set -eux; \
     \
     apk add --no-cache --virtual .ruby-builddeps \
     autoconf \
-    bison \
     bzip2 \
     bzip2-dev \
     ca-certificates \
@@ -57,7 +58,6 @@ RUN set -eux; \
     openssl-dev \
     patch \
     procps \
-    readline-dev \
     ruby \
     tar \
     xz \
@@ -87,7 +87,7 @@ RUN set -eux; \
     cargo --version; \
     fi; \
     \
-    wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz"; \
+    wget -O ruby.tar.xz "$RUBY_DOWNLOAD_URL"; \
     echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.xz" | sha256sum --check --strict; \
     \
     mkdir -p /usr/src/ruby; \
@@ -158,5 +158,7 @@ ENV GEM_HOME /usr/local/bundle
 ENV BUNDLE_SILENCE_ROOT_WARNING=1 \
     BUNDLE_APP_CONFIG="$GEM_HOME"
 ENV PATH $GEM_HOME/bin:$PATH
-# adjust permissions of a few directories for running "gem install" as an arbitrary user
-RUN mkdir -p "$GEM_HOME" && chmod 1777 "$GEM_HOME"
+RUN set -eux; \
+    mkdir "$GEM_HOME"; \
+    # adjust permissions of GEM_HOME for running "gem install" as an arbitrary user
+    chmod 1777 "$GEM_HOME"
