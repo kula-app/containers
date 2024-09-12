@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:v1
+# syntax=docker/dockerfile:1
 
 # Use an official Bitnami base image
 FROM alpine:3.20
