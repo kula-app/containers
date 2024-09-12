@@ -1,13 +1,11 @@
 # syntax=docker/dockerfile:1
 
-# Use an official Bitnami base image
-FROM bitnami/os-shell:12
+FROM bitnami/minideb:bookworm
 
-# Metadata
-LABEL maintainer="kula app GmbH <opensource@kula.app>"
-LABEL description="Container for running lftp based on Bitnami's OS Shell"
+LABEL maintainer="kula app GmbH <opensource@kula.app>" \
+    description="Container for running lftp based on Bitnami's OS Shell"
 
-# Install necessary packages
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends lftp && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends \
+    lftp \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
