@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:v1
 
 # Use an official Bitnami base image
-FROM bitnami/os-shell:12-debian-12-r30
+FROM bitnami/os-shell:12
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
