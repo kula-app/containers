@@ -8,6 +8,5 @@ LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Container for running lftp based on Alpine"
 
 # Install necessary packages
-RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends lftp && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk --no-cache update && \
+    apk --no-cache add lftp
