@@ -63,9 +63,9 @@ RUN set -eux; \
     xz \
     yaml-dev \
     zlib-dev \
-    ; \
-    \
-    rustArch=; \
+    ;
+
+RUN rustArch=; \
     apkArch="$(apk --print-arch)"; \
     case "$apkArch" in \
     'x86_64') rustArch='x86_64-unknown-linux-musl'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.26.0/x86_64-unknown-linux-musl/rustup-init'; rustupSha256='7aa9e2a380a9958fc1fc426a3323209b2c86181c6816640979580f62ff7d48d4' ;; \
@@ -147,10 +147,12 @@ RUN set -eux; \
     ; then \
     exit 1; \
     fi; \
-    [ "$(command -v ruby)" = '/usr/local/bin/ruby' ]; \
-    # rough smoke test
-    ruby --version; \
-    gem --version; \
+    [ "$(command -v ruby)" = '/usr/local/bin/ruby' ];
+
+# Smoke test
+RUN set -eux && \
+    ruby --version && \
+    gem --version && \
     bundle --version
 
 # don't create ".bundle" in all our apps
