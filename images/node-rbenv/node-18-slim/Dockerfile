@@ -1,4 +1,4 @@
-FROM node:18.19.1-slim
+FROM node:18.20.6-slim
 
 # Update dependencies
 RUN apt-get update -qq >/dev/null && apt-get upgrade -y --no-install-recommends
