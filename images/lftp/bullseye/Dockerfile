@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Use an official Bitnami base image
-FROM bitnami/minideb:bookworm
+FROM bitnami/minideb:bullseye
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>" 
