@@ -148,43 +148,6 @@ jobs:
           # endregion
           # endregion
 
-          # region node-ruby
-          # +==================+
-          # | Image: node-ruby |
-          # +==================+
-
-          # +------------+
-          # | Node.JS 18 |
-          # +------------+
-
-          # -- Ruby 3 --
-          - image: node-ruby
-            context: node-ruby/node-18/ruby-3/alpine
-            tags: |
-              kula/node-ruby:18-ruby3-alpine
-              kula/node-ruby:18.19-ruby3-alpine
-              kula/node-ruby:18.19.1-ruby3-alpine
-              kula/node-ruby:18-ruby3.3-alpine
-              kula/node-ruby:18.19-ruby3.3-alpine
-              kula/node-ruby:18.19.1-ruby3.3-alpine
-              kula/node-ruby:18-ruby3.3.7-alpine
-              kula/node-ruby:18.19-ruby3.3.7-alpine
-              kula/node-ruby:18.19.1-ruby3.3.7-alpine
-          - image: node-ruby
-            context: node-ruby/node-18/ruby-3/bullseye
-            tags: |
-              kula/node-ruby:18-ruby3-bullseye
-              kula/node-ruby:18.19-ruby3-bullseye
-              kula/node-ruby:18.19.1-ruby3-bullseye
-              kula/node-ruby:18-ruby3.3-bullseye
-              kula/node-ruby:18.19-ruby3.3-bullseye
-              kula/node-ruby:18.19.1-ruby3.3-bullseye
-              kula/node-ruby:18-ruby3.3.7-bullseye
-              kula/node-ruby:18.19-ruby3.3.7-bullseye
-              kula/node-ruby:18.19.1-ruby3.3.7-bullseye
-
-            # endregion
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
