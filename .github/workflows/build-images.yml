@@ -49,9 +49,9 @@ jobs:
               kula/node-rbenv:18-ruby3.3
               kula/node-rbenv:18.19-ruby3.3
               kula/node-rbenv:18.19.1-ruby3.3
-              kula/node-rbenv:18-ruby3.3.4
-              kula/node-rbenv:18.19-ruby3.3.4
-              kula/node-rbenv:18.19.1-ruby3.3.4
+              kula/node-rbenv:18-ruby3.3.7
+              kula/node-rbenv:18.19-ruby3.3.7
+              kula/node-rbenv:18.19.1-ruby3.3.7
 
           # endregion
           # region Node.JS 18-slim
@@ -76,9 +76,9 @@ jobs:
               kula/node-rbenv:18-slim-ruby3.3
               kula/node-rbenv:18.19-slim-ruby3.3
               kula/node-rbenv:18.19.1-slim-ruby3.3
-              kula/node-rbenv:18-slim-ruby3.3.4
-              kula/node-rbenv:18.19-slim-ruby3.3.4
-              kula/node-rbenv:18.19.1-slim-ruby3.3.4
+              kula/node-rbenv:18-slim-ruby3.3.7
+              kula/node-rbenv:18.19-slim-ruby3.3.7
+              kula/node-rbenv:18.19.1-slim-ruby3.3.7
 
           # endregion
           # region Node.JS 20
@@ -103,9 +103,9 @@ jobs:
               kula/node-rbenv:20-ruby3.3
               kula/node-rbenv:20.11-ruby3.3
               kula/node-rbenv:20.11.1-ruby3.3
-              kula/node-rbenv:20-ruby3.3.4
-              kula/node-rbenv:20.11-ruby3.3.4
-              kula/node-rbenv:20.11.1-ruby3.3.4
+              kula/node-rbenv:20-ruby3.3.7
+              kula/node-rbenv:20.11-ruby3.3.7
+              kula/node-rbenv:20.11.1-ruby3.3.7
 
           # endregion
           # region Node.JS 20-slim
@@ -130,9 +130,9 @@ jobs:
               kula/node-rbenv:20-slim-ruby3.3
               kula/node-rbenv:20.11-slim-ruby3.3
               kula/node-rbenv:20.11.1-slim-ruby3.3
-              kula/node-rbenv:20-slim-ruby3.3.4
-              kula/node-rbenv:20.11-slim-ruby3.3.4
-              kula/node-rbenv:20.11.1-slim-ruby3.3.4
+              kula/node-rbenv:20-slim-ruby3.3.7
+              kula/node-rbenv:20.11-slim-ruby3.3.7
+              kula/node-rbenv:20.11.1-slim-ruby3.3.7
 
           # endregion
           # region Node.JS Latest
