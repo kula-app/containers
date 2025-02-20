@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
 
-# Use an official Bitnami base image
+# Use an official base image
 FROM alpine:3.21
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
-LABEL description="Container for running lftp based on Alpine"
+LABEL description="Container for running"
 
-# Install necessary packages
+# Install dependencies
 RUN apk --no-cache update && \
     apk --no-cache add lftp
