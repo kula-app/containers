@@ -27,60 +27,6 @@ jobs:
           # | Image: node-rbenv |
           # +===================+
 
-          # region Node.JS 16
-
-          # +------------+
-          # | Node.JS 16 |
-          # +------------+
-          - image: node-rbenv
-            context: node-rbenv/node-16
-            tags: |
-              kula/node-rbenv:16
-              kula/node-rbenv:16.20
-              kula/node-rbenv:16.20.2
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-16/ruby-3
-            tags: |
-              kula/node-rbenv:16-ruby3
-              kula/node-rbenv:16-ruby3.3
-              kula/node-rbenv:16-ruby3.3.4
-              kula/node-rbenv:16.20-ruby3
-              kula/node-rbenv:16.20-ruby3.3
-              kula/node-rbenv:16.20-ruby3.3.4
-              kula/node-rbenv:16.20.2-ruby3
-              kula/node-rbenv:16.20.2-ruby3.3
-              kula/node-rbenv:16.20.2-ruby3.3.4
-
-          #endregion
-          # region Node.JS 16-slim
-
-          # +-----------------+
-          # | Node.JS 16-slim |
-          # +-----------------+
-          - image: node-rbenv
-            context: node-rbenv/node-16-slim
-            tags: |
-              kula/node-rbenv:16-slim
-              kula/node-rbenv:16.20-slim
-              kula/node-rbenv:16.20.2-slim
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-16-slim/ruby-3
-            tags: |
-              kula/node-rbenv:16-slim-ruby3
-              kula/node-rbenv:16-slim-ruby3.3
-              kula/node-rbenv:16-slim-ruby3.3.4
-              kula/node-rbenv:16.20-slim-ruby3
-              kula/node-rbenv:16.20-slim-ruby3.3
-              kula/node-rbenv:16.20-slim-ruby3.3.4
-              kula/node-rbenv:16.20.2-slim-ruby3
-              kula/node-rbenv:16.20.2-slim-ruby3.3
-              kula/node-rbenv:16.20.2-slim-ruby3.3.4
-
-          # endregion
           # region Node.JS 18
 
           # +------------+
@@ -90,22 +36,22 @@ jobs:
             context: node-rbenv/node-18
             tags: |
               kula/node-rbenv:18
-              kula/node-rbenv:18.19
-              kula/node-rbenv:18.19.1
+              kula/node-rbenv:18.20
+              kula/node-rbenv:18.20.6
 
           # -- Ruby 3 --
           - image: node-rbenv
             context: node-rbenv/node-18/ruby-3
             tags: |
               kula/node-rbenv:18-ruby3
-              kula/node-rbenv:18.19-ruby3
-              kula/node-rbenv:18.19.1-ruby3
+              kula/node-rbenv:18.20-ruby3
+              kula/node-rbenv:18.20.6-ruby3
               kula/node-rbenv:18-ruby3.3
-              kula/node-rbenv:18.19-ruby3.3
-              kula/node-rbenv:18.19.1-ruby3.3
+              kula/node-rbenv:18.20-ruby3.3
+              kula/node-rbenv:18.20.6-ruby3.3
               kula/node-rbenv:18-ruby3.3.4
-              kula/node-rbenv:18.19-ruby3.3.4
-              kula/node-rbenv:18.19.1-ruby3.3.4
+              kula/node-rbenv:18.20-ruby3.3.4
+              kula/node-rbenv:18.20.6-ruby3.3.4
 
           # endregion
           # region Node.JS 18-slim
@@ -117,22 +63,22 @@ jobs:
             context: node-rbenv/node-18-slim
             tags: |
               kula/node-rbenv:18-slim
-              kula/node-rbenv:18.19-slim
-              kula/node-rbenv:18.19.1-slim
+              kula/node-rbenv:18.20-slim
+              kula/node-rbenv:18.20.6-slim
 
           # -- Ruby 3 --
           - image: node-rbenv
             context: node-rbenv/node-18-slim/ruby-3
             tags: |
               kula/node-rbenv:18-slim-ruby3
-              kula/node-rbenv:18.19-slim-ruby3
-              kula/node-rbenv:18.19.1-slim-ruby3
+              kula/node-rbenv:18.20-slim-ruby3
+              kula/node-rbenv:18.20.6-slim-ruby3
               kula/node-rbenv:18-slim-ruby3.3
-              kula/node-rbenv:18.19-slim-ruby3.3
-              kula/node-rbenv:18.19.1-slim-ruby3.3
+              kula/node-rbenv:18.20-slim-ruby3.3
+              kula/node-rbenv:18.20.6-slim-ruby3.3
               kula/node-rbenv:18-slim-ruby3.3.4
-              kula/node-rbenv:18.19-slim-ruby3.3.4
-              kula/node-rbenv:18.19.1-slim-ruby3.3.4
+              kula/node-rbenv:18.20-slim-ruby3.3.4
+              kula/node-rbenv:18.20.6-slim-ruby3.3.4
 
           # endregion
           # region Node.JS 20
@@ -216,26 +162,26 @@ jobs:
             context: node-ruby/node-18/ruby-3/alpine
             tags: |
               kula/node-ruby:18-ruby3-alpine
-              kula/node-ruby:18.19-ruby3-alpine
-              kula/node-ruby:18.19.1-ruby3-alpine
+              kula/node-rbenv:18.20-ruby3-alpine
+              kula/node-rbenv:18.20.6-ruby3-alpine
               kula/node-ruby:18-ruby3.3-alpine
-              kula/node-ruby:18.19-ruby3.3-alpine
-              kula/node-ruby:18.19.1-ruby3.3-alpine
+              kula/node-rbenv:18.20-ruby3.3-alpine
+              kula/node-rbenv:18.20.6-ruby3.3-alpine
               kula/node-ruby:18-ruby3.3.4-alpine
-              kula/node-ruby:18.19-ruby3.3.4-alpine
-              kula/node-ruby:18.19.1-ruby3.3.4-alpine
+              kula/node-rbenv:18.20-ruby3.3.4-alpine
+              kula/node-rbenv:18.20.6-ruby3.3.4-alpine
           - image: node-ruby
             context: node-ruby/node-18/ruby-3/bullseye
             tags: |
               kula/node-ruby:18-ruby3-bullseye
-              kula/node-ruby:18.19-ruby3-bullseye
-              kula/node-ruby:18.19.1-ruby3-bullseye
+              kula/node-rbenv:18.20-ruby3-bullseye
+              kula/node-rbenv:18.20.6-ruby3-bullseye
               kula/node-ruby:18-ruby3.3-bullseye
-              kula/node-ruby:18.19-ruby3.3-bullseye
-              kula/node-ruby:18.19.1-ruby3.3-bullseye
+              kula/node-rbenv:18.20-ruby3.3-bullseye
+              kula/node-rbenv:18.20.6-ruby3.3-bullseye
               kula/node-ruby:18-ruby3.3.4-bullseye
-              kula/node-ruby:18.19-ruby3.3.4-bullseye
-              kula/node-ruby:18.19.1-ruby3.3.4-bullseye
+              kula/node-rbenv:18.20-ruby3.3.4-bullseye
+              kula/node-rbenv:18.20.6-ruby3.3.4-bullseye
 
             # endregion
 
