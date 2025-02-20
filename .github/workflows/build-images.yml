@@ -90,22 +90,22 @@ jobs:
             context: node-rbenv/node-20
             tags: |
               kula/node-rbenv:20
-              kula/node-rbenv:20.11
-              kula/node-rbenv:20.11.1
+              kula/node-rbenv:20.18
+              kula/node-rbenv:20.18.3
 
           # -- Ruby 3 --
           - image: node-rbenv
             context: node-rbenv/node-20/ruby-3
             tags: |
               kula/node-rbenv:20-ruby3
-              kula/node-rbenv:20.11-ruby3
-              kula/node-rbenv:20.11.1-ruby3
+              kula/node-rbenv:20.18-ruby3
+              kula/node-rbenv:20.18.3-ruby3
               kula/node-rbenv:20-ruby3.3
-              kula/node-rbenv:20.11-ruby3.3
-              kula/node-rbenv:20.11.1-ruby3.3
+              kula/node-rbenv:20.18-ruby3.3
+              kula/node-rbenv:20.18.3-ruby3.3
               kula/node-rbenv:20-ruby3.3.4
-              kula/node-rbenv:20.11-ruby3.3.4
-              kula/node-rbenv:20.11.1-ruby3.3.4
+              kula/node-rbenv:20.18-ruby3.3.4
+              kula/node-rbenv:20.18.3-ruby3.3.4
 
           # endregion
           # region Node.JS 20-slim
@@ -117,22 +117,22 @@ jobs:
             context: node-rbenv/node-20-slim
             tags: |
               kula/node-rbenv:20-slim
-              kula/node-rbenv:20.11-slim
-              kula/node-rbenv:20.11.1-slim
+              kula/node-rbenv:20.18-slim
+              kula/node-rbenv:20.18.3-slim
 
           # -- Ruby 3 --
           - image: node-rbenv
             context: node-rbenv/node-20-slim/ruby-3
             tags: |
               kula/node-rbenv:20-slim-ruby3
-              kula/node-rbenv:20.11-slim-ruby3
-              kula/node-rbenv:20.11.1-slim-ruby3
+              kula/node-rbenv:20.18-slim-ruby3
+              kula/node-rbenv:20.18.3-slim-ruby3
               kula/node-rbenv:20-slim-ruby3.3
-              kula/node-rbenv:20.11-slim-ruby3.3
-              kula/node-rbenv:20.11.1-slim-ruby3.3
+              kula/node-rbenv:20.18-slim-ruby3.3
+              kula/node-rbenv:20.18.3-slim-ruby3.3
               kula/node-rbenv:20-slim-ruby3.3.4
-              kula/node-rbenv:20.11-slim-ruby3.3.4
-              kula/node-rbenv:20.11.1-slim-ruby3.3.4
+              kula/node-rbenv:20.18-slim-ruby3.3.4
+              kula/node-rbenv:20.18.3-slim-ruby3.3.4
 
           # endregion
           # region Node.JS Latest
