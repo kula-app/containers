@@ -27,60 +27,6 @@ jobs:
           # | Image: node-rbenv |
           # +===================+
 
-          # region Node.JS 16
-
-          # +------------+
-          # | Node.JS 16 |
-          # +------------+
-          - image: node-rbenv
-            context: node-rbenv/node-16
-            tags: |
-              kula/node-rbenv:16
-              kula/node-rbenv:16.20
-              kula/node-rbenv:16.20.2
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-16/ruby-3
-            tags: |
-              kula/node-rbenv:16-ruby3
-              kula/node-rbenv:16-ruby3.3
-              kula/node-rbenv:16-ruby3.3.7
-              kula/node-rbenv:16.20-ruby3
-              kula/node-rbenv:16.20-ruby3.3
-              kula/node-rbenv:16.20-ruby3.3.7
-              kula/node-rbenv:16.20.2-ruby3
-              kula/node-rbenv:16.20.2-ruby3.3
-              kula/node-rbenv:16.20.2-ruby3.3.7
-
-          #endregion
-          # region Node.JS 16-slim
-
-          # +-----------------+
-          # | Node.JS 16-slim |
-          # +-----------------+
-          - image: node-rbenv
-            context: node-rbenv/node-16-slim
-            tags: |
-              kula/node-rbenv:16-slim
-              kula/node-rbenv:16.20-slim
-              kula/node-rbenv:16.20.2-slim
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-16-slim/ruby-3
-            tags: |
-              kula/node-rbenv:16-slim-ruby3
-              kula/node-rbenv:16-slim-ruby3.3
-              kula/node-rbenv:16-slim-ruby3.3.7
-              kula/node-rbenv:16.20-slim-ruby3
-              kula/node-rbenv:16.20-slim-ruby3.3
-              kula/node-rbenv:16.20-slim-ruby3.3.7
-              kula/node-rbenv:16.20.2-slim-ruby3
-              kula/node-rbenv:16.20.2-slim-ruby3.3
-              kula/node-rbenv:16.20.2-slim-ruby3.3.7
-
-          # endregion
           # region Node.JS 18
 
           # +------------+
