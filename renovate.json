@@ -12,8 +12,7 @@
       "fileMatch": [".github/workflows/build-images.yml"],
       "matchStrings": [
         "kula/node-rbenv:(?<currentValue>[\\d\\.]*)$",
-        "kula/node-rbenv:(?<currentValue>[\\d\\.]*-slim)$",
-        "kula/node-ruby:(?<currentValue>[\\d\\.]*)$"
+        "kula/node-rbenv:(?<currentValue>[\\d\\.]*-slim)$"
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "node"
