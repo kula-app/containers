@@ -74,6 +74,9 @@ RUN install \
   kubectl /usr/local/bin/kubectl && \
   rm -f kubectl
 
+# Install Node LTS
+RUN apk add --no-cache nodejs npm
+
 # Install Pulumi
 COPY --from=dl-pulumi /tmp/pulumi.tar.gz .
 RUN tar -xvzf pulumi.tar.gz && \
@@ -95,6 +98,8 @@ RUN set -x && \
   patch --version && \
   perl --version && \
   kubectl version --client=true && \
+  node --version && \
+  npm --version && \
   pulumi about
 #endregion
 

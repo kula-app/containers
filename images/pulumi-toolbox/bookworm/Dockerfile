@@ -101,6 +101,13 @@ RUN install \
   kubectl /usr/local/bin/kubectl && \
   rm -f kubectl
 
+# Install Node LTS
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+  nodejs \
+  npm \
+  # Cleanup
+  && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
+
 # Install Pulumi
 COPY --from=dl-pulumi /tmp/pulumi.tar.gz .
 RUN tar -xvzf pulumi.tar.gz && \
@@ -122,6 +129,8 @@ RUN set -x && \
   patch --version && \
   perl --version && \
   kubectl version --client=true && \
+  node --version && \
+  npm --version && \
   pulumi about
 #endregion
 
