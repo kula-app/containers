@@ -61,6 +61,9 @@ LABEL description="Container with CLI utilities used with Pulumi based on Alpine
 # Install AWS CLI
 RUN apk add --no-cache aws-cli
 
+# Install git
+RUN apk add --no-cache git
+
 # Install kubectl
 COPY --from=dl-kubectl /tmp/kubectl .
 RUN install \
@@ -74,7 +77,7 @@ RUN install \
 COPY --from=dl-pulumi /tmp/pulumi.tar.gz .
 RUN tar -xvzf pulumi.tar.gz && \
   for file in $(find pulumi -type f); do \
-    install -o root -g root -m 0755 "${file}" "/usr/local/bin/${file#pulumi/}"; \
+  install -o root -g root -m 0755 "${file}" "/usr/local/bin/${file#pulumi/}"; \
   done && \
   rm -rf pulumi.tar.gz aws
 
@@ -84,6 +87,7 @@ RUN tar -xvzf pulumi.tar.gz && \
 
 RUN set -x && \
   aws --version && \
+  git --version && \
   kubectl version --client=true && \
   pulumi about
 #endregion

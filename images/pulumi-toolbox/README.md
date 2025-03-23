@@ -4,8 +4,10 @@ The Pulumi Toolbox is a collection of utilities and tools that are required by P
 
 The following CLI tools are included in the Pulumi Toolbox:
 
-- `kubectl` - Kubernetes CLI
 - `aws` - AWS CLI
+- `kubectl` - Kubernetes CLI
+- `git` - Git CLI
+- `pulumi` - Pulumi CLI
 
 ## Usage
 

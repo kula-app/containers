@@ -69,17 +69,23 @@ LABEL description="Container with CLI utilities used with Pulumi based on Alpine
 
 # Install common utilities
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-    # Install root certificates for HTTPS access
-    ca-certificates \
-    unzip \
-    # Cleanup
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
+  # Install root certificates for HTTPS access
+  ca-certificates \
+  unzip \
+  # Cleanup
+  && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
 # Install AWS CLI
 COPY --from=dl-awscli /tmp/awscli.zip .
 RUN unzip -q awscli.zip && \
   ./aws/install && \
   rm -rf awscli.zip aws
+
+# Install git
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+  git \
+  # Cleanup
+  && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
 # Install kubectl
 COPY --from=dl-kubectl /tmp/kubectl .
@@ -94,7 +100,7 @@ RUN install \
 COPY --from=dl-pulumi /tmp/pulumi.tar.gz .
 RUN tar -xvzf pulumi.tar.gz && \
   for file in $(find pulumi -type f); do \
-    install -o root -g root -m 0755 "${file}" "/usr/local/bin/${file#pulumi/}"; \
+  install -o root -g root -m 0755 "${file}" "/usr/local/bin/${file#pulumi/}"; \
   done && \
   rm -rf pulumi.tar.gz pulumi
 
@@ -104,6 +110,7 @@ RUN tar -xvzf pulumi.tar.gz && \
 
 RUN set -x && \
   aws --version && \
+  git --version && \
   kubectl version --client=true && \
   pulumi about
 #endregion
