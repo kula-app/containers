@@ -81,9 +81,14 @@ RUN unzip -q awscli.zip && \
   ./aws/install && \
   rm -rf awscli.zip aws
 
-# Install git
+# Install git and supporting utilities
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
   git \
+  git-lfs \
+  gpg \
+  less \
+  patch \
+  perl \
   # Cleanup
   && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
@@ -111,6 +116,11 @@ RUN tar -xvzf pulumi.tar.gz && \
 RUN set -x && \
   aws --version && \
   git --version && \
+  git lfs version && \
+  gpg --version && \
+  less --version && \
+  patch --version && \
+  perl --version && \
   kubectl version --client=true && \
   pulumi about
 #endregion

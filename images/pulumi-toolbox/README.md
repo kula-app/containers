@@ -7,6 +7,11 @@ The following CLI tools are included in the Pulumi Toolbox:
 - `aws` - AWS CLI
 - `kubectl` - Kubernetes CLI
 - `git` - Git CLI
+  - `git-lfs` - Git LFS CLI
+  - `gpg` - GPG CLI
+  - `less` - Less CLI
+  - `patch` - Patch CLI
+  - `perl` - Perl CLI
 - `pulumi` - Pulumi CLI
 
 ## Usage
