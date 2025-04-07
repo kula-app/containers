@@ -81,6 +81,12 @@ RUN unzip -q awscli.zip && \
   ./aws/install && \
   rm -rf awscli.zip aws
 
+# Install curl
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+  curl \
+  # Cleanup
+  && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
+
 # Install git and supporting utilities
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
   git \
@@ -115,6 +121,7 @@ RUN tar -xvzf pulumi.tar.gz && \
 
 RUN set -x && \
   aws --version && \
+  curl --version && \
   git --version && \
   git lfs version && \
   gpg --version && \

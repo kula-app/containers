@@ -61,6 +61,9 @@ LABEL description="Container with CLI utilities used with Pulumi based on Alpine
 # Install AWS CLI
 RUN apk add --no-cache aws-cli
 
+# Install curl
+RUN apk add --no-cache curl
+
 # Install git and supporting utilities
 RUN apk add --no-cache git git-lfs gpg less openssh patch perl && \
   git lfs install
@@ -88,7 +91,7 @@ RUN tar -xvzf pulumi.tar.gz && \
 
 RUN set -x && \
   aws --version && \
-  git --version && \
+  curl --version && \
   git lfs version && \
   gpg --version && \
   less --version && \
