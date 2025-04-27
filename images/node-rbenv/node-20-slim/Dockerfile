@@ -1,4 +1,4 @@
-FROM node:20.11.1-slim
+FROM node:20.19.1-slim
 
 # Update dependencies
 RUN apt-get update -qq >/dev/null && apt-get upgrade -y --no-install-recommends
