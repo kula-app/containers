@@ -52,7 +52,7 @@ EOT
 # ======================================================================================================================
 
 #region -- Product --
-FROM alpine:3.20 AS main
+FROM alpine:3.22 AS main
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
