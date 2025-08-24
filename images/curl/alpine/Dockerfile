@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Use an official base image
-FROM alpine:3.21
+FROM alpine:3.22
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
