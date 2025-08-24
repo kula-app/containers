@@ -5,7 +5,15 @@
 #region -- Download Base --
 FROM alpine AS dl
 ARG TARGETARCH
+
+# -- Versions --
+# renovate: datasource=github-releases depName=golang/go versioning=loose
 ARG GO_VERSION=1.25.0
+# renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=loose
+ARG KUBECTL_VERSION=1.30.0
+# renovate: datasource=github-releases depName=pulumi/pulumi versioning=loose
+ARG PULUMI_VERSION=3.144.1
+
 WORKDIR /tmp
 
 RUN apk add --no-cache curl unzip

@@ -4,18 +4,19 @@
 
 #region -- Download Base --
 FROM alpine AS dl
-ARG GO_VERSION=1.25.0
 ARG TARGETARCH
+
+# -- Versions --
+# renovate: datasource=github-releases depName=golang/go versioning=loose
+ARG GO_VERSION=1.25.0
+# renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=loose
+ARG KUBECTL_VERSION=1.30.0
+# renovate: datasource=github-releases depName=pulumi/pulumi versioning=loose
+ARG PULUMI_VERSION=3.144.1
+
 WORKDIR /tmp
 
 RUN apk add --no-cache curl unzip
-#endregion
-
-# ======================================================================================================================
-
-#region -- Download: aws-cli --
-FROM dl AS dl-awscli
-# noop - installed with apk instead
 #endregion
 
 # ======================================================================================================================
@@ -24,9 +25,9 @@ FROM dl AS dl-awscli
 FROM dl AS dl-kubectl
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
-  curl -LO --fail "https://dl.k8s.io/release/v1.30.0/bin/linux/amd64/kubectl"
+  curl -LO --fail "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
 elif [ "${TARGETARCH}" = "arm64" ]; then
-  curl -LO --fail "https://dl.k8s.io/release/v1.30.0/bin/linux/arm64/kubectl"
+  curl -LO --fail "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/arm64/kubectl"
 else
   echo "Unsupported target architecture: ${TARGETARCH}"
   exit 1
@@ -40,9 +41,9 @@ EOT
 FROM dl AS dl-pulumi
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
-  curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v3.144.1-linux-x64.tar.gz" -o pulumi.tar.gz
+  curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_VERSION}-linux-x64.tar.gz" -o pulumi.tar.gz
 elif [ "${TARGETARCH}" = "arm64" ]; then
-  curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v3.144.1-linux-arm64.tar.gz" -o pulumi.tar.gz
+  curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_VERSION}-linux-arm64.tar.gz" -o pulumi.tar.gz
 else
   echo "Unsupported target architecture: ${TARGETARCH}"
   exit 1
