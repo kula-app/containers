@@ -5,6 +5,7 @@
 #region -- Download Base --
 FROM alpine AS dl
 ARG TARGETARCH
+ARG GO_VERSION=1.25.0
 WORKDIR /tmp
 
 RUN apk add --no-cache curl unzip
@@ -51,6 +52,22 @@ if [ "${TARGETARCH}" = "amd64" ]; then
   curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v3.144.1-linux-x64.tar.gz" -o pulumi.tar.gz
 elif [ "${TARGETARCH}" = "arm64" ]; then
   curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v3.144.1-linux-arm64.tar.gz" -o pulumi.tar.gz
+else
+  echo "Unsupported target architecture: ${TARGETARCH}"
+  exit 1
+fi
+EOT
+#endregion
+
+# ======================================================================================================================
+
+#region -- Download: go --
+FROM dl AS dl-go
+RUN <<EOT ash
+if [ "${TARGETARCH}" = "amd64" ]; then
+  curl -L --fail "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" -o go.tar.gz
+elif [ "${TARGETARCH}" = "arm64" ]; then
+  curl -L --fail "https://go.dev/dl/go${GO_VERSION}.linux-arm64.tar.gz" -o go.tar.gz
 else
   echo "Unsupported target architecture: ${TARGETARCH}"
   exit 1
@@ -115,6 +132,13 @@ RUN tar -xvzf pulumi.tar.gz && \
   done && \
   rm -rf pulumi.tar.gz pulumi
 
+# Install Go
+COPY --from=dl-go /tmp/go.tar.gz .
+RUN tar -xvzf go.tar.gz && \
+  mv -vT go /usr/local/go && \
+  rm -rf go.tar.gz
+ENV PATH="/usr/local/go/bin:${PATH}"
+
 # +-------------+
 # | Smoke Tests |
 # +-------------+
@@ -129,7 +153,8 @@ RUN set -x && \
   patch --version && \
   perl --version && \
   kubectl version --client=true && \
-  pulumi about
+  pulumi about && \
+  go version
 #endregion
 
 # ======================================================================================================================

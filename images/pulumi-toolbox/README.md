@@ -13,6 +13,7 @@ The following CLI tools are included in the Pulumi Toolbox:
   - `patch` - Patch CLI
   - `perl` - Perl CLI
 - `pulumi` - Pulumi CLI
+- `go` - GoLang CLI
 
 ## Usage
 

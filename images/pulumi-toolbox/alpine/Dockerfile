@@ -4,6 +4,7 @@
 
 #region -- Download Base --
 FROM alpine AS dl
+ARG GO_VERSION=1.25.0
 ARG TARGETARCH
 WORKDIR /tmp
 
@@ -51,6 +52,22 @@ EOT
 
 # ======================================================================================================================
 
+#region -- Download: go --
+FROM dl AS dl-go
+RUN <<EOT ash
+if [ "${TARGETARCH}" = "amd64" ]; then
+  curl -L --fail "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" -o go.tar.gz
+elif [ "${TARGETARCH}" = "arm64" ]; then
+  curl -L --fail "https://go.dev/dl/go${GO_VERSION}.linux-arm64.tar.gz" -o go.tar.gz
+else
+  echo "Unsupported target architecture: ${TARGETARCH}"
+  exit 1
+fi
+EOT
+#endregion
+
+# ======================================================================================================================
+
 #region -- Product --
 FROM alpine:3.22 AS main
 
@@ -85,6 +102,13 @@ RUN tar -xvzf pulumi.tar.gz && \
   done && \
   rm -rf pulumi.tar.gz aws
 
+# Install Go
+COPY --from=dl-go /tmp/go.tar.gz .
+RUN tar -xvzf go.tar.gz && \
+  mv -vT go /usr/local/go && \
+  rm -rf go.tar.gz
+ENV PATH="/usr/local/go/bin:${PATH}"
+
 # +-------------+
 # | Smoke Tests |
 # +-------------+
@@ -98,7 +122,8 @@ RUN set -x && \
   patch --version && \
   perl --version && \
   kubectl version --client=true && \
-  pulumi about
+  pulumi about && \
+  go version
 #endregion
 
 # ======================================================================================================================
