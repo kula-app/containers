@@ -1,4 +1,4 @@
-FROM node:20.19.4
+FROM node:20.19.5
 
 # Update dependencies
 RUN apt-get update -qq >/dev/null && apt-get upgrade -y --no-install-recommends
