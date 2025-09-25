@@ -1,6 +1,6 @@
 FROM kula/node-rbenv:20.19.5-slim
 
-ENV RUBY_VERSION 3.3.7
+ENV RUBY_VERSION 3.4.5
 
 # Install ruby versions
 RUN rbenv install $RUBY_VERSION && rbenv global $RUBY_VERSION

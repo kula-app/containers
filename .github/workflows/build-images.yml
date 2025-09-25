@@ -38,12 +38,12 @@ jobs:
               kula/node-rbenv:20-ruby3
               kula/node-rbenv:20.19-ruby3
               kula/node-rbenv:20.19.5-ruby3
-              kula/node-rbenv:20-ruby3.3
-              kula/node-rbenv:20.19-ruby3.3
-              kula/node-rbenv:20.19.5-ruby3.3
-              kula/node-rbenv:20-ruby3.3.7
-              kula/node-rbenv:20.19-ruby3.3.7
-              kula/node-rbenv:20.19.5-ruby3.3.7
+              kula/node-rbenv:20-ruby3.4
+              kula/node-rbenv:20.19-ruby3.4
+              kula/node-rbenv:20.19.5-ruby3.4
+              kula/node-rbenv:20-ruby3.4.5
+              kula/node-rbenv:20.19-ruby3.4.5
+              kula/node-rbenv:20.19.5-ruby3.4.5
 
           # +-----------------+
           # | Node.JS 20-slim |
@@ -62,15 +62,12 @@ jobs:
               kula/node-rbenv:20-slim-ruby3
               kula/node-rbenv:20.19-slim-ruby3
               kula/node-rbenv:20.19.5-slim-ruby3
-              kula/node-rbenv:20-slim-ruby3.3
-              kula/node-rbenv:20.19-slim-ruby3.3
-              kula/node-rbenv:20.19.5-slim-ruby3.3
-              kula/node-rbenv:20-slim-ruby3.3.7
-              kula/node-rbenv:20.19-slim-ruby3.3.7
-              kula/node-rbenv:20.19.5-slim-ruby3.3.7
-
-          # endregion
-          # region Node.JS Latest
+              kula/node-rbenv:20-slim-ruby3.4
+              kula/node-rbenv:20.19-slim-ruby3.4
+              kula/node-rbenv:20.19.5-slim-ruby3.4
+              kula/node-rbenv:20-slim-ruby3.4.5
+              kula/node-rbenv:20.19-slim-ruby3.4.5
+              kula/node-rbenv:20.19.5-slim-ruby3.4.5
 
           # +------------------+
           # | Node.JS - Latest |
@@ -79,9 +76,6 @@ jobs:
             context: node-rbenv/node-latest
             tags: |
               kula/node-rbenv:latest
-
-          # endregion
-          # endregion
 
     steps:
       - name: Checkout Repository

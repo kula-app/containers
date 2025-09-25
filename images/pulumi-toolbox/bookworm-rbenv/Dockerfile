@@ -46,7 +46,7 @@ ENV PATH=$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
 #endregion
 
 #region -- Install Ruby --
-RUN rbenv install 3.3.1
+RUN rbenv install 3.4.1
 
 RUN rbenv install 3.4.2
 RUN rbenv global 3.4.2
