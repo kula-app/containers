@@ -7,171 +7,43 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: "0 4 * * *"
+    - cron: '0 4 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-publish-image:
+  generate-matrix:
     runs-on: ubuntu-latest
-    name: "Build Images (${{ matrix.context}})"
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Generate Matrix
+        id: matrix
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const script = require('./bin/prepare-matrix.js')
+            const matrix = script.main()
+
+            console.log('Generated matrix:')
+            console.log(JSON.stringify({ include: matrix }, null, 2))
+
+            core.setOutput('matrix', JSON.stringify({ include: matrix }))
+
+            return { include: matrix }
+
+  build-publish-image:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+    name: 'Build Images (${{ matrix.context}})'
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          # +------------+
-          # | Node.JS 20 |
-          # +------------+
-          - image: node-rbenv
-            context: node-rbenv/node-20
-            tags: |
-              kula/node-rbenv:20
-              kula/node-rbenv:20.19
-              kula/node-rbenv:20.19.5
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-20/ruby-3
-            tags: |
-              kula/node-rbenv:20-ruby3
-              kula/node-rbenv:20.19-ruby3
-              kula/node-rbenv:20.19.5-ruby3
-              kula/node-rbenv:20-ruby3.4
-              kula/node-rbenv:20.19-ruby3.4
-              kula/node-rbenv:20.19.5-ruby3.4
-              kula/node-rbenv:20-ruby3.4.5
-              kula/node-rbenv:20.19-ruby3.4.5
-              kula/node-rbenv:20.19.5-ruby3.4.5
-
-          # +-----------------+
-          # | Node.JS 20-slim |
-          # +-----------------+
-          - image: node-rbenv
-            context: node-rbenv/node-20-slim
-            tags: |
-              kula/node-rbenv:20-slim
-              kula/node-rbenv:20.19-slim
-              kula/node-rbenv:20.19.5-slim
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-20-slim/ruby-3
-            tags: |
-              kula/node-rbenv:20-slim-ruby3
-              kula/node-rbenv:20.19-slim-ruby3
-              kula/node-rbenv:20.19.5-slim-ruby3
-              kula/node-rbenv:20-slim-ruby3.4
-              kula/node-rbenv:20.19-slim-ruby3.4
-              kula/node-rbenv:20.19.5-slim-ruby3.4
-              kula/node-rbenv:20-slim-ruby3.4.5
-              kula/node-rbenv:20.19-slim-ruby3.4.5
-              kula/node-rbenv:20.19.5-slim-ruby3.4.5
-
-          # +------------+
-          # | Node.JS 22 |
-          # +------------+
-          - image: node-rbenv
-            context: node-rbenv/node-22
-            tags: |
-              kula/node-rbenv:22
-              kula/node-rbenv:22.20
-              kula/node-rbenv:22.20.0
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-22/ruby-3
-            tags: |
-              kula/node-rbenv:22-ruby3
-              kula/node-rbenv:22.20-ruby3
-              kula/node-rbenv:22.20.0-ruby3
-              kula/node-rbenv:22-ruby3.4
-              kula/node-rbenv:22.20-ruby3.4
-              kula/node-rbenv:22.20.0-ruby3.4
-              kula/node-rbenv:22-ruby3.4.5
-              kula/node-rbenv:22.20-ruby3.4.5
-              kula/node-rbenv:22.20.0-ruby3.4.5
-
-          # +-----------------+
-          # | Node.JS 22-slim |
-          # +-----------------+
-          - image: node-rbenv
-            context: node-rbenv/node-22-slim
-            tags: |
-              kula/node-rbenv:22-slim
-              kula/node-rbenv:22.20-slim
-              kula/node-rbenv:22.20.0-slim
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-22-slim/ruby-3
-            tags: |
-              kula/node-rbenv:22-slim-ruby3
-              kula/node-rbenv:22.20-slim-ruby3
-              kula/node-rbenv:22.20.0-slim-ruby3
-              kula/node-rbenv:22-slim-ruby3.4
-              kula/node-rbenv:22.20-slim-ruby3.4
-              kula/node-rbenv:22.20.0-slim-ruby3.4
-              kula/node-rbenv:22-slim-ruby3.4.5
-              kula/node-rbenv:22.20-slim-ruby3.4.5
-              kula/node-rbenv:22.20.0-slim-ruby3.4.5
-
-          # +------------+
-          # | Node.JS 24 |
-          # +------------+
-          - image: node-rbenv
-            context: node-rbenv/node-24
-            tags: |
-              kula/node-rbenv:24
-              kula/node-rbenv:24.8
-              kula/node-rbenv:24.8.0
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-24/ruby-3
-            tags: |
-              kula/node-rbenv:24-ruby3
-              kula/node-rbenv:24.8-ruby3
-              kula/node-rbenv:24.8.0-ruby3
-              kula/node-rbenv:24-ruby3.4
-              kula/node-rbenv:24.8-ruby3.4
-              kula/node-rbenv:24.8.0-ruby3.4
-              kula/node-rbenv:24-ruby3.4.5
-              kula/node-rbenv:24.8-ruby3.4.5
-              kula/node-rbenv:24.8.0-ruby3.4.5
-
-          # +-----------------+
-          # | Node.JS 24-slim |
-          # +-----------------+
-          - image: node-rbenv
-            context: node-rbenv/node-24-slim
-            tags: |
-              kula/node-rbenv:24-slim
-              kula/node-rbenv:24.8-slim
-              kula/node-rbenv:24.8.0-slim
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-24-slim/ruby-3
-            tags: |
-              kula/node-rbenv:24-slim-ruby3
-              kula/node-rbenv:24.8-slim-ruby3
-              kula/node-rbenv:24.8.0-slim-ruby3
-              kula/node-rbenv:24-slim-ruby3.4
-              kula/node-rbenv:24.8-slim-ruby3.4
-              kula/node-rbenv:24.8.0-slim-ruby3.4
-              kula/node-rbenv:24-slim-ruby3.4.5
-              kula/node-rbenv:24.8-slim-ruby3.4.5
-              kula/node-rbenv:24.8.0-slim-ruby3.4.5
-
-          # +------------------+
-          # | Node.JS - Latest |
-          # +------------------+
-          - image: node-rbenv
-            context: node-rbenv/node-latest
-            tags: |
-              kula/node-rbenv:latest
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
     steps:
       - name: Checkout Repository
