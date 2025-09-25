@@ -21,68 +21,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # region node-rbenv
-
-          # +===================+
-          # | Image: node-rbenv |
-          # +===================+
-
-          # region Node.JS 18
-
-          # +------------+
-          # | Node.JS 18 |
-          # +------------+
-          - image: node-rbenv
-            context: node-rbenv/node-18
-            tags: |
-              kula/node-rbenv:18
-              kula/node-rbenv:18.19
-              kula/node-rbenv:18.19.1
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-18/ruby-3
-            tags: |
-              kula/node-rbenv:18-ruby3
-              kula/node-rbenv:18.19-ruby3
-              kula/node-rbenv:18.19.1-ruby3
-              kula/node-rbenv:18-ruby3.3
-              kula/node-rbenv:18.19-ruby3.3
-              kula/node-rbenv:18.19.1-ruby3.3
-              kula/node-rbenv:18-ruby3.3.7
-              kula/node-rbenv:18.19-ruby3.3.7
-              kula/node-rbenv:18.19.1-ruby3.3.7
-
-          # endregion
-          # region Node.JS 18-slim
-
-          # +-----------------+
-          # | Node.JS 18-slim |
-          # +-----------------+
-          - image: node-rbenv
-            context: node-rbenv/node-18-slim
-            tags: |
-              kula/node-rbenv:18-slim
-              kula/node-rbenv:18.19-slim
-              kula/node-rbenv:18.19.1-slim
-
-          # -- Ruby 3 --
-          - image: node-rbenv
-            context: node-rbenv/node-18-slim/ruby-3
-            tags: |
-              kula/node-rbenv:18-slim-ruby3
-              kula/node-rbenv:18.19-slim-ruby3
-              kula/node-rbenv:18.19.1-slim-ruby3
-              kula/node-rbenv:18-slim-ruby3.3
-              kula/node-rbenv:18.19-slim-ruby3.3
-              kula/node-rbenv:18.19.1-slim-ruby3.3
-              kula/node-rbenv:18-slim-ruby3.3.7
-              kula/node-rbenv:18.19-slim-ruby3.3.7
-              kula/node-rbenv:18.19.1-slim-ruby3.3.7
-
-          # endregion
-          # region Node.JS 20
-
           # +------------+
           # | Node.JS 20 |
           # +------------+
