@@ -116,6 +116,55 @@ jobs:
               kula/node-rbenv:22-slim-ruby3.4.5
               kula/node-rbenv:22.20-slim-ruby3.4.5
               kula/node-rbenv:22.20.0-slim-ruby3.4.5
+
+          # +------------+
+          # | Node.JS 24 |
+          # +------------+
+          - image: node-rbenv
+            context: node-rbenv/node-24
+            tags: |
+              kula/node-rbenv:24
+              kula/node-rbenv:24.8
+              kula/node-rbenv:24.8.0
+
+          # -- Ruby 3 --
+          - image: node-rbenv
+            context: node-rbenv/node-24/ruby-3
+            tags: |
+              kula/node-rbenv:24-ruby3
+              kula/node-rbenv:24.8-ruby3
+              kula/node-rbenv:24.8.0-ruby3
+              kula/node-rbenv:24-ruby3.4
+              kula/node-rbenv:24.8-ruby3.4
+              kula/node-rbenv:24.8.0-ruby3.4
+              kula/node-rbenv:24-ruby3.4.5
+              kula/node-rbenv:24.8-ruby3.4.5
+              kula/node-rbenv:24.8.0-ruby3.4.5
+
+          # +-----------------+
+          # | Node.JS 24-slim |
+          # +-----------------+
+          - image: node-rbenv
+            context: node-rbenv/node-24-slim
+            tags: |
+              kula/node-rbenv:24-slim
+              kula/node-rbenv:24.8-slim
+              kula/node-rbenv:24.8.0-slim
+
+          # -- Ruby 3 --
+          - image: node-rbenv
+            context: node-rbenv/node-24-slim/ruby-3
+            tags: |
+              kula/node-rbenv:24-slim-ruby3
+              kula/node-rbenv:24.8-slim-ruby3
+              kula/node-rbenv:24.8.0-slim-ruby3
+              kula/node-rbenv:24-slim-ruby3.4
+              kula/node-rbenv:24.8-slim-ruby3.4
+              kula/node-rbenv:24.8.0-slim-ruby3.4
+              kula/node-rbenv:24-slim-ruby3.4.5
+              kula/node-rbenv:24.8-slim-ruby3.4.5
+              kula/node-rbenv:24.8.0-slim-ruby3.4.5
+
           # +------------------+
           # | Node.JS - Latest |
           # +------------------+
