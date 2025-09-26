@@ -10,6 +10,7 @@ ARG RUBY_VERSION=3.4.5
 # ====================================================== PRODUCT =======================================================
 
 FROM kula/node-rbenv:${NODE_VERSION}-slim
+ARG RUBY_VERSION
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"

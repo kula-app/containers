@@ -48,8 +48,8 @@ RUN mkdir /usr/local/rbenv/plugins
 RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plugins/ruby-build
 
 # Setup rbenv shimming
-ENV RBENV_ROOT /usr/local/rbenv
-ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
+ENV RBENV_ROOT=/usr/local/rbenv
+ENV PATH=$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
 
 # Smoke tests
 RUN set -x && \

@@ -35,6 +35,7 @@ EOT
 # =================================================== DOWNLOAD: KUBECTL ================================================
 
 FROM dl AS dl-kubectl
+ARG KUBECTL_VERSION
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
   curl -LO --fail "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
@@ -49,6 +50,7 @@ EOT
 #= ================================================= DOWNLOAD: PULUMI ==================================================
 
 FROM dl AS dl-pulumi
+ARG PULUMI_VERSION
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
   curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_VERSION}-linux-x64.tar.gz" -o pulumi.tar.gz
@@ -63,6 +65,7 @@ EOT
 # ==================================================== DOWNLOAD: GO ====================================================
 
 FROM dl AS dl-go
+ARG GO_VERSION
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
   curl -L --fail "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" -o go.tar.gz

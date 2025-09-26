@@ -51,8 +51,7 @@ ENV RBENV_ROOT=/usr/local/rbenv
 ENV PATH=$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
 
 # Install ruby
-RUN rbenv install ${RUBY_VERSION}
-RUN rbenv global ${RUBY_VERSION}
+RUN rbenv install ${RUBY_VERSION} && rbenv global ${RUBY_VERSION}
 
 RUN gem install bundler
 
