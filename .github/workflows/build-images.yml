@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   generate-matrix:
+    name: Generate Matrix
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
@@ -31,6 +32,7 @@ jobs:
             core.setOutput('matrix', script.generateMatrix())
 
   build-each-image:
+    name: Build Image (${{ matrix.image.image }} - ${{ matrix.image.context }})
     needs: generate-matrix
     strategy:
       fail-fast: false
@@ -42,3 +44,17 @@ jobs:
       context: ${{ matrix.image.context }}
       tags: ${{ matrix.image.tags }}
     secrets: inherit
+
+  required-check:
+    needs: [generate-matrix, build-each-image]
+    name: Build Images
+    # This is necessary since a failed/skipped dependent job would cause this job to be skipped
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      # If any jobs we depend on fails gets cancelled or times out, this job will fail.
+      # Skipped jobs are not considered failures.
+      - name: Check for failures
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: |
+          echo "One of the build jobs has failed." && exit 1
