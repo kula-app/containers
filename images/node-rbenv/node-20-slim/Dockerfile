@@ -3,11 +3,11 @@
 # ====================================================== VERSIONS ======================================================
 
 # renovate: datasource=github-releases depName=node/node versioning=loose
-ARG NODE_VERSION=20.19.5-slim
+ARG NODE_VERSION=20.19.5
 
 # ====================================================== PRODUCT =======================================================
 
-FROM node:${NODE_VERSION}
+FROM node:${NODE_VERSION}-slim
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
