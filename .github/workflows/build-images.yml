@@ -8,7 +8,7 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: "0 4 * * *"
+    - cron: '0 4 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -41,6 +41,7 @@ jobs:
         image: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
     uses: ./.github/workflows/build-image.yml
     with:
+      id: ${{ matrix.image.id }}
       image: ${{ matrix.image.image }}
       context: ${{ matrix.image.context }}
       tags: ${{ matrix.image.tags }}

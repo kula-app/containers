@@ -254,6 +254,7 @@ function generateMatrix() {
     for (const variant of image.variants) {
       // Always include the base variant entry first
       matrix.push({
+        id: `${image.name}-${variant.name}`,
         image: image.name,
         context: getContext(image, variant),
         tags: generateTags(image, variant).join("\n"),
@@ -263,6 +264,7 @@ function generateMatrix() {
       if (variant.subvariants) {
         for (const subvariant of variant.subvariants) {
           matrix.push({
+            id: `${image.name}-${variant.name}-${subvariant.name}`,
             image: image.name,
             context: getContext(image, variant, subvariant),
             tags: generateTags(image, variant, subvariant).join("\n"),

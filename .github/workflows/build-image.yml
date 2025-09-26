@@ -3,6 +3,10 @@ name: Build Image
 on:
   workflow_call:
     inputs:
+      id:
+        description: Image ID
+        required: true
+        type: string
       image:
         description: Image name (repository logical name)
         required: true
@@ -26,7 +30,7 @@ permissions:
 
 jobs:
   build-platform:
-    name: "Build (${{ matrix.platform.name }})"
+    name: 'Build (${{ matrix.platform.name }})'
     strategy:
       fail-fast: false
       matrix:
@@ -78,7 +82,7 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         uses: actions/upload-artifact@v4
         with:
-          name: digests-${{ inputs.image }}-${{ matrix.platform.tag }}
+          name: digests-${{ inputs.id }}-${{ matrix.platform.tag }}
           path: ${{ runner.temp }}/digests/*
           if-no-files-found: error
           retention-days: 1
@@ -93,7 +97,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: ${{ runner.temp }}/digests
-          pattern: digests-${{ inputs.image }}-*
+          pattern: digests-${{ inputs.id }}-*
           merge-multiple: true
 
       - name: Login to Docker Hub
@@ -121,11 +125,11 @@ jobs:
             echo "No tags provided for image, skipping" >&2
             exit 1
           fi
-          
+
           # Convert newline-separated tags to -t arguments
           image_tags=$(printf '%s' "$TAGS" | awk '{print "-t "$0}' | xargs)
           echo "Creating manifest list with tags: $image_tags"
-          
+
           # Build digest references for the repository (using first tag to get repo name)
           repo=$(printf '%s' "$TAGS" | head -n1 | cut -d: -f1)
           digest_refs=""
@@ -133,7 +137,7 @@ jobs:
             digest_refs="$digest_refs ${repo}@sha256:${f}"
           done
           echo "Digest references: $digest_refs"
-          
+
           docker buildx imagetools create $image_tags $digest_refs
 
       - name: Inspect image
