@@ -136,7 +136,7 @@ jobs:
           for f in *; do
             digest_refs="$digest_refs ${repo}@sha256:${f}"
           done
-          echo "Digest references: $digest_refs"
+          echo "Source digest references: $digest_refs"
 
           docker buildx imagetools create $image_tags $digest_refs
 
