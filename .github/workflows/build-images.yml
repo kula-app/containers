@@ -7,7 +7,7 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: '0 4 * * *'
+    - cron: "0 4 * * *"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -28,19 +28,13 @@ jobs:
         with:
           script: |
             const script = require('./bin/prepare-matrix.js')
-            const matrix = script.main()
-
-            console.log('Generated matrix:')
-            console.log(JSON.stringify({ include: matrix }, null, 2))
-
+            const matrix = script.generateMatrix()
             core.setOutput('matrix', JSON.stringify({ include: matrix }))
-
-            return { include: matrix }
 
   build-publish-image:
     needs: generate-matrix
     runs-on: ubuntu-latest
-    name: 'Build Images (${{ matrix.context}})'
+    name: "Build Images (${{ matrix.context}})"
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
@@ -74,7 +68,7 @@ jobs:
         with:
           cache-from: type=registry,ref=ghcr.io/kula-app/containers/${{ matrix.image }}:buildcache
           cache-to: type=registry,ref=ghcr.io/kula-app/containers/${{ matrix.image }}:buildcache,mode=max
-          context: images/${{ matrix.context }}
+          context: ${{ matrix.context }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ matrix.tags }}
