@@ -28,8 +28,7 @@ jobs:
         with:
           script: |
             const script = require('./bin/prepare-matrix.js')
-            const matrix = script.generateMatrix()
-            core.setOutput('matrix', JSON.stringify({ include: matrix }))
+            core.setOutput('matrix', script.generateMatrix())
 
   build-publish-image:
     needs: generate-matrix
