@@ -162,6 +162,7 @@ test("generateMatrix includes all variants of curl", () => {
   assert.deepStrictEqual(
     entries[0],
     {
+      id: "curl-alpine",
       image: "curl",
       context: "images/curl/alpine",
       tags: "kula/curl:alpine",
@@ -177,6 +178,7 @@ test("generateMatrix includes all variants of jq", () => {
   assert.deepStrictEqual(
     entries[0],
     {
+      id: "jq-alpine",
       image: "jq",
       context: "images/jq/alpine",
       tags: "kula/jq:alpine",
@@ -186,6 +188,7 @@ test("generateMatrix includes all variants of jq", () => {
   assert.deepStrictEqual(
     entries[1],
     {
+      id: "jq-bookworm",
       image: "jq",
       context: "images/jq/bookworm",
       tags: "kula/jq:bookworm",
@@ -201,6 +204,7 @@ test("generateMatrix includes all variants of lftp", () => {
   assert.deepStrictEqual(
     entries[0],
     {
+      id: "lftp-alpine",
       image: "lftp",
       context: "images/lftp/alpine",
       tags: "kula/lftp:alpine",
@@ -210,6 +214,7 @@ test("generateMatrix includes all variants of lftp", () => {
   assert.deepStrictEqual(
     entries[1],
     {
+      id: "lftp-bookworm",
       image: "lftp",
       context: "images/lftp/bookworm",
       tags: "kula/lftp:bookworm",
@@ -219,6 +224,7 @@ test("generateMatrix includes all variants of lftp", () => {
   assert.deepStrictEqual(
     entries[2],
     {
+      id: "lftp-bullseye",
       image: "lftp",
       context: "images/lftp/bullseye",
       tags: "kula/lftp:bullseye",
@@ -234,6 +240,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[0],
     {
+      id: "node-rbenv-node-20",
       image: "node-rbenv",
       context: "images/node-rbenv/node-20",
       tags: [
@@ -247,6 +254,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[1],
     {
+      id: "node-rbenv-node-20-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-20/ruby-3",
       tags: [
@@ -264,6 +272,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[2],
     {
+      id: "node-rbenv-node-20-slim",
       image: "node-rbenv",
       context: "images/node-rbenv/node-20-slim",
       tags: [
@@ -277,6 +286,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[3],
     {
+      id: "node-rbenv-node-20-slim-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-20-slim/ruby-3",
       tags: [
@@ -294,6 +304,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[4],
     {
+      id: "node-rbenv-node-22",
       image: "node-rbenv",
       context: "images/node-rbenv/node-22",
       tags: [
@@ -307,6 +318,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[5],
     {
+      id: "node-rbenv-node-22-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-22/ruby-3",
       tags: [
@@ -324,6 +336,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[6],
     {
+      id: "node-rbenv-node-22-slim",
       image: "node-rbenv",
       context: "images/node-rbenv/node-22-slim",
       tags: [
@@ -337,6 +350,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[7],
     {
+      id: "node-rbenv-node-22-slim-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-22-slim/ruby-3",
       tags: [
@@ -354,6 +368,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[8],
     {
+      id: "node-rbenv-node-24",
       image: "node-rbenv",
       context: "images/node-rbenv/node-24",
       tags: [
@@ -367,6 +382,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[9],
     {
+      id: "node-rbenv-node-24-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-24/ruby-3",
       tags: [
@@ -384,6 +400,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[10],
     {
+      id: "node-rbenv-node-24-slim",
       image: "node-rbenv",
       context: "images/node-rbenv/node-24-slim",
       tags: [
@@ -397,6 +414,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[11],
     {
+      id: "node-rbenv-node-24-slim-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-24-slim/ruby-3",
       tags: [
@@ -414,6 +432,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
   assert.deepStrictEqual(
     entries[12],
     {
+      id: "node-rbenv-node-latest",
       image: "node-rbenv",
       context: "images/node-rbenv/node-latest",
       tags: "kula/node-rbenv:latest",
@@ -429,6 +448,7 @@ test("generateMatrix includes all variants of pulumi-toolbox", () => {
   assert.deepStrictEqual(
     entries[0],
     {
+      id: "pulumi-toolbox-alpine",
       image: "pulumi-toolbox",
       context: "images/pulumi-toolbox/alpine",
       tags: "kula/pulumi-toolbox:alpine",
@@ -438,6 +458,7 @@ test("generateMatrix includes all variants of pulumi-toolbox", () => {
   assert.deepStrictEqual(
     entries[1],
     {
+      id: "pulumi-toolbox-bookworm",
       image: "pulumi-toolbox",
       context: "images/pulumi-toolbox/bookworm",
       tags: "kula/pulumi-toolbox:bookworm",
@@ -447,6 +468,7 @@ test("generateMatrix includes all variants of pulumi-toolbox", () => {
   assert.deepStrictEqual(
     entries[2],
     {
+      id: "pulumi-toolbox-bookworm-rbenv",
       image: "pulumi-toolbox",
       context: "images/pulumi-toolbox/bookworm-rbenv",
       tags: "kula/pulumi-toolbox:bookworm-rbenv",
@@ -460,6 +482,7 @@ test("generateMatrix includes all variants of rsync", () => {
   const matrix = generateMatrix();
   const entries = matrix.filter((item) => item.image === "rsync");
   assert.deepStrictEqual(entries[0], {
+    id: "rsync-alpine",
     image: "rsync",
     context: "images/rsync/alpine",
     tags: "kula/rsync:alpine",
@@ -471,6 +494,7 @@ test("generateMatrix includes all variants of tree", () => {
   const matrix = generateMatrix();
   const entries = matrix.filter((item) => item.image === "tree");
   assert.deepStrictEqual(entries[0], {
+    id: "tree-alpine",
     image: "tree",
     context: "images/tree/alpine",
     tags: "kula/tree:alpine",
