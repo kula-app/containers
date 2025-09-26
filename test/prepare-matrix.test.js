@@ -135,9 +135,9 @@ test("images contains all known images and variants", () => {
 
 test("generateMatrix returns expected structure", () => {
   const matrix = generateMatrix();
-  assert.notEqual(matrix.include, undefined, "matrix should not be undefined");
-  assert.ok(Array.isArray(matrix.include), "matrix should be an array");
-  assert.ok(matrix.include.length > 0, "matrix should not be empty");
+  assert.notEqual(matrix, undefined, "matrix should not be undefined");
+  assert.ok(Array.isArray(matrix), "matrix should be an array");
+  assert.ok(matrix.length > 0, "matrix should not be empty");
 });
 
 test("generateMatrix includes all images and variants", () => {
@@ -145,12 +145,12 @@ test("generateMatrix includes all images and variants", () => {
   for (const image of images) {
     for (const variant of image.variants) {
       assert.ok(
-        matrix.include.some(
+        matrix.some(
           (item) =>
             item.image === image.name &&
             item.context === `images/${image.name}/${variant.name}`
         ),
-        `matrix should include ${image.name}, found: ${matrix.include.length}`
+        `matrix should include ${image.name}, found: ${matrix.length}`
       );
     }
   }
@@ -158,7 +158,7 @@ test("generateMatrix includes all images and variants", () => {
 
 test("generateMatrix includes all variants of curl", () => {
   const matrix = generateMatrix();
-  const entries = matrix.include.filter((item) => item.image === "curl");
+  const entries = matrix.filter((item) => item.image === "curl");
   assert.deepStrictEqual(
     entries[0],
     {
@@ -173,7 +173,7 @@ test("generateMatrix includes all variants of curl", () => {
 
 test("generateMatrix includes all variants of jq", () => {
   const matrix = generateMatrix();
-  const entries = matrix.include.filter((item) => item.image === "jq");
+  const entries = matrix.filter((item) => item.image === "jq");
   assert.deepStrictEqual(
     entries[0],
     {
@@ -197,7 +197,7 @@ test("generateMatrix includes all variants of jq", () => {
 
 test("generateMatrix includes all variants of lftp", () => {
   const matrix = generateMatrix();
-  const entries = matrix.include.filter((item) => item.image === "lftp");
+  const entries = matrix.filter((item) => item.image === "lftp");
   assert.deepStrictEqual(
     entries[0],
     {
@@ -230,7 +230,7 @@ test("generateMatrix includes all variants of lftp", () => {
 
 test("generateMatrix includes all variants of node-rbenv", () => {
   const matrix = generateMatrix();
-  const entries = matrix.include.filter((item) => item.image === "node-rbenv");
+  const entries = matrix.filter((item) => item.image === "node-rbenv");
   assert.deepStrictEqual(
     entries[0],
     {
@@ -425,9 +425,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
 
 test("generateMatrix includes all variants of pulumi-toolbox", () => {
   const matrix = generateMatrix();
-  const entries = matrix.include.filter(
-    (item) => item.image === "pulumi-toolbox"
-  );
+  const entries = matrix.filter((item) => item.image === "pulumi-toolbox");
   assert.deepStrictEqual(
     entries[0],
     {
@@ -460,7 +458,7 @@ test("generateMatrix includes all variants of pulumi-toolbox", () => {
 
 test("generateMatrix includes all variants of rsync", () => {
   const matrix = generateMatrix();
-  const entries = matrix.include.filter((item) => item.image === "rsync");
+  const entries = matrix.filter((item) => item.image === "rsync");
   assert.deepStrictEqual(entries[0], {
     image: "rsync",
     context: "images/rsync/alpine",
@@ -471,7 +469,7 @@ test("generateMatrix includes all variants of rsync", () => {
 
 test("generateMatrix includes all variants of tree", () => {
   const matrix = generateMatrix();
-  const entries = matrix.include.filter((item) => item.image === "tree");
+  const entries = matrix.filter((item) => item.image === "tree");
   assert.deepStrictEqual(entries[0], {
     image: "tree",
     context: "images/tree/alpine",

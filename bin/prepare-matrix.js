@@ -246,7 +246,7 @@ function getContext(image, variant, subvariant) {
 
 /**
  * Scan directory structure and generate matrix
- * @returns {{include: {image: string, context: string, tags: string[]}[]}} Matrix array
+ * @returns {{image: string, context: string, tags: string[]}[]}} Matrix array
  */
 function generateMatrix() {
   const matrix = [];
@@ -271,9 +271,7 @@ function generateMatrix() {
       }
     }
   }
-  return {
-    include: matrix,
-  };
+  return matrix;
 }
 
 /**
