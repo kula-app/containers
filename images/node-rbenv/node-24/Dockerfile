@@ -1,4 +1,4 @@
-FROM node:24.8.0
+FROM node:24.9.0
 
 # Update dependencies
 RUN apt-get update -qq >/dev/null && apt-get upgrade -y --no-install-recommends
