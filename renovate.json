@@ -1,15 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
+  "extends": ["config:recommended"],
   "packageRules": [
     {
       "matchUpdateTypes": ["major"],
       "enabled": false
     }
   ],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": [".github/workflows/build-images.yml"],
+      "customType": "regex",
+      "managerFilePatterns": ["/.github/workflows/build-images.yml/"],
       "matchStrings": [
         "kula/node-rbenv:(?<currentValue>[\\d\\.]*)$",
         "kula/node-rbenv:(?<currentValue>[\\d\\.]*-slim)$"
@@ -18,7 +19,11 @@
       "depNameTemplate": "node"
     },
     {
-      "fileMatch": [".github/workflows/build-images.yml", "Dockerfile"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/.github/workflows/build-images.yml/",
+        "/Dockerfile/"
+      ],
       "matchStrings": [
         "kula/node-rbenv:[\\d\\.]*-ruby(?<currentValue>[\\d\\.]*)$",
         "ENV RUBY_VERSION (?<currentValue>.*)$"
