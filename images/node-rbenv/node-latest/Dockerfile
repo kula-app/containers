@@ -1,8 +1,13 @@
 # syntax=docker/dockerfile:1
 
+# ====================================================== VERSIONS ======================================================
+
+# renovate: datasource=github-releases depName=node/node versioning=loose
+ARG NODE_VERSION=latest
+
 # ====================================================== PRODUCT =======================================================
 
-FROM node:latest
+FROM node:${NODE_VERSION}
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
