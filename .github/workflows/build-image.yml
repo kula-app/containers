@@ -64,24 +64,22 @@ jobs:
         with:
           context: ${{ inputs.context }}
           platforms: ${{ matrix.platform.name }}
-          tags: ${{ inputs.tags }}
+          tags: kula/${{ inputs.image }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }}
 
       - name: Export digest
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          set -e
-          mkdir -p /tmp/digests
+          mkdir -p ${{ runner.temp }}/digests
           digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${digest#sha256:}"
-          ls -la /tmp/digests
+          touch "${{ runner.temp }}/digests/${digest#sha256:}"
 
       - name: Upload digest
         if: ${{ github.event_name != 'pull_request' }}
         uses: actions/upload-artifact@v4
         with:
           name: digests-${{ inputs.image }}-${{ matrix.platform.tag }}
-          path: /tmp/digests/*
+          path: ${{ runner.temp }}/digests/*
           if-no-files-found: error
           retention-days: 1
 
@@ -89,9 +87,14 @@ jobs:
     name: Merge Manifests
     needs: build-platform
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' }}
     steps:
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-${{ inputs.image }}-*
+          merge-multiple: true
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -106,17 +109,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download digests for image
-        uses: actions/download-artifact@v5
-        with:
-          path: /tmp/digests
-          pattern: digests-${{ inputs.image }}-*
-          merge-multiple: true
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Create and push multi-arch manifest
-        if: ${{ github.event_name != 'pull_request' }}
-        working-directory: /tmp/digests
-        shell: bash
+      - name: Create manifest list and push
+        working-directory: ${{ runner.temp }}/digests
         run: |
           set -euo pipefail
           TAGS='${{ inputs.tags }}'
@@ -124,18 +121,22 @@ jobs:
             echo "No tags provided for image, skipping" >&2
             exit 1
           fi
+          
+          # Convert newline-separated tags to -t arguments
           image_tags=$(printf '%s' "$TAGS" | awk '{print "-t "$0}' | xargs)
           echo "Creating manifest list with tags: $image_tags"
+          
+          # Build digest references for the repository (using first tag to get repo name)
+          repo=$(printf '%s' "$TAGS" | head -n1 | cut -d: -f1)
           digest_refs=""
-          while IFS= read -r tag; do
-            repo=${tag%%:*}
-            for f in *; do
-              digest_refs="$digest_refs ${repo}@sha256:${f}"
-            done
-          done <<EOF
-          $TAGS
-          EOF
+          for f in *; do
+            digest_refs="$digest_refs ${repo}@sha256:${f}"
+          done
           echo "Digest references: $digest_refs"
+          
           docker buildx imagetools create $image_tags $digest_refs
-          first_tag=$(printf '%s' "$TAGS" | head -n1)
+
+      - name: Inspect image
+        run: |
+          first_tag=$(printf '%s' '${{ inputs.tags }}' | head -n1)
           docker buildx imagetools inspect "$first_tag"
