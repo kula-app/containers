@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   generate-matrix:
+    name: Generate Matrix
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
@@ -28,53 +29,33 @@ jobs:
         with:
           script: |
             const script = require('./bin/prepare-matrix.js')
-            const matrix = script.main()
+            core.setOutput('matrix', script.generateMatrix())
 
-            console.log('Generated matrix:')
-            console.log(JSON.stringify({ include: matrix }, null, 2))
-
-            core.setOutput('matrix', JSON.stringify({ include: matrix }))
-
-            return { include: matrix }
-
-  build-publish-image:
+  build-each-image:
+    name: Build Image (${{ matrix.image.context }})
     needs: generate-matrix
-    runs-on: ubuntu-latest
-    name: 'Build Images (${{ matrix.context}})'
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+      matrix:
+        image: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    uses: ./.github/workflows/build-image.yml
+    with:
+      id: ${{ matrix.image.id }}
+      image: ${{ matrix.image.image }}
+      context: ${{ matrix.image.context }}
+      tags: ${{ matrix.image.tags }}
+    secrets: inherit
 
+  required-check:
+    needs: [generate-matrix, build-each-image]
+    name: Build Images
+    # This is necessary since a failed/skipped dependent job would cause this job to be skipped
+    if: always()
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: kula
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build Image
-        uses: docker/build-push-action@v5
-        if: always()
-        with:
-          cache-from: type=registry,ref=ghcr.io/kula-app/containers/${{ matrix.image }}:buildcache
-          cache-to: type=registry,ref=ghcr.io/kula-app/containers/${{ matrix.image }}:buildcache,mode=max
-          context: images/${{ matrix.context }}
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ matrix.tags }}
+      # If any jobs we depend on fails gets cancelled or times out, this job will fail.
+      # Skipped jobs are not considered failures.
+      - name: Check for failures
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: |
+          echo "One of the build jobs has failed." && exit 1
