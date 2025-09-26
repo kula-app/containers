@@ -12,6 +12,10 @@ ARG RUBY_VERSION=3.4.5
 FROM kula/node-rbenv:${NODE_VERSION}-slim
 ARG RUBY_VERSION
 
+# Metadata
+LABEL maintainer="kula app GmbH <opensource@kula.app>"
+LABEL description="Container with rbenv and node 20 slim with ruby 3"
+
 # Install ruby versions
 RUN rbenv install ${RUBY_VERSION} && rbenv global ${RUBY_VERSION}
 
