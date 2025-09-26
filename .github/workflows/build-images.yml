@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - fix-prepare-matrix
   pull_request:
   workflow_dispatch:
   schedule:
@@ -32,7 +33,7 @@ jobs:
             core.setOutput('matrix', script.generateMatrix())
 
   build-each-image:
-    name: Build Image (${{ matrix.image.image }} - ${{ matrix.image.context }})
+    name: Build Image (${{ matrix.image.context }})
     needs: generate-matrix
     strategy:
       fail-fast: false
