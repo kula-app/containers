@@ -1,4 +1,12 @@
+# syntax=docker/dockerfile:1
+
+# ====================================================== PRODUCT =======================================================
+
 FROM node:latest
+
+# Metadata
+LABEL maintainer="kula app GmbH <opensource@kula.app>"
+LABEL description="Container with rbenv and latest node version"
 
 # Update dependencies
 RUN apt-get update -qq > /dev/null && apt-get upgrade -y --no-install-recommends
@@ -36,5 +44,7 @@ RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plu
 ENV RBENV_ROOT /usr/local/rbenv
 ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
 
-# Smoke test
-RUN rbenv --version
+# Smoke tests
+RUN set -x && \
+    node --version && \
+    rbenv --version

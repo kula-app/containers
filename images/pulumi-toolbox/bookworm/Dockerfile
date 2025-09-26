@@ -1,12 +1,7 @@
 # syntax=docker/dockerfile:1
 
-# ======================================================================================================================
+# ====================================================== VERSIONS ======================================================
 
-#region -- Download Base --
-FROM alpine AS dl
-ARG TARGETARCH
-
-# -- Versions --
 # renovate: datasource=github-releases depName=golang/go versioning=loose
 ARG GO_VERSION=1.25.0
 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=loose
@@ -14,14 +9,17 @@ ARG KUBECTL_VERSION=1.30.0
 # renovate: datasource=github-releases depName=pulumi/pulumi versioning=loose
 ARG PULUMI_VERSION=3.144.1
 
+# ==================================================== DOWNLOAD BASE ===================================================
+
+FROM alpine AS dl
+ARG TARGETARCH
+
 WORKDIR /tmp
 
 RUN apk add --no-cache curl unzip
-#endregion
 
-# ======================================================================================================================
+# ================================================== DOWNLOAD: AWS CLI =================================================
 
-#region -- Download: aws-cli --
 FROM dl AS dl-awscli
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
@@ -33,43 +31,37 @@ else
   exit 1
 fi
 EOT
-#endregion
 
-# ======================================================================================================================
+# =================================================== DOWNLOAD: KUBECTL ================================================
 
-#region -- Download: kubectl --
 FROM dl AS dl-kubectl
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
-  curl -LO --fail "https://dl.k8s.io/release/v1.30.0/bin/linux/amd64/kubectl"
+  curl -LO --fail "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
 elif [ "${TARGETARCH}" = "arm64" ]; then
-  curl -LO --fail "https://dl.k8s.io/release/v1.30.0/bin/linux/arm64/kubectl"
+  curl -LO --fail "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/arm64/kubectl"
 else
   echo "Unsupported target architecture: ${TARGETARCH}"
   exit 1
 fi
 EOT
-#endregion
 
-# ======================================================================================================================
+#= ================================================= DOWNLOAD: PULUMI ==================================================
 
-#region -- Download: pulumi --
 FROM dl AS dl-pulumi
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
-  curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v3.144.1-linux-x64.tar.gz" -o pulumi.tar.gz
+  curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_VERSION}-linux-x64.tar.gz" -o pulumi.tar.gz
 elif [ "${TARGETARCH}" = "arm64" ]; then
-  curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v3.144.1-linux-arm64.tar.gz" -o pulumi.tar.gz
+  curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_VERSION}-linux-arm64.tar.gz" -o pulumi.tar.gz
 else
   echo "Unsupported target architecture: ${TARGETARCH}"
   exit 1
 fi
 EOT
-#endregion
 
-# ======================================================================================================================
+# ==================================================== DOWNLOAD: GO ====================================================
 
-#region -- Download: go --
 FROM dl AS dl-go
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
@@ -81,11 +73,9 @@ else
   exit 1
 fi
 EOT
-#endregion
 
-# ======================================================================================================================
+# ==================================================== PRODUCT =========================================================
 
-#region -- Product --
 FROM bitnami/minideb:bookworm AS main
 
 # Metadata
@@ -147,10 +137,7 @@ RUN tar -xvzf go.tar.gz && \
   rm -rf go.tar.gz
 ENV PATH="/usr/local/go/bin:${PATH}"
 
-# +-------------+
-# | Smoke Tests |
-# +-------------+
-
+# Smoke tests
 RUN set -x && \
   aws --version && \
   curl --version && \
@@ -163,6 +150,3 @@ RUN set -x && \
   kubectl version --client=true && \
   pulumi about && \
   go version
-#endregion
-
-# ======================================================================================================================

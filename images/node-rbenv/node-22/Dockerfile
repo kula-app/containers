@@ -1,4 +1,19 @@
-FROM node:22.20.0
+# syntax=docker/dockerfile:1
+
+# ====================================================== VERSIONS ======================================================
+
+# renovate: datasource=github-releases depName=node/node versioning=loose
+ARG NODE_VERSION=22.20.0
+# renovate: datasource=github-releases depName=ruby/ruby versioning=loose
+ARG RUBY_VERSION=3.4.5
+
+# ====================================================== PRODUCT =======================================================
+
+FROM node:${NODE_VERSION}
+
+# Metadata
+LABEL maintainer="kula app GmbH <opensource@kula.app>"
+LABEL description="Container with rbenv and node 22"
 
 # Update dependencies
 RUN apt-get update -qq >/dev/null && apt-get upgrade -y --no-install-recommends
@@ -36,5 +51,7 @@ RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plu
 ENV RBENV_ROOT /usr/local/rbenv
 ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
 
-# Smoke test
-RUN rbenv --version
+# Smoke tests
+RUN set -x && \
+    node --version && \
+    rbenv --version
