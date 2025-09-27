@@ -1,12 +1,19 @@
 # syntax=docker/dockerfile:1
 
-# ======================================================================================================================
+# ====================================================== VERSIONS ======================================================
 
-#region -- Product --
+# renovate: datasource=github-releases depName=ruby/ruby versioning=loose
+ARG RUBY_VERSION=3.4.5
+
+# ====================================================== PRODUCT =======================================================
+
 FROM kula/pulumi-toolbox:bookworm
-#endregion
+ARG RUBY_VERSION
 
-#region -- Install rbenv --
+# Metadata
+LABEL maintainer="kula app GmbH <opensource@kula.app>"
+LABEL description="Container with CLI utilities used with Pulumi based on Bookworm with rbenv"
+
 # Install dependencies of rbenv
 # Reference: https://github.com/rbenv/ruby-build/wiki#ubuntudebianmint
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
@@ -43,23 +50,15 @@ RUN mkdir /usr/local/rbenv/plugins && \
 # Setup rbenv shimming
 ENV RBENV_ROOT=/usr/local/rbenv
 ENV PATH=$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
-#endregion
 
-#region -- Install Ruby --
-RUN rbenv install 3.4.1
-
-RUN rbenv install 3.4.2
-RUN rbenv global 3.4.2
+# Install ruby
+RUN rbenv install ${RUBY_VERSION} && rbenv global ${RUBY_VERSION}
 
 RUN gem install bundler
-#endregion
 
-#region -- Smoke Tests --
+# Smoke tests
 RUN set -x && \
     rbenv --version && \
     ruby --version && \
     gem --version && \
     bundler --version
-#endregion
-
-# # ======================================================================================================================

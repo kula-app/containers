@@ -1,12 +1,9 @@
 # syntax=docker/dockerfile:1
 
-# ======================================================================================================================
+# ====================================================== VERSIONS ======================================================
 
-#region -- Download Base --
-FROM alpine AS dl
-ARG TARGETARCH
-
-# -- Versions --
+# renovate: datasource=docker depName=alpine versioning=loose
+ARG ALPINE_VERSION=3.22
 # renovate: datasource=github-releases depName=golang/go versioning=loose
 ARG GO_VERSION=1.25.0
 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=loose
@@ -14,15 +11,19 @@ ARG KUBECTL_VERSION=1.30.0
 # renovate: datasource=github-releases depName=pulumi/pulumi versioning=loose
 ARG PULUMI_VERSION=3.144.1
 
+# ==================================================== DOWNLOAD BASE ===================================================
+
+FROM alpine AS dl
+ARG TARGETARCH
+
 WORKDIR /tmp
 
 RUN apk add --no-cache curl unzip
-#endregion
 
-# ======================================================================================================================
+# =================================================== DOWNLOAD: KUBECTL ================================================
 
-#region -- Download: kubectl --
 FROM dl AS dl-kubectl
+ARG KUBECTL_VERSION
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
   curl -LO --fail "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
@@ -33,12 +34,11 @@ else
   exit 1
 fi
 EOT
-#endregion
 
-# ======================================================================================================================
+#= ================================================= DOWNLOAD: PULUMI ==================================================
 
-#region -- Download: pulumi --
 FROM dl AS dl-pulumi
+ARG PULUMI_VERSION
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
   curl -L --fail "https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_VERSION}-linux-x64.tar.gz" -o pulumi.tar.gz
@@ -49,12 +49,11 @@ else
   exit 1
 fi
 EOT
-#endregion
 
-# ======================================================================================================================
+# ==================================================== DOWNLOAD: GO ====================================================
 
-#region -- Download: go --
 FROM dl AS dl-go
+ARG GO_VERSION
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
   curl -L --fail "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" -o go.tar.gz
@@ -65,12 +64,11 @@ else
   exit 1
 fi
 EOT
-#endregion
 
-# ======================================================================================================================
+# ==================================================== PRODUCT =========================================================
 
-#region -- Product --
-FROM alpine:3.22 AS main
+FROM alpine:${ALPINE_VERSION} AS main
+ARG ALPINE_VERSION
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
@@ -110,10 +108,7 @@ RUN tar -xvzf go.tar.gz && \
   rm -rf go.tar.gz
 ENV PATH="/usr/local/go/bin:${PATH}"
 
-# +-------------+
-# | Smoke Tests |
-# +-------------+
-
+# Smoke tests
 RUN set -x && \
   aws --version && \
   curl --version && \
@@ -125,6 +120,3 @@ RUN set -x && \
   kubectl version --client=true && \
   pulumi about && \
   go version
-#endregion
-
-# ======================================================================================================================

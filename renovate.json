@@ -18,6 +18,16 @@
         "minor",
         "patch"
       ]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "matchDatasources": ["github-releases"],
+      "matchDepNames": ["node/node"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     }
   ],
   "rebaseLabel": "renovate:rebase",

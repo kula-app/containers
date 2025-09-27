@@ -159,9 +159,9 @@ function getRubySemver(image, variant, subvariant) {
   if (!content) {
     return null;
   }
-  // e.g. ENV RUBY_VERSION 3.4.5
+  // e.g. ARG RUBY_VERSION=3.4.5
   const match = content.match(
-    /ENV\s+RUBY_VERSION\s+([0-9]+)\.([0-9]+)\.([0-9]+)/
+    /ARG\s+RUBY_VERSION=([0-9]+)\.([0-9]+)\.([0-9]+)/
   );
   if (!match) return null;
   return {
@@ -177,9 +177,9 @@ function getNodeSemver(image, variant, subvariant) {
   if (!content) {
     return null;
   }
-  // e.g. FROM node:20.19.5 or FROM node:20.19.5-slim
+  // e.g. ARG NODE_VERSION=20.19.5 or ARG NODE_VERSION=20.19.5-slim
   const match = content.match(
-    /FROM\s+node:([0-9]+)\.([0-9]+)\.([0-9]+)(?:-[^\s]+)?/
+    /ARG\s+NODE_VERSION=([0-9]+)\.([0-9]+)\.([0-9]+)(?:-[^\s]+)?/
   );
   if (!match) return null;
   return {
