@@ -8,6 +8,7 @@ ARG RUBY_VERSION=3.4.5
 # ====================================================== PRODUCT =======================================================
 
 FROM kula/pulumi-toolbox:bookworm
+ARG RUBY_VERSION
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
