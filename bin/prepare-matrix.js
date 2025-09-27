@@ -28,10 +28,10 @@ const images = [
     variants: [
       {
         name: "alpine",
-        latest: true,
       },
       {
         name: "bookworm",
+        latest: true,
       },
     ],
   },
@@ -87,6 +87,7 @@ const images = [
       },
       {
         name: "node-24",
+        latest: true,
         subvariants: [
           {
             name: "ruby-3",
@@ -126,6 +127,7 @@ const images = [
     variants: [
       {
         name: "alpine",
+        latest: true,
       },
     ],
   },
@@ -134,6 +136,7 @@ const images = [
     variants: [
       {
         name: "alpine",
+        latest: true,
       },
     ],
   },
@@ -201,33 +204,47 @@ function generateTags(image, variant, subvariant) {
   const node = getNodeSemver(image.name, variant.name, undefined);
   if (!subvariant) {
     // Base variant tags: major, minor, patch (no "-slim" suffix in tags per tests)
-    if (!node) return [`kula/${image.name}:${variant.name}`];
-    return [
-      `kula/${image.name}:${node.major}`,
-      `kula/${image.name}:${node.minor}`,
-      `kula/${image.name}:${node.patch}`,
+    if (!node) {
+      let tags = [`kula/${image.name}:${variant.name}`];
+      if (variant.latest) {
+        tags.push(`kula/${image.name}:latest`);
+      }
+      return tags;
+    }
+
+    // For node variants, include slim suffix if present
+    const variantSuffix = variant.name.includes("-slim") ? "-slim" : "";
+    let tags = [
+      `kula/${image.name}:${node.major}${variantSuffix}`,
+      `kula/${image.name}:${node.minor}${variantSuffix}`,
+      `kula/${image.name}:${node.patch}${variantSuffix}`,
     ];
+    if (variant.latest) {
+      tags.push(`kula/${image.name}:latest`);
+    }
+    return tags;
   }
 
-  // Subvariant tags: include node minor plain, and node minor/patch with ruby suffixes
+  // Subvariant tags: include ruby suffixes with node versions
   const ruby = getRubySemver(image.name, variant.name, subvariant?.name);
   if (!node || !ruby) {
-    return [`kula/${image.name}:${variant.name}-${subvariant.name}`];
+    let tags = [`kula/${image.name}:${variant.name}-${subvariant.name}`];
+    if (variant.latest) {
+      tags.push(`kula/${image.name}:latest`);
+    }
+    return tags;
   }
 
-  return [
-    // plain node minor tag
-    `kula/${image.name}:${node.minor}`,
-    // ruby major
-    `kula/${image.name}:${node.minor}-ruby${ruby.major}`,
-    `kula/${image.name}:${node.patch}-ruby${ruby.major}`,
-    // ruby minor
-    `kula/${image.name}:${node.minor}-ruby${ruby.minor}`,
-    `kula/${image.name}:${node.patch}-ruby${ruby.minor}`,
-    // ruby patch
-    `kula/${image.name}:${node.minor}-ruby${ruby.patch}`,
-    `kula/${image.name}:${node.patch}-ruby${ruby.patch}`,
-  ];
+  const variantSuffix = variant.name.includes("-slim") ? "-slim" : "";
+  let tags = [];
+  for (const nodeVersion of [node.major, node.minor, node.patch]) {
+    for (const rubyVersion of [ruby.major, ruby.minor, ruby.patch]) {
+      tags.push(
+        `kula/${image.name}:${nodeVersion}${variantSuffix}-ruby${rubyVersion}`
+      );
+    }
+  }
+  return tags;
 }
 
 /**
@@ -252,15 +269,12 @@ function generateMatrix() {
   const matrix = [];
   for (const image of images) {
     for (const variant of image.variants) {
-      // Always include the base variant entry first
       matrix.push({
         id: `${image.name}-${variant.name}`,
         image: image.name,
         context: getContext(image, variant),
         tags: generateTags(image, variant).join("\n"),
       });
-
-      // Then include subvariants, if any
       if (variant.subvariants) {
         for (const subvariant of variant.subvariants) {
           matrix.push({
