@@ -373,8 +373,8 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       context: "images/node-rbenv/node-24",
       tags: [
         "kula/node-rbenv:24",
-        "kula/node-rbenv:24.8",
-        "kula/node-rbenv:24.8.0",
+        "kula/node-rbenv:24.9",
+        "kula/node-rbenv:24.9.0",
       ].join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[8].tags}`
@@ -386,13 +386,13 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       image: "node-rbenv",
       context: "images/node-rbenv/node-24/ruby-3",
       tags: [
-        "kula/node-rbenv:24.8",
-        "kula/node-rbenv:24.8-ruby3",
-        "kula/node-rbenv:24.8.0-ruby3",
-        "kula/node-rbenv:24.8-ruby3.4",
-        "kula/node-rbenv:24.8.0-ruby3.4",
-        "kula/node-rbenv:24.8-ruby3.4.5",
-        "kula/node-rbenv:24.8.0-ruby3.4.5",
+        "kula/node-rbenv:24.9",
+        "kula/node-rbenv:24.9-ruby3",
+        "kula/node-rbenv:24.9.0-ruby3",
+        "kula/node-rbenv:24.9-ruby3.4",
+        "kula/node-rbenv:24.9.0-ruby3.4",
+        "kula/node-rbenv:24.9-ruby3.4.5",
+        "kula/node-rbenv:24.9.0-ruby3.4.5",
       ].join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[9].tags}`
@@ -405,8 +405,8 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       context: "images/node-rbenv/node-24-slim",
       tags: [
         "kula/node-rbenv:24",
-        "kula/node-rbenv:24.8",
-        "kula/node-rbenv:24.8.0",
+        "kula/node-rbenv:24.9",
+        "kula/node-rbenv:24.9.0",
       ].join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[10].tags}`
@@ -418,13 +418,13 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       image: "node-rbenv",
       context: "images/node-rbenv/node-24-slim/ruby-3",
       tags: [
-        "kula/node-rbenv:24.8",
-        "kula/node-rbenv:24.8-ruby3",
-        "kula/node-rbenv:24.8.0-ruby3",
-        "kula/node-rbenv:24.8-ruby3.4",
-        "kula/node-rbenv:24.8.0-ruby3.4",
-        "kula/node-rbenv:24.8-ruby3.4.5",
-        "kula/node-rbenv:24.8.0-ruby3.4.5",
+        "kula/node-rbenv:24.9",
+        "kula/node-rbenv:24.9-ruby3",
+        "kula/node-rbenv:24.9.0-ruby3",
+        "kula/node-rbenv:24.9-ruby3.4",
+        "kula/node-rbenv:24.9.0-ruby3.4",
+        "kula/node-rbenv:24.9-ruby3.4.5",
+        "kula/node-rbenv:24.9.0-ruby3.4.5",
       ].join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[11].tags}`
