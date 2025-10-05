@@ -15,6 +15,14 @@ test("images contains all known images and variants", () => {
       ],
     },
     {
+      name: "atlas-app-services-cli",
+      variants: [
+        {
+          name: "latest",
+        },
+      ],
+    },
+    {
       name: "curl",
       variants: [
         {
@@ -175,6 +183,20 @@ test("generateMatrix includes all variants of android-build-box", () => {
     context: "images/android-build-box/latest",
     tags: "kula/android-build-box:latest",
     platforms: '["linux/amd64"]',
+  });
+  assert.equal(entries.length, 1);
+});
+
+test("generateMatrix includes all variants of atlas-app-services-cli", () => {
+  const matrix = generateMatrix();
+  const entries = matrix.filter(
+    (item) => item.image === "atlas-app-services-cli"
+  );
+  assert.deepStrictEqual(entries[0], {
+    id: "atlas-app-services-cli-latest",
+    image: "atlas-app-services-cli",
+    context: "images/atlas-app-services-cli/latest",
+    tags: "kula/atlas-app-services-cli:latest",
   });
   assert.equal(entries.length, 1);
 });
