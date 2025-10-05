@@ -47,8 +47,7 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            const inputs = "${{ env.INPUT_PLATFORMS }}"
-            const platforms = inputs.platforms ? JSON.parse(inputs.platforms) : ['linux/amd64', 'linux/arm64']
+            const platforms = process.env.INPUT_PLATFORMS ? JSON.parse(process.env.INPUT_PLATFORMS) : ['linux/amd64', 'linux/arm64']
             if (platforms.includes('linux/amd64')) {
               platforms.push({
                 name: 'linux/amd64',
