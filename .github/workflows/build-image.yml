@@ -39,12 +39,15 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       platforms: ${{ steps.platforms-matrix.outputs.platforms }}
+    env:
+      INPUT_PLATFORMS: ${{ inputs.platforms }}
     steps:
       - name: Prepare Platforms Matrix
         id: platforms-matrix
         uses: actions/github-script@v8
         with:
           script: |
+            const inputs = "${{ env.INPUT_PLATFORMS }}"
             const platforms = inputs.platforms ? JSON.parse(inputs.platforms) : ['linux/amd64', 'linux/arm64']
             if (platforms.includes('linux/amd64')) {
               platforms.push({
