@@ -15,6 +15,14 @@ const path = require("path");
  */
 const images = [
   {
+    name: "android-build-box",
+    variants: [
+      {
+        name: "latest",
+      },
+    ],
+  },
+  {
     name: "curl",
     variants: [
       {
