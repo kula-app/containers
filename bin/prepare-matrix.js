@@ -202,8 +202,8 @@ function getNodeSemver(image, variant, subvariant) {
   };
 }
 
-/** @type {(image: string, variant: string, subvariant: string | undefined) => string[]} */
-function generateTags(image, variant, subvariant) {
+/** @type {(image: string, variant: string, subvariant: string | undefined, customTag: string) => string[]} */
+function generateTags(image, variant, subvariant, customTag) {
   // Default behavior for non node-rbenv images: single tag "{variant}"
   // node-latest is special-cased to a single tag
   if (variant.name === "node-latest") {
@@ -219,6 +219,9 @@ function generateTags(image, variant, subvariant) {
       if (variant.latest) {
         tags.push(`kula/${image.name}:latest`);
       }
+      if (customTag && customTag !== "") {
+        tags.push(`kula/${image.name}:${customTag}`);
+      }
       return tags;
     }
 
@@ -229,6 +232,9 @@ function generateTags(image, variant, subvariant) {
       `kula/${image.name}:${node.minor}${variantSuffix}`,
       `kula/${image.name}:${node.patch}${variantSuffix}`,
     ];
+    if (customTag && customTag !== "") {
+      tags.push(`kula/${image.name}:${customTag}`);
+    }
     if (variant.latest) {
       tags.push(`kula/${image.name}:latest`);
     }
@@ -239,6 +245,9 @@ function generateTags(image, variant, subvariant) {
   const ruby = getRubySemver(image.name, variant.name, subvariant?.name);
   if (!node || !ruby) {
     let tags = [`kula/${image.name}:${variant.name}-${subvariant.name}`];
+    if (customTag && customTag !== "") {
+      tags.push(`kula/${image.name}:${customTag}`);
+    }
     if (variant.latest) {
       tags.push(`kula/${image.name}:latest`);
     }
@@ -253,6 +262,9 @@ function generateTags(image, variant, subvariant) {
         `kula/${image.name}:${nodeVersion}${variantSuffix}-ruby${rubyVersion}`
       );
     }
+  }
+  if (customTag) {
+    tags.push(`kula/${image.name}:${customTag}`);
   }
   return tags;
 }
@@ -273,9 +285,10 @@ function getContext(image, variant, subvariant) {
 
 /**
  * Scan directory structure and generate matrix
+ * @param {{customTag: string | undefined} | undefined} options - Options
  * @returns {{image: string, context: string, tags: string[], platforms: string | undefined}[]} Matrix array
  */
-function generateMatrix() {
+function generateMatrix(options) {
   const matrix = [];
   for (const image of images) {
     for (const variant of image.variants) {
@@ -283,7 +296,9 @@ function generateMatrix() {
         id: `${image.name}-${variant.name}`,
         image: image.name,
         context: getContext(image, variant),
-        tags: generateTags(image, variant).join("\n"),
+        tags: generateTags(image, variant, undefined, options?.customTag).join(
+          "\n"
+        ),
       };
       if (image.platforms) {
         entry.platforms = JSON.stringify(image.platforms);
@@ -295,7 +310,12 @@ function generateMatrix() {
             id: `${image.name}-${variant.name}-${subvariant.name}`,
             image: image.name,
             context: getContext(image, variant, subvariant),
-            tags: generateTags(image, variant, subvariant).join("\n"),
+            tags: generateTags(
+              image,
+              variant,
+              subvariant,
+              options?.customTag
+            ).join("\n"),
           };
           if (image.platforms) {
             subEntry.platforms = JSON.stringify(image.platforms);

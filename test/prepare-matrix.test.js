@@ -539,3 +539,114 @@ test("generateMatrix includes all variants of tree", () => {
   });
   assert.equal(entries.length, 1);
 });
+
+test("generateMatrix includes custom tag", () => {
+  const matrix = generateMatrix({ customTag: "custom" });
+  assert.deepStrictEqual(
+    matrix[0].tags,
+    ["kula/android-build-box:latest", "kula/android-build-box:custom"].join(
+      "\n"
+    )
+  );
+  assert.deepStrictEqual(
+    matrix[1].tags,
+    ["kula/curl:alpine", "kula/curl:latest", "kula/curl:custom"].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[2].tags,
+    ["kula/jq:alpine", "kula/jq:custom"].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[3].tags,
+    ["kula/jq:bookworm", "kula/jq:latest", "kula/jq:custom"].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[4].tags,
+    ["kula/lftp:alpine", "kula/lftp:custom"].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[5].tags,
+    ["kula/lftp:bookworm", "kula/lftp:latest", "kula/lftp:custom"].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[6].tags,
+    ["kula/lftp:bullseye", "kula/lftp:custom"].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[7].tags,
+    [
+      "kula/node-rbenv:20",
+      "kula/node-rbenv:20.19",
+      "kula/node-rbenv:20.19.5",
+      "kula/node-rbenv:custom",
+    ].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[8].tags,
+    [
+      "kula/node-rbenv:20-ruby3",
+      "kula/node-rbenv:20-ruby3.4",
+      "kula/node-rbenv:20-ruby3.4.5",
+      "kula/node-rbenv:20.19-ruby3",
+      "kula/node-rbenv:20.19-ruby3.4",
+      "kula/node-rbenv:20.19-ruby3.4.5",
+      "kula/node-rbenv:20.19.5-ruby3",
+      "kula/node-rbenv:20.19.5-ruby3.4",
+      "kula/node-rbenv:20.19.5-ruby3.4.5",
+      "kula/node-rbenv:custom",
+    ].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[15].tags,
+    [
+      "kula/node-rbenv:24",
+      "kula/node-rbenv:24.9",
+      "kula/node-rbenv:24.9.0",
+      "kula/node-rbenv:custom",
+      "kula/node-rbenv:latest",
+    ].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[16].tags,
+    [
+      "kula/node-rbenv:24-ruby3",
+      "kula/node-rbenv:24-ruby3.4",
+      "kula/node-rbenv:24-ruby3.4.5",
+      "kula/node-rbenv:24.9-ruby3",
+      "kula/node-rbenv:24.9-ruby3.4",
+      "kula/node-rbenv:24.9-ruby3.4.5",
+      "kula/node-rbenv:24.9.0-ruby3",
+      "kula/node-rbenv:24.9.0-ruby3.4",
+      "kula/node-rbenv:24.9.0-ruby3.4.5",
+      "kula/node-rbenv:custom",
+    ].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[20].tags,
+    ["kula/pulumi-toolbox:alpine", "kula/pulumi-toolbox:custom"].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[21].tags,
+    [
+      "kula/pulumi-toolbox:bookworm",
+      "kula/pulumi-toolbox:latest",
+      "kula/pulumi-toolbox:custom",
+    ].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[22].tags,
+    [
+      "kula/pulumi-toolbox:bookworm-rbenv",
+      "kula/pulumi-toolbox:custom",
+    ].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[23].tags,
+    ["kula/rsync:alpine", "kula/rsync:latest", "kula/rsync:custom"].join("\n")
+  );
+  assert.deepStrictEqual(
+    matrix[24].tags,
+    ["kula/tree:alpine", "kula/tree:latest", "kula/tree:custom"].join("\n")
+  );
+  assert.equal(matrix.length, 25);
+});

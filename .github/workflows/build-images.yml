@@ -6,6 +6,12 @@ on:
       - main
   pull_request:
   workflow_dispatch:
+    inputs:
+      custom_tag:
+        description: Custom tag to apply to the images
+        required: false
+        type: string
+        default: ''
   schedule:
     - cron: '0 4 * * *'
 
@@ -29,7 +35,9 @@ jobs:
         with:
           script: |
             const script = require('./bin/prepare-matrix.js')
-            core.setOutput('matrix', script.generateMatrix())
+            core.setOutput('matrix', script.generateMatrix({
+              customTag: '${{ github.event.inputs.custom_tag }}',
+            }))
 
   build-each-image:
     name: Build Image (${{ matrix.image.context }})
