@@ -1,7 +1,5 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const path = require("node:path");
-const fs = require("node:fs");
 
 const { generateMatrix, images } = require("../bin/prepare-matrix.js");
 
@@ -9,6 +7,7 @@ test("images contains all known images and variants", () => {
   assert.deepEqual(images, [
     {
       name: "android-build-box",
+      platforms: ["linux/amd64"],
       variants: [
         {
           name: "latest",
@@ -175,6 +174,7 @@ test("generateMatrix includes all variants of android-build-box", () => {
     image: "android-build-box",
     context: "images/android-build-box/latest",
     tags: "kula/android-build-box:latest",
+    platforms: '["linux/amd64"]',
   });
   assert.equal(entries.length, 1);
 });

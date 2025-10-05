@@ -44,6 +44,7 @@ jobs:
       image: ${{ matrix.image.image }}
       context: ${{ matrix.image.context }}
       tags: ${{ matrix.image.tags }}
+      platforms: ${{ matrix.image.platforms }}
     secrets: inherit
 
   required-check:

@@ -5,6 +5,7 @@ const path = require("path");
  * The index of images in this repository
  * @type {{
  *   name: string,
+ *   platforms: string[] | undefined,
  *   variants: {
  *     name: string,
  *     subvariants: {
@@ -16,6 +17,7 @@ const path = require("path");
 const images = [
   {
     name: "android-build-box",
+    platforms: ["linux/amd64"],
     variants: [
       {
         name: "latest",
@@ -271,26 +273,34 @@ function getContext(image, variant, subvariant) {
 
 /**
  * Scan directory structure and generate matrix
- * @returns {{image: string, context: string, tags: string[]}[]}} Matrix array
+ * @returns {{image: string, context: string, tags: string[], platforms: string | undefined}[]} Matrix array
  */
 function generateMatrix() {
   const matrix = [];
   for (const image of images) {
     for (const variant of image.variants) {
-      matrix.push({
+      const entry = {
         id: `${image.name}-${variant.name}`,
         image: image.name,
         context: getContext(image, variant),
         tags: generateTags(image, variant).join("\n"),
-      });
+      };
+      if (image.platforms) {
+        entry.platforms = JSON.stringify(image.platforms);
+      }
+      matrix.push(entry);
       if (variant.subvariants) {
         for (const subvariant of variant.subvariants) {
-          matrix.push({
+          const subEntry = {
             id: `${image.name}-${variant.name}-${subvariant.name}`,
             image: image.name,
             context: getContext(image, variant, subvariant),
             tags: generateTags(image, variant, subvariant).join("\n"),
-          });
+          };
+          if (image.platforms) {
+            subEntry.platforms = JSON.stringify(image.platforms);
+          }
+          matrix.push(subEntry);
         }
       }
     }
