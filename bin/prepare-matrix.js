@@ -42,6 +42,15 @@ const images = [
     ],
   },
   {
+    name: "itms-transporter",
+    variants: [
+      {
+        name: "bookworm",
+        latest: true,
+      },
+    ],
+  },
+  {
     name: "jq",
     variants: [
       {

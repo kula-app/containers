@@ -32,6 +32,15 @@ test("images contains all known images and variants", () => {
       ],
     },
     {
+      name: "itms-transporter",
+      variants: [
+        {
+          name: "bookworm",
+          latest: true,
+        },
+      ],
+    },
+    {
       name: "jq",
       variants: [
         {
@@ -213,6 +222,22 @@ test("generateMatrix includes all variants of curl", () => {
       tags: ["kula/curl:alpine", "kula/curl:latest"].join("\n"),
     },
     `matrix should include curl, found: ${entries[0].tags}`
+  );
+  assert.equal(entries.length, 1);
+});
+
+test("generateMatrix includes all variants of itms-transporter", () => {
+  const matrix = generateMatrix();
+  const entries = matrix.filter((item) => item.image === "itms-transporter");
+  assert.deepStrictEqual(
+    entries[0],
+    {
+      id: "itms-transporter-bookworm",
+      image: "itms-transporter",
+      context: "images/itms-transporter/bookworm",
+      tags: ["kula/itms-transporter:bookworm", "kula/itms-transporter:latest"].join("\n"),
+    },
+    `matrix should include itms-transporter, found: ${entries[0].tags}`
   );
   assert.equal(entries.length, 1);
 });
