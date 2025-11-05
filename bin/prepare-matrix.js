@@ -43,6 +43,7 @@ const images = [
   },
   {
     name: "itms-transporter",
+    platforms: ["linux/amd64"],
     variants: [
       {
         name: "bookworm",

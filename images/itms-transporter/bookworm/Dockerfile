@@ -37,7 +37,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
   # Cleanup
   && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
-# Install ITMS Transporter
+# Install ITMS Transporter (includes bundled Java for x86_64)
 COPY --from=dl-itms-transporter /tmp/transporter/itms /usr/local/
 ENV PATH="/usr/local/itms/bin:${PATH}"
 

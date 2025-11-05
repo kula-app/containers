@@ -33,6 +33,7 @@ test("images contains all known images and variants", () => {
     },
     {
       name: "itms-transporter",
+      platforms: ["linux/amd64"],
       variants: [
         {
           name: "bookworm",
@@ -236,6 +237,7 @@ test("generateMatrix includes all variants of itms-transporter", () => {
       image: "itms-transporter",
       context: "images/itms-transporter/bookworm",
       tags: ["kula/itms-transporter:bookworm", "kula/itms-transporter:latest"].join("\n"),
+      platforms: '["linux/amd64"]',
     },
     `matrix should include itms-transporter, found: ${entries[0].tags}`
   );
