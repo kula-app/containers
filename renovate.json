@@ -5,7 +5,7 @@
   ],
   "keepUpdatedLabel": "renovate:keep-updated",
   "lockFileMaintenance": {
-    "automerge": true,
+    "automerge": false,
     "enabled": true,
     "extends": [
       "schedule:daily"
@@ -13,15 +13,13 @@
   },
   "packageRules": [
     {
-      "automerge": true,
+      "automerge": false,
       "matchUpdateTypes": [
+        "major",
         "minor",
-        "patch"
+        "patch",
+        "digest"
       ]
-    },
-    {
-      "matchUpdateTypes": ["major"],
-      "enabled": false
     },
     {
       "matchDatasources": ["github-releases"],
