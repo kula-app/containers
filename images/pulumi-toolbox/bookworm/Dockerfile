@@ -110,6 +110,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
   git \
   git-lfs \
   gpg \
+  jq \
   less \
   patch \
   perl \
@@ -147,6 +148,7 @@ RUN set -x && \
   git --version && \
   git lfs version && \
   gpg --version && \
+  jq --version && \
   less --version && \
   patch --version && \
   perl --version && \
