@@ -80,6 +80,9 @@ RUN apk add --no-cache aws-cli
 # Install curl
 RUN apk add --no-cache curl
 
+# Install jq
+RUN apk add --no-cache jq
+
 # Install git and supporting utilities
 RUN apk add --no-cache git git-lfs gpg less openssh patch perl && \
   git lfs install
@@ -114,6 +117,7 @@ RUN set -x && \
   curl --version && \
   git lfs version && \
   gpg --version && \
+  jq --version && \
   less --version && \
   patch --version && \
   perl --version && \
