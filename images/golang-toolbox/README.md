@@ -11,6 +11,7 @@ The following CLI tools are included in the Go Toolbox:
 - `bash` - Bash shell (bookworm variant only)
 - `curl` - Command-line HTTP client
 - `pkg-config` - Package configuration tool (bookworm variant only)
+- `unzip` - Archive extraction utility
 
 ## Variants
 

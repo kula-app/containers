@@ -49,6 +49,8 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
   curl \
   # Shell
   bash \
+  # Utilities
+  unzip \
   # Cleanup
   && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
