@@ -47,6 +47,8 @@ RUN apk --no-cache update && \
     git \
     # HTTPS support
     ca-certificates \
+    # Utilities
+    unzip \
     # Cleanup is automatic with --no-cache
     && rm -rf /var/cache/apk/*
 
