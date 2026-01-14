@@ -12,6 +12,7 @@ The following CLI tools are included in the Go Toolbox:
 - `curl` - Command-line HTTP client
 - `pkg-config` - Package configuration tool (bookworm variant only)
 - `unzip` - Archive extraction utility
+- `dprint` - Code formatter
 
 ## Variants
 

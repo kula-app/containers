@@ -4,6 +4,8 @@
 
 # renovate: datasource=github-releases depName=golang/go versioning=loose
 ARG GO_VERSION=1.25.0
+# renovate: datasource=github-releases depName=dprint/dprint versioning=loose
+ARG DPRINT_VERSION=0.51.1
 
 # ==================================================== DOWNLOAD: GO ====================================================
 
@@ -24,6 +26,29 @@ else
   echo "Unsupported target architecture: ${TARGETARCH}"
   exit 1
 fi
+EOT
+
+# ================================================== DOWNLOAD: DPRINT ==================================================
+
+FROM alpine AS dl-dprint
+ARG DPRINT_VERSION
+ARG TARGETARCH
+
+WORKDIR /tmp
+
+RUN apk add --no-cache curl unzip
+
+RUN <<EOT ash
+if [ "${TARGETARCH}" = "amd64" ]; then
+  curl -L --fail "https://github.com/dprint/dprint/releases/download/${DPRINT_VERSION}/dprint-x86_64-unknown-linux-gnu.zip" -o dprint.zip
+elif [ "${TARGETARCH}" = "arm64" ]; then
+  curl -L --fail "https://github.com/dprint/dprint/releases/download/${DPRINT_VERSION}/dprint-aarch64-unknown-linux-gnu.zip" -o dprint.zip
+else
+  echo "Unsupported target architecture: ${TARGETARCH}"
+  exit 1
+fi
+unzip dprint.zip
+chmod +x dprint
 EOT
 
 # ====================================================== PRODUCT =======================================================
@@ -59,6 +84,9 @@ COPY --from=dl-go /tmp/go.tar.gz /tmp/
 RUN tar -C /usr/local -xzf /tmp/go.tar.gz && \
     rm /tmp/go.tar.gz
 
+# Install dprint
+COPY --from=dl-dprint /tmp/dprint /usr/local/bin/dprint
+
 # Set Go environment variables
 ENV PATH="/usr/local/go/bin:${PATH}"
 ENV GOPATH="/go"
@@ -75,7 +103,8 @@ RUN set -x && \
     gcc --version && \
     g++ --version && \
     git --version && \
-    bash --version
+    bash --version && \
+    dprint --version
 
 # Set working directory
 WORKDIR /workspace
