@@ -42,6 +42,18 @@ const images = [
     ],
   },
   {
+    name: "golang-toolbox",
+    variants: [
+      {
+        name: "alpine",
+      },
+      {
+        name: "bookworm",
+        latest: true,
+      },
+    ],
+  },
+  {
     name: "itms-transporter",
     platforms: ["linux/amd64"],
     variants: [
