@@ -9,6 +9,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN apt-get update -y && apt-get install -y \
   python3-pip \
   imagemagick \
+  jq \
   # Install dependencies for rbenv
   autoconf \
   patch \
@@ -37,7 +38,7 @@ RUN pip3 install cookiecutter
 
 ## Install rbenv
 RUN git clone https://github.com/rbenv/rbenv.git /root/.rbenv
-ENV PATH "/root/.rbenv/bin:$PATH"
+ENV PATH="/root/.rbenv/bin:$PATH"
 RUN <<EOF
 echo 'eval "$(rbenv init -)"' >> /root/.bashric
 echo 'eval "$(rbenv init -)"' >> /root/.profile
@@ -50,8 +51,8 @@ PREFIX=/usr/local /root/ruby-build/install.sh
 EOF
 
 # Setup global rbenv shimming
-ENV RBENV_ROOT /usr/local/rbenv
-ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
+ENV RBENV_ROOT=/usr/local/rbenv
+ENV PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
 
 # Install each supported version as its own layer after the default one in reverse order
 # Add additional versions on at the end to keep previous layers
@@ -72,6 +73,7 @@ RUN set -x && \
   pip3 --version && \
   cookiecutter --version && \
   convert --version && \
+  jq --version && \
   rbenv --version && \
   rbenv install --list-all && \
   ruby --version && \
