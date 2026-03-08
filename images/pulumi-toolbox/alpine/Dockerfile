@@ -5,7 +5,7 @@
 # renovate: datasource=docker depName=alpine versioning=loose
 ARG ALPINE_VERSION=3.22
 # renovate: datasource=github-releases depName=golang/go versioning=loose
-ARG GO_VERSION=1.25.0
+ARG GO_VERSION=1.26.0
 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=loose
 ARG KUBECTL_VERSION=1.30.0
 # renovate: datasource=github-releases depName=pulumi/pulumi versioning=loose
