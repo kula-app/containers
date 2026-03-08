@@ -11,6 +11,16 @@
       "schedule:daily"
     ]
   },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["(^|/)Dockerfile$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+) versioning=(?<versioning>[^\\s]+)\\nARG \\w+=(?<currentValue>.+)"
+      ],
+      "extractVersionTemplate": "^(v|go)?(?<version>[\\d][\\d.]+.*)$"
+    }
+  ],
   "packageRules": [
     {
       "automerge": false,
