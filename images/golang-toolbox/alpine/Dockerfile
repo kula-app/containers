@@ -7,7 +7,7 @@ ARG ALPINE_VERSION=3.22
 # renovate: datasource=github-releases depName=golang/go versioning=loose
 ARG GO_VERSION=1.26.0
 # renovate: datasource=github-releases depName=dprint/dprint versioning=loose
-ARG DPRINT_VERSION=0.52.0
+ARG DPRINT_VERSION=0.53.0
 
 # ==================================================== DOWNLOAD: GO ====================================================
 
