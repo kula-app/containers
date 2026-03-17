@@ -5,7 +5,7 @@
 # renovate: datasource=github-releases depName=node/node versioning=loose
 ARG NODE_VERSION=24.9.0
 # renovate: datasource=github-releases depName=ruby/ruby versioning=loose
-ARG RUBY_VERSION=3.4.5
+ARG RUBY_VERSION=4.0.2
 
 # ====================================================== PRODUCT =======================================================
 
