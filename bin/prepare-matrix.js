@@ -148,6 +148,15 @@ const images = [
     ],
   },
   {
+    name: "rcodesign",
+    variants: [
+      {
+        name: "alpine",
+        latest: true,
+      },
+    ],
+  },
+  {
     name: "pulumi-toolbox",
     variants: [
       {

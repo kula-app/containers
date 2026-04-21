@@ -138,6 +138,15 @@ test("images contains all known images and variants", () => {
       ],
     },
     {
+      name: "rcodesign",
+      variants: [
+        {
+          name: "alpine",
+          latest: true,
+        },
+      ],
+    },
+    {
       name: "pulumi-toolbox",
       variants: [
         {
@@ -601,6 +610,18 @@ test("generateMatrix includes all variants of pulumi-toolbox", () => {
     `matrix should include pulumi-toolbox, found: ${entries[2].tags}`
   );
   assert.equal(entries.length, 3);
+});
+
+test("generateMatrix includes all variants of rcodesign", () => {
+  const matrix = generateMatrix();
+  const entries = matrix.filter((item) => item.image === "rcodesign");
+  assert.deepStrictEqual(entries[0], {
+    id: "rcodesign-alpine",
+    image: "rcodesign",
+    context: "images/rcodesign/alpine",
+    tags: ["kula/rcodesign:alpine", "kula/rcodesign:latest"].join("\n"),
+  });
+  assert.equal(entries.length, 1);
 });
 
 test("generateMatrix includes all variants of rsync", () => {
