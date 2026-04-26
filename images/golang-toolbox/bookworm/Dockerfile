@@ -53,9 +53,12 @@ EOT
 
 # ====================================================== PRODUCT =======================================================
 
-FROM bitnami/minideb:bookworm
+FROM kula/base:bookworm
 
 # Metadata
+LABEL org.opencontainers.image.title="golang-toolbox"
+LABEL org.opencontainers.image.description="Container with Go toolchain and essential build tools based on Debian Bookworm"
+LABEL org.opencontainers.image.base.name="kula/base:bookworm"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Container with Go toolchain and essential build tools based on Debian Bookworm"
 
@@ -70,7 +73,6 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
   # Version control
   git \
   # HTTPS support
-  ca-certificates \
   curl \
   # Shell
   bash \

@@ -2,8 +2,6 @@
 
 # ====================================================== VERSIONS ======================================================
 
-# renovate: datasource=docker depName=alpine versioning=loose
-ARG ALPINE_VERSION=3.23
 # renovate: datasource=github-releases depName=golang/go versioning=loose
 ARG GO_VERSION=1.26.0
 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=loose
@@ -67,10 +65,12 @@ EOT
 
 # ==================================================== PRODUCT =========================================================
 
-FROM alpine:${ALPINE_VERSION} AS main
-ARG ALPINE_VERSION
+FROM kula/base:alpine AS main
 
 # Metadata
+LABEL org.opencontainers.image.title="pulumi-toolbox"
+LABEL org.opencontainers.image.description="Container with CLI utilities used with Pulumi based on Alpine"
+LABEL org.opencontainers.image.base.name="kula/base:alpine"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Container with CLI utilities used with Pulumi based on Alpine"
 

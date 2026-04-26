@@ -41,15 +41,18 @@ EOT
 
 # ====================================================== PRODUCT =======================================================
 
-FROM alpine:${ALPINE_VERSION}
+FROM kula/base:alpine
 
 # Metadata
+LABEL org.opencontainers.image.title="rcodesign"
+LABEL org.opencontainers.image.description="Container for signing and notarizing Apple binaries using rcodesign (apple-codesign)"
+LABEL org.opencontainers.image.base.name="kula/base:alpine"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Container for signing and notarizing Apple binaries using rcodesign (apple-codesign)"
 
 # Install runtime dependencies (zip is required to package Mach-O binaries for notarization)
 RUN apk --no-cache update && \
-    apk --no-cache add ca-certificates zip
+    apk --no-cache add zip
 
 # Install rcodesign
 COPY --from=dl-rcodesign /tmp/rcodesign /usr/local/bin/rcodesign

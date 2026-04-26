@@ -366,6 +366,25 @@ function generateMatrix() {
 }
 
 /**
+ * Generate matrix entries for the kula/base images only.
+ * Used by the workflow's first build stage so base images publish before
+ * any consumer image attempts to pull them.
+ * @returns {ReturnType<typeof generateMatrix>} Matrix array
+ */
+function generateBaseMatrix() {
+  return generateMatrix().filter((entry) => entry.image === "base");
+}
+
+/**
+ * Generate matrix entries for everything except the kula/base images.
+ * Used by the workflow's second build stage, gated on the base stage.
+ * @returns {ReturnType<typeof generateMatrix>} Matrix array
+ */
+function generateRestMatrix() {
+  return generateMatrix().filter((entry) => entry.image !== "base");
+}
+
+/**
  * Main function to generate and output matrix
  */
 function main() {
@@ -389,4 +408,6 @@ if (require.main === module) {
 module.exports = {
   images,
   generateMatrix,
+  generateBaseMatrix,
+  generateRestMatrix,
 };

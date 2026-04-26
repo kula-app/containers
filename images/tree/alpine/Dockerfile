@@ -1,15 +1,13 @@
 # syntax=docker/dockerfile:1
 
-# ====================================================== VERSIONS ======================================================
-
-# renovate: datasource=docker depName=alpine versioning=loose
-ARG ALPINE_VERSION=3.23
-
 # ====================================================== PRODUCT =======================================================
 
-FROM alpine:${ALPINE_VERSION}
+FROM kula/base:alpine
 
 # Metadata
+LABEL org.opencontainers.image.title="tree"
+LABEL org.opencontainers.image.description="Minimal container for running tree"
+LABEL org.opencontainers.image.base.name="kula/base:alpine"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Minimal container for running tree"
 

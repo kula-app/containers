@@ -1,15 +1,13 @@
 # syntax=docker/dockerfile:1
 
-# ====================================================== VERSIONS ======================================================
-
-# renovate: datasource=docker depName=bitnami/minideb versioning=loose
-ARG DEBIAN_VERSION=bookworm
-
 # ====================================================== PRODUCT =======================================================
 
-FROM bitnami/minideb:${DEBIAN_VERSION}
+FROM kula/base:bookworm
 
 # Metadata
+LABEL org.opencontainers.image.title="jq"
+LABEL org.opencontainers.image.description="Container for running jq"
+LABEL org.opencontainers.image.base.name="kula/base:bookworm"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Container for running jq"
 

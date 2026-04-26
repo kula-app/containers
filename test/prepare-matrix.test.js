@@ -1,7 +1,12 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { generateMatrix, images } = require("../bin/prepare-matrix.js");
+const {
+  generateMatrix,
+  generateBaseMatrix,
+  generateRestMatrix,
+  images,
+} = require("../bin/prepare-matrix.js");
 
 test("images contains all known images and variants", () => {
   assert.deepEqual(images, [
@@ -694,4 +699,28 @@ test("generateMatrix includes all variants of tree", () => {
     tags: ["kula/tree:alpine", "kula/tree:latest"].join("\n"),
   });
   assert.equal(entries.length, 1);
+});
+
+test("generateBaseMatrix returns only base entries", () => {
+  const baseMatrix = generateBaseMatrix();
+  assert.ok(baseMatrix.length > 0, "base matrix should not be empty");
+  for (const entry of baseMatrix) {
+    assert.equal(entry.image, "base", `expected base entry, got ${entry.image}`);
+  }
+  assert.equal(baseMatrix.length, 3);
+});
+
+test("generateRestMatrix excludes base entries", () => {
+  const restMatrix = generateRestMatrix();
+  assert.ok(restMatrix.length > 0, "rest matrix should not be empty");
+  for (const entry of restMatrix) {
+    assert.notEqual(entry.image, "base", `unexpected base entry in rest matrix`);
+  }
+});
+
+test("generateBaseMatrix and generateRestMatrix together equal generateMatrix", () => {
+  const full = generateMatrix();
+  const base = generateBaseMatrix();
+  const rest = generateRestMatrix();
+  assert.equal(base.length + rest.length, full.length);
 });

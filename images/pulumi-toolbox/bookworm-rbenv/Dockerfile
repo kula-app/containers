@@ -11,6 +11,9 @@ FROM kula/pulumi-toolbox:bookworm
 ARG RUBY_VERSION
 
 # Metadata
+LABEL org.opencontainers.image.title="pulumi-toolbox"
+LABEL org.opencontainers.image.description="Container with CLI utilities used with Pulumi based on Bookworm with rbenv"
+LABEL org.opencontainers.image.base.name="kula/pulumi-toolbox:bookworm"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Container with CLI utilities used with Pulumi based on Bookworm with rbenv"
 

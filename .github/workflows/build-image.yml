@@ -106,6 +106,10 @@ jobs:
           context: ${{ inputs.context }}
           platforms: ${{ matrix.platform.name }}
           tags: kula/${{ inputs.image }}
+          labels: |
+            org.opencontainers.image.created=${{ github.event.repository.updated_at || github.run_started_at }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.version=${{ github.ref_name }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }}
 
       - name: Export digest

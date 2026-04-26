@@ -79,16 +79,17 @@ EOT
 
 # ==================================================== PRODUCT =========================================================
 
-FROM bitnami/minideb:bookworm AS main
+FROM kula/base:bookworm AS main
 
 # Metadata
+LABEL org.opencontainers.image.title="pulumi-toolbox"
+LABEL org.opencontainers.image.description="Container with CLI utilities used with Pulumi based on Debian Bookworm"
+LABEL org.opencontainers.image.base.name="kula/base:bookworm"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
-LABEL description="Container with CLI utilities used with Pulumi based on Alpine"
+LABEL description="Container with CLI utilities used with Pulumi based on Debian Bookworm"
 
 # Install common utilities
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-  # Install root certificates for HTTPS access
-  ca-certificates \
   unzip \
   # Cleanup
   && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives

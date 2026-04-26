@@ -2,8 +2,6 @@
 
 # ====================================================== VERSIONS ======================================================
 
-# renovate: datasource=docker depName=bitnami/minideb versioning=loose
-ARG DEBIAN_VERSION=bookworm
 # renovate: datasource=github-releases depName=indygreg/apple-platform-rs extractVersion=^apple-codesign/(?<version>.*)$ versioning=loose
 ARG RCODESIGN_VERSION=0.29.0
 # SHA-256 of the upstream release tarballs. Update alongside RCODESIGN_VERSION; values are at
@@ -41,15 +39,17 @@ EOT
 
 # ====================================================== PRODUCT =======================================================
 
-FROM bitnami/minideb:${DEBIAN_VERSION}
+FROM kula/base:bookworm
 
 # Metadata
+LABEL org.opencontainers.image.title="rcodesign"
+LABEL org.opencontainers.image.description="Container for signing and notarizing Apple binaries using rcodesign (apple-codesign) based on Debian Bookworm"
+LABEL org.opencontainers.image.base.name="kula/base:bookworm"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Container for signing and notarizing Apple binaries using rcodesign (apple-codesign) based on Debian Bookworm"
 
 # Install runtime dependencies (zip is required to package Mach-O binaries for notarization)
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-    ca-certificates \
     zip \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 

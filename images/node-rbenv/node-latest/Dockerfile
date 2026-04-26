@@ -8,8 +8,18 @@ ARG NODE_VERSION=latest
 # ====================================================== PRODUCT =======================================================
 
 FROM node:${NODE_VERSION}
+ARG NODE_VERSION
 
 # Metadata
+LABEL org.opencontainers.image.authors="kula app GmbH <opensource@kula.app>"
+LABEL org.opencontainers.image.vendor="kula app GmbH"
+LABEL org.opencontainers.image.url="https://github.com/kula-app/containers"
+LABEL org.opencontainers.image.source="https://github.com/kula-app/containers"
+LABEL org.opencontainers.image.documentation="https://github.com/kula-app/containers"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.title="node-rbenv"
+LABEL org.opencontainers.image.description="Container with rbenv and latest node version"
+LABEL org.opencontainers.image.base.name="node:${NODE_VERSION}"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Container with rbenv and latest node version"
 

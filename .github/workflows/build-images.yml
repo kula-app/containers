@@ -18,7 +18,8 @@ jobs:
     name: Generate Matrix
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.matrix.outputs.matrix }}
+      base-matrix: ${{ steps.matrix.outputs.base-matrix }}
+      rest-matrix: ${{ steps.matrix.outputs.rest-matrix }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
@@ -29,15 +30,33 @@ jobs:
         with:
           script: |
             const script = require('./bin/prepare-matrix.js')
-            core.setOutput('matrix', script.generateMatrix())
+            core.setOutput('base-matrix', script.generateBaseMatrix())
+            core.setOutput('rest-matrix', script.generateRestMatrix())
+
+  build-base-image:
+    name: Build Base (${{ matrix.image.context }})
+    needs: generate-matrix
+    strategy:
+      # If any base image fails the downstream stage cannot succeed, so abort early.
+      fail-fast: true
+      matrix:
+        image: ${{ fromJson(needs.generate-matrix.outputs.base-matrix) }}
+    uses: ./.github/workflows/build-image.yml
+    with:
+      id: ${{ matrix.image.id }}
+      image: ${{ matrix.image.image }}
+      context: ${{ matrix.image.context }}
+      tags: ${{ matrix.image.tags }}
+      platforms: ${{ matrix.image.platforms }}
+    secrets: inherit
 
   build-each-image:
     name: Build Image (${{ matrix.image.context }})
-    needs: generate-matrix
+    needs: [generate-matrix, build-base-image]
     strategy:
       fail-fast: false
       matrix:
-        image: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+        image: ${{ fromJson(needs.generate-matrix.outputs.rest-matrix) }}
     uses: ./.github/workflows/build-image.yml
     with:
       id: ${{ matrix.image.id }}
@@ -48,7 +67,7 @@ jobs:
     secrets: inherit
 
   required-check:
-    needs: [generate-matrix, build-each-image]
+    needs: [generate-matrix, build-base-image, build-each-image]
     name: Build Images
     # This is necessary since a failed/skipped dependent job would cause this job to be skipped
     if: always()

@@ -55,9 +55,12 @@ EOT
 
 # ====================================================== PRODUCT =======================================================
 
-FROM alpine:${ALPINE_VERSION}
+FROM kula/base:alpine
 
 # Metadata
+LABEL org.opencontainers.image.title="golang-toolbox"
+LABEL org.opencontainers.image.description="Minimal container for building Go applications with essential build tools"
+LABEL org.opencontainers.image.base.name="kula/base:alpine"
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
 LABEL description="Minimal container for building Go applications with essential build tools"
 
@@ -70,8 +73,6 @@ RUN apk --no-cache update && \
     musl-dev \
     # Version control
     git \
-    # HTTPS support
-    ca-certificates \
     # Utilities
     unzip \
     # Cleanup is automatic with --no-cache
