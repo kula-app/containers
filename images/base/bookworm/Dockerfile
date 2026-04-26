@@ -8,6 +8,7 @@ ARG DEBIAN_VERSION=bookworm-slim
 # ====================================================== PRODUCT =======================================================
 
 FROM debian:${DEBIAN_VERSION}
+ARG DEBIAN_VERSION
 
 # Metadata
 LABEL org.opencontainers.image.authors="kula app GmbH <opensource@kula.app>"

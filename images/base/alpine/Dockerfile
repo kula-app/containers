@@ -8,6 +8,7 @@ ARG ALPINE_VERSION=3.22
 # ====================================================== PRODUCT =======================================================
 
 FROM alpine:${ALPINE_VERSION}
+ARG ALPINE_VERSION
 
 # Metadata
 LABEL org.opencontainers.image.authors="kula app GmbH <opensource@kula.app>"
