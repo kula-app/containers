@@ -3,7 +3,7 @@
 # ====================================================== VERSIONS ======================================================
 
 # renovate: datasource=docker depName=alpine versioning=loose
-ARG ALPINE_VERSION=3.22
+ARG ALPINE_VERSION=3.23
 # renovate: datasource=github-releases depName=indygreg/apple-platform-rs extractVersion=^apple-codesign/(?<version>.*)$ versioning=loose
 ARG RCODESIGN_VERSION=0.29.0
 # SHA-256 of the upstream release tarballs. Update alongside RCODESIGN_VERSION; values are at
