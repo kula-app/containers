@@ -2,8 +2,8 @@
 
 # ====================================================== VERSIONS ======================================================
 
-# renovate: datasource=docker depName=alpine versioning=loose
-ARG ALPINE_VERSION=3.22
+# renovate: datasource=docker depName=bitnami/minideb versioning=loose
+ARG DEBIAN_VERSION=bookworm
 # renovate: datasource=github-releases depName=indygreg/apple-platform-rs extractVersion=^apple-codesign/(?<version>.*)$ versioning=loose
 ARG RCODESIGN_VERSION=0.29.0
 # SHA-256 of the upstream release tarballs. Update alongside RCODESIGN_VERSION; values are at
@@ -13,7 +13,7 @@ ARG RCODESIGN_SHA256_ARM64=4af92c87ddf52f5f2d1258a3b4e56c7dcb8f1b2468df744976c5f
 
 # ================================================ DOWNLOAD: RCODESIGN =================================================
 
-FROM alpine:${ALPINE_VERSION} AS dl-rcodesign
+FROM alpine AS dl-rcodesign
 ARG RCODESIGN_VERSION
 ARG RCODESIGN_SHA256_AMD64
 ARG RCODESIGN_SHA256_ARM64
@@ -41,15 +41,17 @@ EOT
 
 # ====================================================== PRODUCT =======================================================
 
-FROM alpine:${ALPINE_VERSION}
+FROM bitnami/minideb:${DEBIAN_VERSION}
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
-LABEL description="Container for signing and notarizing Apple binaries using rcodesign (apple-codesign)"
+LABEL description="Container for signing and notarizing Apple binaries using rcodesign (apple-codesign) based on Debian Bookworm"
 
 # Install runtime dependencies (zip is required to package Mach-O binaries for notarization)
-RUN apk --no-cache update && \
-    apk --no-cache add ca-certificates zip
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    zip \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
 # Install rcodesign
 COPY --from=dl-rcodesign /tmp/rcodesign /usr/local/bin/rcodesign

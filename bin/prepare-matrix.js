@@ -152,6 +152,9 @@ const images = [
     variants: [
       {
         name: "alpine",
+      },
+      {
+        name: "bookworm",
         latest: true,
       },
     ],

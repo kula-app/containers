@@ -142,6 +142,9 @@ test("images contains all known images and variants", () => {
       variants: [
         {
           name: "alpine",
+        },
+        {
+          name: "bookworm",
           latest: true,
         },
       ],
@@ -619,9 +622,15 @@ test("generateMatrix includes all variants of rcodesign", () => {
     id: "rcodesign-alpine",
     image: "rcodesign",
     context: "images/rcodesign/alpine",
-    tags: ["kula/rcodesign:alpine", "kula/rcodesign:latest"].join("\n"),
+    tags: "kula/rcodesign:alpine",
   });
-  assert.equal(entries.length, 1);
+  assert.deepStrictEqual(entries[1], {
+    id: "rcodesign-bookworm",
+    image: "rcodesign",
+    context: "images/rcodesign/bookworm",
+    tags: ["kula/rcodesign:bookworm", "kula/rcodesign:latest"].join("\n"),
+  });
+  assert.equal(entries.length, 2);
 });
 
 test("generateMatrix includes all variants of rsync", () => {

@@ -9,12 +9,20 @@ Bundled tools:
 
 ## Variants
 
-### Alpine (Recommended)
+### Bookworm (Recommended)
 
-Minimal Alpine-based image. `rcodesign` is a statically-linked musl binary, so no glibc is needed.
+Based on Debian Bookworm.
 
 ```sh
 docker pull kula/rcodesign:latest
+docker pull kula/rcodesign:bookworm
+```
+
+### Alpine
+
+Minimal Alpine-based image for smaller footprint. `rcodesign` is a statically-linked musl binary, so no glibc is needed.
+
+```sh
 docker pull kula/rcodesign:alpine
 ```
 
