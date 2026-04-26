@@ -33,6 +33,21 @@ const images = [
     ],
   },
   {
+    name: "base",
+    variants: [
+      {
+        name: "alpine",
+      },
+      {
+        name: "bookworm",
+        latest: true,
+      },
+      {
+        name: "trixie",
+      },
+    ],
+  },
+  {
     name: "curl",
     variants: [
       {
