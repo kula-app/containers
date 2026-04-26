@@ -23,6 +23,21 @@ test("images contains all known images and variants", () => {
       ],
     },
     {
+      name: "base",
+      variants: [
+        {
+          name: "alpine",
+        },
+        {
+          name: "bookworm",
+          latest: true,
+        },
+        {
+          name: "trixie",
+        },
+      ],
+    },
+    {
       name: "curl",
       variants: [
         {
@@ -233,6 +248,30 @@ test("generateMatrix includes all variants of atlas-app-services-cli", () => {
     tags: "kula/atlas-app-services-cli:latest",
   });
   assert.equal(entries.length, 1);
+});
+
+test("generateMatrix includes all variants of base", () => {
+  const matrix = generateMatrix();
+  const entries = matrix.filter((item) => item.image === "base");
+  assert.deepStrictEqual(entries[0], {
+    id: "base-alpine",
+    image: "base",
+    context: "images/base/alpine",
+    tags: "kula/base:alpine",
+  });
+  assert.deepStrictEqual(entries[1], {
+    id: "base-bookworm",
+    image: "base",
+    context: "images/base/bookworm",
+    tags: ["kula/base:bookworm", "kula/base:latest"].join("\n"),
+  });
+  assert.deepStrictEqual(entries[2], {
+    id: "base-trixie",
+    image: "base",
+    context: "images/base/trixie",
+    tags: "kula/base:trixie",
+  });
+  assert.equal(entries.length, 3);
 });
 
 test("generateMatrix includes all variants of curl", () => {
