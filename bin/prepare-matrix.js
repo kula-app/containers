@@ -25,14 +25,6 @@ const images = [
     ],
   },
   {
-    name: "atlas-app-services-cli",
-    variants: [
-      {
-        name: "latest",
-      },
-    ],
-  },
-  {
     name: "base",
     variants: [
       {
