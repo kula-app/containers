@@ -44,9 +44,9 @@ RUN apk add --no-cache curl unzip
 
 RUN <<EOT ash
 if [ "${TARGETARCH}" = "amd64" ]; then
-  curl -L --fail "https://github.com/dprint/dprint/releases/download/${DPRINT_VERSION}/dprint-x86_64-unknown-linux-gnu.zip" -o dprint.zip
+  curl -L --fail "https://github.com/dprint/dprint/releases/download/${DPRINT_VERSION}/dprint-x86_64-unknown-linux-musl.zip" -o dprint.zip
 elif [ "${TARGETARCH}" = "arm64" ]; then
-  curl -L --fail "https://github.com/dprint/dprint/releases/download/${DPRINT_VERSION}/dprint-aarch64-unknown-linux-gnu.zip" -o dprint.zip
+  curl -L --fail "https://github.com/dprint/dprint/releases/download/${DPRINT_VERSION}/dprint-aarch64-unknown-linux-musl.zip" -o dprint.zip
 else
   echo "Unsupported target architecture: ${TARGETARCH}"
   exit 1
