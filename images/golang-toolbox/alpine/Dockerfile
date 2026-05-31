@@ -5,9 +5,13 @@
 # renovate: datasource=docker depName=alpine versioning=loose
 ARG ALPINE_VERSION=3.23
 # renovate: datasource=github-releases depName=golang/go versioning=loose
-ARG GO_VERSION=1.26.0
+ARG GO_VERSION=1.26.3
 # renovate: datasource=github-releases depName=dprint/dprint versioning=loose
-ARG DPRINT_VERSION=0.52.0
+ARG DPRINT_VERSION=0.54.0
+# renovate: datasource=go depName=honnef.co/go/tools versioning=semver
+ARG STATICCHECK_VERSION=0.7.0
+# renovate: datasource=go depName=golang.org/x/vuln versioning=semver
+ARG GOVULNCHECK_VERSION=1.3.0
 
 # ==================================================== DOWNLOAD: GO ====================================================
 
@@ -55,7 +59,9 @@ EOT
 
 # ====================================================== PRODUCT =======================================================
 
-FROM alpine:${ALPINE_VERSION}
+FROM kula/base:alpine
+ARG STATICCHECK_VERSION
+ARG GOVULNCHECK_VERSION
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
@@ -94,13 +100,19 @@ ENV PATH="${GOPATH}/bin:${PATH}"
 RUN mkdir -p "${GOPATH}/src" "${GOPATH}/bin" && \
     chmod -R 777 "${GOPATH}"
 
+# Install Go analysis tools
+RUN go install "honnef.co/go/tools/cmd/staticcheck@v${STATICCHECK_VERSION}" && \
+    go install "golang.org/x/vuln/cmd/govulncheck@v${GOVULNCHECK_VERSION}"
+
 # Smoke tests
 RUN set -x && \
     go version && \
     make --version && \
     gcc --version && \
     git --version && \
-    dprint --version
+    dprint --version && \
+    staticcheck --version && \
+    govulncheck --version
 
 # Set working directory
 WORKDIR /workspace
