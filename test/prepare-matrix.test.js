@@ -48,6 +48,9 @@ test("images contains all known images and variants", () => {
           name: "bookworm",
           latest: true,
         },
+        {
+          name: "trixie",
+        },
       ],
     },
     {
@@ -291,7 +294,17 @@ test("generateMatrix includes all variants of golang-toolbox", () => {
     },
     `matrix should include golang-toolbox, found: ${entries[1].tags}`
   );
-  assert.equal(entries.length, 2);
+  assert.deepStrictEqual(
+    entries[2],
+    {
+      id: "golang-toolbox-trixie",
+      image: "golang-toolbox",
+      context: "images/golang-toolbox/trixie",
+      tags: "kula/golang-toolbox:trixie",
+    },
+    `matrix should include golang-toolbox, found: ${entries[2].tags}`
+  );
+  assert.equal(entries.length, 3);
 });
 
 test("generateMatrix includes all variants of itms-transporter", () => {

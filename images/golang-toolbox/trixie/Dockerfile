@@ -57,13 +57,13 @@ EOT
 
 # ====================================================== PRODUCT =======================================================
 
-FROM kula/base:bookworm
+FROM kula/base:trixie
 ARG STATICCHECK_VERSION
 ARG GOVULNCHECK_VERSION
 
 # Metadata
 LABEL maintainer="kula app GmbH <opensource@kula.app>"
-LABEL description="Container with Go toolchain and essential build tools based on Debian Bookworm"
+LABEL description="Container with Go toolchain and essential build tools based on Debian Trixie"
 
 # Install build dependencies and tools
 RUN apt-get update -y && apt-get install -y --no-install-recommends \

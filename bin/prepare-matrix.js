@@ -58,6 +58,9 @@ const images = [
         name: "bookworm",
         latest: true,
       },
+      {
+        name: "trixie",
+      },
     ],
   },
   {

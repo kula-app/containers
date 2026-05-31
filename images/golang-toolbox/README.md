@@ -13,8 +13,18 @@ The following CLI tools are included in the Go Toolbox:
 - `pkg-config` - Package configuration tool (bookworm variant only)
 - `unzip` - Archive extraction utility
 - `dprint` - Code formatter
+- `staticcheck` - Static analysis for Go
+- `govulncheck` - Go vulnerability scanner
 
 ## Variants
+
+### Trixie
+
+Based on Debian Trixie with bash and full build tools.
+
+```sh
+docker pull kula/golang-toolbox:trixie
+```
 
 ### Bookworm (Recommended)
 
