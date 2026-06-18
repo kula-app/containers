@@ -19,6 +19,14 @@
         "# renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+) versioning=(?<versioning>[^\\s]+)\\nARG \\w+=(?<currentValue>.+)"
       ],
       "extractVersionTemplate": "^(v|go)?(?<version>[\\d][\\d.]+.*)$"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["\\.js$"],
+      "matchStrings": [
+        "// renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+) versioning=(?<versioning>[^\\s]+)\\nconst \\w+\\s*=\\s*\"(?<currentValue>[^\"]+)\";"
+      ],
+      "extractVersionTemplate": "^(v|go)?(?<version>[\\d][\\d.]+.*)$"
     }
   ],
   "packageRules": [
@@ -34,14 +42,14 @@
     {
       "matchDatasources": ["github-releases"],
       "matchDepNames": ["node/node"],
-      "matchFileNames": ["images/node-rbenv/node-[0-9]*/**"],
+      "matchFileNames": ["images/node-rbenv/node-[0-9]*/**", "test/**"],
       "matchUpdateTypes": ["major"],
       "enabled": false
     },
     {
       "matchDatasources": ["github-releases"],
       "matchDepNames": ["ruby/ruby"],
-      "matchFileNames": ["images/**/ruby-[0-9]*/**"],
+      "matchFileNames": ["images/**/ruby-[0-9]*/**", "test/**"],
       "matchUpdateTypes": ["major"],
       "enabled": false
     }
