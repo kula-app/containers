@@ -3,7 +3,7 @@
 # ====================================================== VERSIONS ======================================================
 
 # renovate: datasource=docker depName=alpine versioning=loose
-ARG ALPINE_VERSION=3.24
+ARG ALPINE_VERSION=3.24.1
 # renovate: datasource=github-releases depName=golang/go versioning=loose
 ARG GO_VERSION=1.26.0
 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=loose
