@@ -19,7 +19,7 @@ jobs:
       image: node
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
 
       - name: Setup Node.js Environment
         uses: actions/setup-node@v6
