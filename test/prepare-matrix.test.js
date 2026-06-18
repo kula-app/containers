@@ -3,6 +3,41 @@ const assert = require("node:assert/strict");
 
 const { generateMatrix, images } = require("../bin/prepare-matrix.js");
 
+// renovate: datasource=github-releases depName=node/node versioning=loose
+const NODE_20_VERSION = "20.19.5";
+// renovate: datasource=github-releases depName=node/node versioning=loose
+const NODE_22_VERSION = "22.20.0";
+// renovate: datasource=github-releases depName=node/node versioning=loose
+const NODE_24_VERSION = "24.9.0";
+// renovate: datasource=github-releases depName=ruby/ruby versioning=loose
+const RUBY_3_VERSION = "3.4.5";
+
+function semver(version) {
+  const [major, minor, patch] = version.split(".");
+  return { major, minor: `${major}.${minor}`, patch: `${major}.${minor}.${patch}` };
+}
+
+function nodeTags(version, suffix = "") {
+  const v = semver(version);
+  return [
+    `kula/node-rbenv:${v.major}${suffix}`,
+    `kula/node-rbenv:${v.minor}${suffix}`,
+    `kula/node-rbenv:${v.patch}${suffix}`,
+  ];
+}
+
+function nodeRubyTags(nodeVersion, rubyVersion, suffix = "") {
+  const n = semver(nodeVersion);
+  const r = semver(rubyVersion);
+  const tags = [];
+  for (const nv of [n.major, n.minor, n.patch]) {
+    for (const rv of [r.major, r.minor, r.patch]) {
+      tags.push(`kula/node-rbenv:${nv}${suffix}-ruby${rv}`);
+    }
+  }
+  return tags;
+}
+
 test("images contains all known images and variants", () => {
   assert.deepEqual(images, [
     {
@@ -395,11 +430,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-20",
       image: "node-rbenv",
       context: "images/node-rbenv/node-20",
-      tags: [
-        "kula/node-rbenv:20",
-        "kula/node-rbenv:20.19",
-        "kula/node-rbenv:20.19.5",
-      ].join("\n"),
+      tags: nodeTags(NODE_20_VERSION).join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[0].tags}`
   );
@@ -409,17 +440,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-20-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-20/ruby-3",
-      tags: [
-        "kula/node-rbenv:20-ruby3",
-        "kula/node-rbenv:20-ruby3.4",
-        "kula/node-rbenv:20-ruby3.4.5",
-        "kula/node-rbenv:20.19-ruby3",
-        "kula/node-rbenv:20.19-ruby3.4",
-        "kula/node-rbenv:20.19-ruby3.4.5",
-        "kula/node-rbenv:20.19.5-ruby3",
-        "kula/node-rbenv:20.19.5-ruby3.4",
-        "kula/node-rbenv:20.19.5-ruby3.4.5",
-      ].join("\n"),
+      tags: nodeRubyTags(NODE_20_VERSION, RUBY_3_VERSION).join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[1].tags}`
   );
@@ -429,11 +450,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-20-slim",
       image: "node-rbenv",
       context: "images/node-rbenv/node-20-slim",
-      tags: [
-        "kula/node-rbenv:20-slim",
-        "kula/node-rbenv:20.19-slim",
-        "kula/node-rbenv:20.19.5-slim",
-      ].join("\n"),
+      tags: nodeTags(NODE_20_VERSION, "-slim").join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[2].tags}`
   );
@@ -443,17 +460,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-20-slim-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-20-slim/ruby-3",
-      tags: [
-        "kula/node-rbenv:20-slim-ruby3",
-        "kula/node-rbenv:20-slim-ruby3.4",
-        "kula/node-rbenv:20-slim-ruby3.4.5",
-        "kula/node-rbenv:20.19-slim-ruby3",
-        "kula/node-rbenv:20.19-slim-ruby3.4",
-        "kula/node-rbenv:20.19-slim-ruby3.4.5",
-        "kula/node-rbenv:20.19.5-slim-ruby3",
-        "kula/node-rbenv:20.19.5-slim-ruby3.4",
-        "kula/node-rbenv:20.19.5-slim-ruby3.4.5",
-      ].join("\n"),
+      tags: nodeRubyTags(NODE_20_VERSION, RUBY_3_VERSION, "-slim").join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[3].tags}`
   );
@@ -463,11 +470,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-22",
       image: "node-rbenv",
       context: "images/node-rbenv/node-22",
-      tags: [
-        "kula/node-rbenv:22",
-        "kula/node-rbenv:22.20",
-        "kula/node-rbenv:22.20.0",
-      ].join("\n"),
+      tags: nodeTags(NODE_22_VERSION).join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[4].tags}`
   );
@@ -477,17 +480,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-22-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-22/ruby-3",
-      tags: [
-        "kula/node-rbenv:22-ruby3",
-        "kula/node-rbenv:22-ruby3.4",
-        "kula/node-rbenv:22-ruby3.4.5",
-        "kula/node-rbenv:22.20-ruby3",
-        "kula/node-rbenv:22.20-ruby3.4",
-        "kula/node-rbenv:22.20-ruby3.4.5",
-        "kula/node-rbenv:22.20.0-ruby3",
-        "kula/node-rbenv:22.20.0-ruby3.4",
-        "kula/node-rbenv:22.20.0-ruby3.4.5",
-      ].join("\n"),
+      tags: nodeRubyTags(NODE_22_VERSION, RUBY_3_VERSION).join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[5].tags}`
   );
@@ -497,11 +490,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-22-slim",
       image: "node-rbenv",
       context: "images/node-rbenv/node-22-slim",
-      tags: [
-        "kula/node-rbenv:22-slim",
-        "kula/node-rbenv:22.20-slim",
-        "kula/node-rbenv:22.20.0-slim",
-      ].join("\n"),
+      tags: nodeTags(NODE_22_VERSION, "-slim").join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[6].tags}`
   );
@@ -511,17 +500,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-22-slim-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-22-slim/ruby-3",
-      tags: [
-        "kula/node-rbenv:22-slim-ruby3",
-        "kula/node-rbenv:22-slim-ruby3.4",
-        "kula/node-rbenv:22-slim-ruby3.4.5",
-        "kula/node-rbenv:22.20-slim-ruby3",
-        "kula/node-rbenv:22.20-slim-ruby3.4",
-        "kula/node-rbenv:22.20-slim-ruby3.4.5",
-        "kula/node-rbenv:22.20.0-slim-ruby3",
-        "kula/node-rbenv:22.20.0-slim-ruby3.4",
-        "kula/node-rbenv:22.20.0-slim-ruby3.4.5",
-      ].join("\n"),
+      tags: nodeRubyTags(NODE_22_VERSION, RUBY_3_VERSION, "-slim").join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[7].tags}`
   );
@@ -531,12 +510,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-24",
       image: "node-rbenv",
       context: "images/node-rbenv/node-24",
-      tags: [
-        "kula/node-rbenv:24",
-        "kula/node-rbenv:24.9",
-        "kula/node-rbenv:24.9.0",
-        "kula/node-rbenv:latest",
-      ].join("\n"),
+      tags: [...nodeTags(NODE_24_VERSION), "kula/node-rbenv:latest"].join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[8].tags}`
   );
@@ -546,17 +520,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-24-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-24/ruby-3",
-      tags: [
-        "kula/node-rbenv:24-ruby3",
-        "kula/node-rbenv:24-ruby3.4",
-        "kula/node-rbenv:24-ruby3.4.5",
-        "kula/node-rbenv:24.9-ruby3",
-        "kula/node-rbenv:24.9-ruby3.4",
-        "kula/node-rbenv:24.9-ruby3.4.5",
-        "kula/node-rbenv:24.9.0-ruby3",
-        "kula/node-rbenv:24.9.0-ruby3.4",
-        "kula/node-rbenv:24.9.0-ruby3.4.5",
-      ].join("\n"),
+      tags: nodeRubyTags(NODE_24_VERSION, RUBY_3_VERSION).join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[9].tags}`
   );
@@ -566,11 +530,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-24-slim",
       image: "node-rbenv",
       context: "images/node-rbenv/node-24-slim",
-      tags: [
-        "kula/node-rbenv:24-slim",
-        "kula/node-rbenv:24.9-slim",
-        "kula/node-rbenv:24.9.0-slim",
-      ].join("\n"),
+      tags: nodeTags(NODE_24_VERSION, "-slim").join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[10].tags}`
   );
@@ -580,17 +540,7 @@ test("generateMatrix includes all variants of node-rbenv", () => {
       id: "node-rbenv-node-24-slim-ruby-3",
       image: "node-rbenv",
       context: "images/node-rbenv/node-24-slim/ruby-3",
-      tags: [
-        "kula/node-rbenv:24-slim-ruby3",
-        "kula/node-rbenv:24-slim-ruby3.4",
-        "kula/node-rbenv:24-slim-ruby3.4.5",
-        "kula/node-rbenv:24.9-slim-ruby3",
-        "kula/node-rbenv:24.9-slim-ruby3.4",
-        "kula/node-rbenv:24.9-slim-ruby3.4.5",
-        "kula/node-rbenv:24.9.0-slim-ruby3",
-        "kula/node-rbenv:24.9.0-slim-ruby3.4",
-        "kula/node-rbenv:24.9.0-slim-ruby3.4.5",
-      ].join("\n"),
+      tags: nodeRubyTags(NODE_24_VERSION, RUBY_3_VERSION, "-slim").join("\n"),
     },
     `matrix should include node-rbenv, found: ${entries[11].tags}`
   );
