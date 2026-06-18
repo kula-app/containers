@@ -44,7 +44,7 @@ jobs:
     steps:
       - name: Prepare Platforms Matrix
         id: platforms-matrix
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             let filter = JSON.parse(process.env.INPUT_PLATFORMS && process.env.INPUT_PLATFORMS.length > 0 ? process.env.INPUT_PLATFORMS : '[]')
