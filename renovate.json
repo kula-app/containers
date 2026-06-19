@@ -3,6 +3,10 @@
   "extends": [
     "config:recommended"
   ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**"
+  ],
   "keepUpdatedLabel": "renovate:keep-updated",
   "lockFileMaintenance": {
     "automerge": false,
@@ -14,7 +18,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["(^|/)Dockerfile$"],
+      "managerFilePatterns": ["/(^|/)Dockerfile$/"],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+) versioning=(?<versioning>[^\\s]+)\\nARG \\w+=(?<currentValue>.+)"
       ],
@@ -22,7 +26,7 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["\\.js$"],
+      "managerFilePatterns": ["/\\.js$/"],
       "matchStrings": [
         "// renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+) versioning=(?<versioning>[^\\s]+)\\nconst \\w+\\s*=\\s*\"(?<currentValue>[^\"]+)\";"
       ],
