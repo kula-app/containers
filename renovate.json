@@ -1,20 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
   "keepUpdatedLabel": "renovate:keep-updated",
   "lockFileMaintenance": {
     "automerge": false,
     "enabled": true,
-    "extends": [
-      "schedule:daily"
-    ]
+    "extends": ["schedule:daily"]
   },
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["(^|/)Dockerfile$"],
+      "managerFilePatterns": ["/(^|/)Dockerfile$/"],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+) versioning=(?<versioning>[^\\s]+)\\nARG \\w+=(?<currentValue>.+)"
       ],
@@ -22,7 +18,7 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["\\.js$"],
+      "managerFilePatterns": ["/\\.js$/"],
       "matchStrings": [
         "// renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+) versioning=(?<versioning>[^\\s]+)\\nconst \\w+\\s*=\\s*\"(?<currentValue>[^\"]+)\";"
       ],
@@ -32,12 +28,7 @@
   "packageRules": [
     {
       "automerge": false,
-      "matchUpdateTypes": [
-        "major",
-        "minor",
-        "patch",
-        "digest"
-      ]
+      "matchUpdateTypes": ["major", "minor", "patch", "digest"]
     },
     {
       "description": "Node versions are driven by the annotated ARG/test constants (github-releases). Disable the built-in Docker manager so it does not produce duplicate or unscoped (major) FROM updates.",
