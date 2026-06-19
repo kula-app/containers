@@ -2,7 +2,7 @@
 
 # ====================================================== VERSIONS ======================================================
 
-# renovate: datasource=github-releases depName=node/node versioning=loose
+# renovate: datasource=github-releases depName=nodejs/node versioning=loose
 ARG NODE_VERSION=24.9.0
 
 # ====================================================== PRODUCT =======================================================

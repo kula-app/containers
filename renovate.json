@@ -40,8 +40,14 @@
       ]
     },
     {
+      "description": "Node versions are driven by the annotated ARG/test constants (github-releases). Disable the built-in Docker manager so it does not produce duplicate or unscoped (major) FROM updates.",
+      "matchManagers": ["dockerfile"],
+      "matchDepNames": ["node"],
+      "enabled": false
+    },
+    {
       "matchDatasources": ["github-releases"],
-      "matchDepNames": ["node/node"],
+      "matchDepNames": ["nodejs/node"],
       "matchFileNames": ["images/node-rbenv/node-[0-9]*/**", "test/**"],
       "matchUpdateTypes": ["major"],
       "enabled": false
