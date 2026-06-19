@@ -6,7 +6,7 @@ const { generateMatrix, images } = require("../bin/prepare-matrix.js");
 // renovate: datasource=github-releases depName=nodejs/node versioning=loose
 const NODE_20_VERSION = "20.19.5";
 // renovate: datasource=github-releases depName=nodejs/node versioning=loose
-const NODE_22_VERSION = "22.20.0";
+const NODE_22_VERSION = "22.23.0";
 // renovate: datasource=github-releases depName=nodejs/node versioning=loose
 const NODE_24_VERSION = "24.9.0";
 // renovate: datasource=github-releases depName=ruby/ruby versioning=loose
