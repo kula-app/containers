@@ -65,6 +65,17 @@ gem update --system
 gem install bundler
 EOF
 
+# +---------+
+# | Maestro |
+# +---------+
+# Maestro drives the server-generated screenshot flows on the emulator. Pinned
+# so the image ships a known engine; the screenshot workflow relies on this
+# pre-installed binary (with a runtime install as a fallback for older images).
+ARG MAESTRO_VERSION=1.39.0
+RUN curl -Ls "https://get.maestro.mobile.dev" | MAESTRO_VERSION="${MAESTRO_VERSION}" bash \
+  && ln -sf /root/.maestro/bin/maestro /usr/local/bin/maestro
+ENV PATH="/root/.maestro/bin:$PATH"
+
 # +-------------+
 # | Smoke Tests |
 # +-------------+
@@ -77,4 +88,5 @@ RUN set -x && \
   rbenv --version && \
   rbenv install --list-all && \
   ruby --version && \
-  bundler --version
+  bundler --version && \
+  maestro --version
