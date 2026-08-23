@@ -7,7 +7,7 @@ ARG GO_VERSION=1.26.0
 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=loose
 ARG KUBECTL_VERSION=1.36.4
 # renovate: datasource=github-releases depName=pulumi/pulumi versioning=loose
-ARG PULUMI_VERSION=3.258.0
+ARG PULUMI_VERSION=3.259.0
 
 # ==================================================== DOWNLOAD BASE ===================================================
 
