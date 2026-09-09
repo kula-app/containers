@@ -9,7 +9,7 @@ ARG DPRINT_VERSION=0.57.3
 # renovate: datasource=go depName=honnef.co/go/tools versioning=semver
 ARG STATICCHECK_VERSION=0.8.1
 # renovate: datasource=go depName=golang.org/x/vuln versioning=semver
-ARG GOVULNCHECK_VERSION=1.7.0
+ARG GOVULNCHECK_VERSION=1.8.0
 
 # ==================================================== DOWNLOAD: GO ====================================================
 
