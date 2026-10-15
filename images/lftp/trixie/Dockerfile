@@ -3,7 +3,7 @@
 # ====================================================== VERSIONS ======================================================
 
 # renovate: datasource=docker depName=bitnami/minideb versioning=loose
-ARG DEBIAN_VERSION=bullseye
+ARG DEBIAN_VERSION=trixie
 
 # ====================================================== PRODUCT =======================================================
 

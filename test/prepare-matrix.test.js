@@ -1,42 +1,9 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 
 const { generateMatrix, images } = require("../bin/prepare-matrix.js");
-
-// renovate: datasource=github-releases depName=nodejs/node versioning=loose
-const NODE_20_VERSION = "20.20.2";
-// renovate: datasource=github-releases depName=nodejs/node versioning=loose
-const NODE_22_VERSION = "22.23.1";
-// renovate: datasource=github-releases depName=nodejs/node versioning=loose
-const NODE_24_VERSION = "24.18.0";
-// renovate: datasource=github-releases depName=ruby/ruby versioning=loose
-const RUBY_3_VERSION = "3.4.5";
-
-function semver(version) {
-  const [major, minor, patch] = version.split(".");
-  return { major, minor: `${major}.${minor}`, patch: `${major}.${minor}.${patch}` };
-}
-
-function nodeTags(version, suffix = "") {
-  const v = semver(version);
-  return [
-    `kula/node-rbenv:${v.major}${suffix}`,
-    `kula/node-rbenv:${v.minor}${suffix}`,
-    `kula/node-rbenv:${v.patch}${suffix}`,
-  ];
-}
-
-function nodeRubyTags(nodeVersion, rubyVersion, suffix = "") {
-  const n = semver(nodeVersion);
-  const r = semver(rubyVersion);
-  const tags = [];
-  for (const nv of [n.major, n.minor, n.patch]) {
-    for (const rv of [r.major, r.minor, r.patch]) {
-      tags.push(`kula/node-rbenv:${nv}${suffix}-ruby${rv}`);
-    }
-  }
-  return tags;
-}
 
 test("images contains all known images and variants", () => {
   assert.deepEqual(images, [
@@ -89,16 +56,6 @@ test("images contains all known images and variants", () => {
       ],
     },
     {
-      name: "itms-transporter",
-      platforms: ["linux/amd64"],
-      variants: [
-        {
-          name: "bookworm",
-          latest: true,
-        },
-      ],
-    },
-    {
       name: "jq",
       variants: [
         {
@@ -107,6 +64,9 @@ test("images contains all known images and variants", () => {
         {
           name: "bookworm",
           latest: true,
+        },
+        {
+          name: "trixie",
         },
       ],
     },
@@ -121,64 +81,7 @@ test("images contains all known images and variants", () => {
           latest: true,
         },
         {
-          name: "bullseye",
-        },
-      ],
-    },
-    {
-      name: "node-rbenv",
-      variants: [
-        {
-          name: "node-20",
-          subvariants: [
-            {
-              name: "ruby-3",
-            },
-          ],
-        },
-        {
-          name: "node-20-slim",
-          subvariants: [
-            {
-              name: "ruby-3",
-            },
-          ],
-        },
-        {
-          name: "node-22",
-          subvariants: [
-            {
-              name: "ruby-3",
-            },
-          ],
-        },
-        {
-          name: "node-22-slim",
-          subvariants: [
-            {
-              name: "ruby-3",
-            },
-          ],
-        },
-        {
-          name: "node-24",
-          latest: true,
-          subvariants: [
-            {
-              name: "ruby-3",
-            },
-          ],
-        },
-        {
-          name: "node-24-slim",
-          subvariants: [
-            {
-              name: "ruby-3",
-            },
-          ],
-        },
-        {
-          name: "node-latest",
+          name: "trixie",
         },
       ],
     },
@@ -192,6 +95,9 @@ test("images contains all known images and variants", () => {
           name: "bookworm",
           latest: true,
         },
+        {
+          name: "trixie",
+        },
       ],
     },
     {
@@ -203,6 +109,9 @@ test("images contains all known images and variants", () => {
         {
           name: "bookworm",
           latest: true,
+        },
+        {
+          name: "trixie",
         },
         {
           name: "bookworm-rbenv",
@@ -228,6 +137,58 @@ test("images contains all known images and variants", () => {
       ],
     },
   ]);
+});
+
+test("generateMatrix offers both supported Debian flavors", () => {
+  const matrix = generateMatrix();
+  for (const image of [
+    "base",
+    "golang-toolbox",
+    "jq",
+    "lftp",
+    "pulumi-toolbox",
+    "rcodesign",
+  ]) {
+    for (const distro of ["bookworm", "trixie"]) {
+      const entry = matrix.find(
+        (item) => item.context === `images/${image}/${distro}`
+      );
+      assert.ok(entry, `${image} must offer ${distro}`);
+      assert.ok(entry.tags.split("\n").includes(`kula/${image}:${distro}`));
+    }
+  }
+  assert.ok(!matrix.some((item) => item.context.includes("bullseye")));
+});
+
+test("every matrix context has a buildable Dockerfile path", () => {
+  for (const entry of generateMatrix()) {
+    assert.ok(
+      fs.existsSync(path.join(__dirname, "..", entry.context, "Dockerfile")),
+      entry.context
+    );
+  }
+});
+
+test("matrix contexts match all repository Dockerfiles", () => {
+  const root = path.join(__dirname, "..");
+  function dockerfileContexts(directory) {
+    return fs
+      .readdirSync(path.join(root, directory), { withFileTypes: true })
+      .flatMap((entry) => {
+        const entryPath = `${directory}/${entry.name}`;
+        if (entry.isDirectory()) {
+          return dockerfileContexts(entryPath);
+        }
+        return entry.name === "Dockerfile" ? [directory] : [];
+      });
+  }
+
+  assert.deepEqual(
+    generateMatrix()
+      .map((entry) => entry.context)
+      .sort(),
+    dockerfileContexts("images").sort()
+  );
 });
 
 test("generateMatrix returns expected structure", () => {
@@ -342,23 +303,6 @@ test("generateMatrix includes all variants of golang-toolbox", () => {
   assert.equal(entries.length, 3);
 });
 
-test("generateMatrix includes all variants of itms-transporter", () => {
-  const matrix = generateMatrix();
-  const entries = matrix.filter((item) => item.image === "itms-transporter");
-  assert.deepStrictEqual(
-    entries[0],
-    {
-      id: "itms-transporter-bookworm",
-      image: "itms-transporter",
-      context: "images/itms-transporter/bookworm",
-      tags: ["kula/itms-transporter:bookworm", "kula/itms-transporter:latest"].join("\n"),
-      platforms: '["linux/amd64"]',
-    },
-    `matrix should include itms-transporter, found: ${entries[0].tags}`
-  );
-  assert.equal(entries.length, 1);
-});
-
 test("generateMatrix includes all variants of jq", () => {
   const matrix = generateMatrix();
   const entries = matrix.filter((item) => item.image === "jq");
@@ -382,7 +326,13 @@ test("generateMatrix includes all variants of jq", () => {
     },
     `matrix should include jq, found: ${entries[1].tags}`
   );
-  assert.equal(entries.length, 2);
+  assert.deepStrictEqual(entries[2], {
+    id: "jq-trixie",
+    image: "jq",
+    context: "images/jq/trixie",
+    tags: "kula/jq:trixie",
+  });
+  assert.equal(entries.length, 3);
 });
 
 test("generateMatrix includes all variants of lftp", () => {
@@ -411,150 +361,14 @@ test("generateMatrix includes all variants of lftp", () => {
   assert.deepStrictEqual(
     entries[2],
     {
-      id: "lftp-bullseye",
+      id: "lftp-trixie",
       image: "lftp",
-      context: "images/lftp/bullseye",
-      tags: "kula/lftp:bullseye",
+      context: "images/lftp/trixie",
+      tags: "kula/lftp:trixie",
     },
     `matrix should include lftp, found: ${entries[2].tags}`
   );
   assert.equal(entries.length, 3);
-});
-
-test("generateMatrix includes all variants of node-rbenv", () => {
-  const matrix = generateMatrix();
-  const entries = matrix.filter((item) => item.image === "node-rbenv");
-  assert.deepStrictEqual(
-    entries[0],
-    {
-      id: "node-rbenv-node-20",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-20",
-      tags: nodeTags(NODE_20_VERSION).join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[0].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[1],
-    {
-      id: "node-rbenv-node-20-ruby-3",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-20/ruby-3",
-      tags: nodeRubyTags(NODE_20_VERSION, RUBY_3_VERSION).join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[1].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[2],
-    {
-      id: "node-rbenv-node-20-slim",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-20-slim",
-      tags: nodeTags(NODE_20_VERSION, "-slim").join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[2].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[3],
-    {
-      id: "node-rbenv-node-20-slim-ruby-3",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-20-slim/ruby-3",
-      tags: nodeRubyTags(NODE_20_VERSION, RUBY_3_VERSION, "-slim").join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[3].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[4],
-    {
-      id: "node-rbenv-node-22",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-22",
-      tags: nodeTags(NODE_22_VERSION).join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[4].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[5],
-    {
-      id: "node-rbenv-node-22-ruby-3",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-22/ruby-3",
-      tags: nodeRubyTags(NODE_22_VERSION, RUBY_3_VERSION).join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[5].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[6],
-    {
-      id: "node-rbenv-node-22-slim",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-22-slim",
-      tags: nodeTags(NODE_22_VERSION, "-slim").join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[6].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[7],
-    {
-      id: "node-rbenv-node-22-slim-ruby-3",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-22-slim/ruby-3",
-      tags: nodeRubyTags(NODE_22_VERSION, RUBY_3_VERSION, "-slim").join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[7].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[8],
-    {
-      id: "node-rbenv-node-24",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-24",
-      tags: [...nodeTags(NODE_24_VERSION), "kula/node-rbenv:latest"].join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[8].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[9],
-    {
-      id: "node-rbenv-node-24-ruby-3",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-24/ruby-3",
-      tags: nodeRubyTags(NODE_24_VERSION, RUBY_3_VERSION).join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[9].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[10],
-    {
-      id: "node-rbenv-node-24-slim",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-24-slim",
-      tags: nodeTags(NODE_24_VERSION, "-slim").join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[10].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[11],
-    {
-      id: "node-rbenv-node-24-slim-ruby-3",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-24-slim/ruby-3",
-      tags: nodeRubyTags(NODE_24_VERSION, RUBY_3_VERSION, "-slim").join("\n"),
-    },
-    `matrix should include node-rbenv, found: ${entries[11].tags}`
-  );
-  assert.deepStrictEqual(
-    entries[12],
-    {
-      id: "node-rbenv-node-latest",
-      image: "node-rbenv",
-      context: "images/node-rbenv/node-latest",
-      tags: "kula/node-rbenv:latest",
-    },
-    `matrix should include node-rbenv, found: ${entries[12].tags}`
-  );
-  assert.equal(entries.length, 13);
 });
 
 test("generateMatrix includes all variants of pulumi-toolbox", () => {
@@ -583,16 +397,22 @@ test("generateMatrix includes all variants of pulumi-toolbox", () => {
     `matrix should include pulumi-toolbox, found: ${entries[1].tags}`
   );
   assert.deepStrictEqual(
-    entries[2],
+    entries[3],
     {
       id: "pulumi-toolbox-bookworm-rbenv",
       image: "pulumi-toolbox",
       context: "images/pulumi-toolbox/bookworm-rbenv",
       tags: "kula/pulumi-toolbox:bookworm-rbenv",
     },
-    `matrix should include pulumi-toolbox, found: ${entries[2].tags}`
+    `matrix should include pulumi-toolbox, found: ${entries[3].tags}`
   );
-  assert.equal(entries.length, 3);
+  assert.deepStrictEqual(entries[2], {
+    id: "pulumi-toolbox-trixie",
+    image: "pulumi-toolbox",
+    context: "images/pulumi-toolbox/trixie",
+    tags: "kula/pulumi-toolbox:trixie",
+  });
+  assert.equal(entries.length, 4);
 });
 
 test("generateMatrix includes all variants of rcodesign", () => {
@@ -610,7 +430,13 @@ test("generateMatrix includes all variants of rcodesign", () => {
     context: "images/rcodesign/bookworm",
     tags: ["kula/rcodesign:bookworm", "kula/rcodesign:latest"].join("\n"),
   });
-  assert.equal(entries.length, 2);
+  assert.deepStrictEqual(entries[2], {
+    id: "rcodesign-trixie",
+    image: "rcodesign",
+    context: "images/rcodesign/trixie",
+    tags: "kula/rcodesign:trixie",
+  });
+  assert.equal(entries.length, 3);
 });
 
 test("generateMatrix includes all variants of rsync", () => {
