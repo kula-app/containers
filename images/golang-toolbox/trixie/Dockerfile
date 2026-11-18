@@ -5,7 +5,7 @@
 # renovate: datasource=github-releases depName=golang/go versioning=loose
 ARG GO_VERSION=1.26.3
 # renovate: datasource=github-releases depName=dprint/dprint versioning=loose
-ARG DPRINT_VERSION=0.64.3
+ARG DPRINT_VERSION=0.65.0
 # renovate: datasource=go depName=honnef.co/go/tools versioning=semver
 ARG STATICCHECK_VERSION=0.8.2
 # renovate: datasource=go depName=golang.org/x/vuln versioning=semver
