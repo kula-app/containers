@@ -17,7 +17,7 @@ ARG JENV_RELEASE="0.5.6"
 #----------~~~~~~~~~~*****
 # build stage: ubuntu
 #----------~~~~~~~~~~*****
-FROM ubuntu:22.04 AS ubuntu
+FROM ubuntu:26.04 AS ubuntu
 # Ensure ARGs are in this build context
 ARG ANDROID_SDK_TOOLS_VERSION
 ARG NDK_VERSION
@@ -293,6 +293,7 @@ WORKDIR ${FINAL_DIRWORK}
 # Install required tools
 RUN apt-get update -y && apt-get install -y \
   python3-pip \
+  cookiecutter \
   imagemagick \
   jq \
   # Install dependencies for rbenv
@@ -317,9 +318,6 @@ RUN apt-get update -y && apt-get install -y \
 
 # Configure Java Environment
 RUN jenv global 17
-
-# Install Python dependencies
-RUN pip3 install cookiecutter
 
 ## Install rbenv
 RUN git clone https://github.com/rbenv/rbenv.git /root/.rbenv
